@@ -1,0 +1,3 @@
+sys_platform;string;win_platform
+sys_width;uint;448
+sys_height;uint;544

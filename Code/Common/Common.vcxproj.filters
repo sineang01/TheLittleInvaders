@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="IFramework.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IGame.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlatform.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlatformManager.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IGraphicItem.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IGraphicContainer.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IGraphicTextfield.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IGraphicBitmap.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystemGlobalEnvironment.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Size.h">
+      <Filter>GraphicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Picture.h">
+      <Filter>GraphicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>GraphicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>GraphicLib</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryHandler.h">
+      <Filter>UtilsLib</Filter>
+    </ClInclude>
+    <ClInclude Include="InputKey.h">
+      <Filter>UtilsLib</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseListenerHandler.h">
+      <Filter>UtilsLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CSVReader.h">
+      <Filter>UtilsLib</Filter>
+    </ClInclude>
+    <ClInclude Include="IVariablesManager.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="IVariable.h">
+      <Filter>Interfaces_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>UtilsLib</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>UtilsLib</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Interfaces_h">
+      <UniqueIdentifier>{5baae517-2333-45f3-b6e5-4807f3dd04e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicLib">
+      <UniqueIdentifier>{eff0c6a1-9654-4c1d-bdbe-106806c7db91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UtilsLib">
+      <UniqueIdentifier>{e3e95b0d-494c-4ff1-a7ab-f80f4246278e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Picture.cpp">
+      <Filter>GraphicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>GraphicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>GraphicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Size.cpp">
+      <Filter>GraphicLib</Filter>
+    </ClCompile>
+    <ClCompile Include="LibraryHandler.cpp">
+      <Filter>UtilsLib</Filter>
+    </ClCompile>
+    <ClCompile Include="CSVReader.cpp">
+      <Filter>UtilsLib</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>UtilsLib</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

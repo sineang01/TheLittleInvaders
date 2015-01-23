@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GraphicViewFramework">
+      <UniqueIdentifier>{be550196-cc9a-4c31-819a-4e29fe70297f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platforms">
+      <UniqueIdentifier>{9951556c-5dbb-4eba-af5f-8cb6c81c6f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platforms\EasyPlatform">
+      <UniqueIdentifier>{1f9e5f95-5344-49a7-b10b-b5da88cf675b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Variables">
+      <UniqueIdentifier>{2d7966eb-7ba3-4a74-b1a5-6858ac70eecc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="GraphicBitmap.cpp">
+      <Filter>GraphicViewFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicContainer.cpp">
+      <Filter>GraphicViewFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicItem.cpp">
+      <Filter>GraphicViewFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicTextfield.cpp">
+      <Filter>GraphicViewFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="EasyPlatform.cpp">
+      <Filter>Platforms\EasyPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformFactory.cpp">
+      <Filter>Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDll.cpp" />
+    <ClCompile Include="VariablesManager.cpp">
+      <Filter>Variables</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework.h" />
+    <ClInclude Include="GraphicTextfield.h">
+      <Filter>GraphicViewFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicBitmap.h">
+      <Filter>GraphicViewFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicContainer.h">
+      <Filter>GraphicViewFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicItem.h">
+      <Filter>GraphicViewFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyPlatform.h">
+      <Filter>Platforms\EasyPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformFactory.h">
+      <Filter>Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="VariablesManager.h">
+      <Filter>Variables</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
