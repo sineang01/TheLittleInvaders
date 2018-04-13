@@ -353,7 +353,7 @@ void CGameStateInGame::spawnBombs()
 		return;
 
 	IGraphicItem::TGraphicItems aliens = freeAliens();
-	const unsigned int alienSize = aliens.size();
+	const size_t alienSize = aliens.size();
 
 	if (aliens.empty())
 		return;

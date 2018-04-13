@@ -201,7 +201,7 @@ IGraphicContainer * CFramework::window() const
 	return m_pWindow;
 }
 
-unsigned int CFramework::random(unsigned int maxValue) const
+unsigned int CFramework::random(size_t maxValue) const
 {
 	return rand() % maxValue;
 }

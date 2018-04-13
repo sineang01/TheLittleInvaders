@@ -31,67 +31,67 @@ class CVariablesManager;
 
 class CFramework : public IFramework
 {
-	public:
-		CFramework();
-		~CFramework();
+public:
+	CFramework();
+	~CFramework();
 
-        /**
-         * @brief Retrieves the platform manager
-         */
-		IPlatformManager * platformManager();
+			/**
+				* @brief Retrieves the platform manager
+				*/
+	IPlatformManager * platformManager();
 
-        /**
-         * @brief Retreives the current platform instancated
-         */
-		IPlatform * platform();
+	/**
+		* @brief Retreives the current platform instancated
+		*/
+	IPlatform * platform();
 
-        /**
-         * @brief Schedules a sprite to be destroyed
-         */
-		void destroySprite(ISprite * pSprite);
+	/**
+		* @brief Schedules a sprite to be destroyed
+		*/
+	void destroySprite(ISprite * pSprite);
 
-    public:
-        // IFramework
-		bool init();
-		int exec();
-        float elapsedTime() const;
-		IGraphicContainer * window() const;
-        unsigned int random(unsigned int maxValue) const;
-		const char * applicationPath() const;
-		IVariablesManager * variablesManager() const;
-        // ~IFramework
+public:
+	// IFramework
+	bool init();
+	int exec();
+	float elapsedTime() const;
+	IGraphicContainer * window() const;
+	unsigned int random(size_t maxValue) const;
+	const char * applicationPath() const;
+	IVariablesManager * variablesManager() const;
+	// ~IFramework
 
-	protected:
-		// IFrameworkListener
-		void onUpdate(float deltaTime);
-		void onInput(CInputKey key, float deltaTime);
-		// ~IFrameworkListener
+protected:
+	// IFrameworkListener
+	void onUpdate(float deltaTime);
+	void onInput(CInputKey key, float deltaTime);
+	// ~IFrameworkListener
 
-	private:
-		void spriteDeferredDestruction();
-		void makeApplicationPath();
+private:
+	void spriteDeferredDestruction();
+	void makeApplicationPath();
 
-		bool initVariables();
+	bool initVariables();
 
-	private:
-		CFramework(const CFramework &);
-		CFramework &operator=(const CFramework &);
+private:
+	CFramework(const CFramework &);
+	CFramework &operator=(const CFramework &);
 
-	private:
-		IPlatformManager * m_pPlatformManager;
-		CGraphicContainer * m_pWindow;
-		CVariablesManager * m_pVariablesManager;
+private:
+	IPlatformManager * m_pPlatformManager;
+	CGraphicContainer * m_pWindow;
+	CVariablesManager * m_pVariablesManager;
 
-		typedef std::vector<ISprite *> TSprites;
-		TSprites m_sprites;
+	typedef std::vector<ISprite *> TSprites;
+	TSprites m_sprites;
 
-		float m_time;
+	float m_time;
 
-		CInputKey m_keyFire;
-		CInputKey m_keyLeft;
-		CInputKey m_keyRight;
+	CInputKey m_keyFire;
+	CInputKey m_keyLeft;
+	CInputKey m_keyRight;
 
-		std::string m_applicationPath;
+	std::string m_applicationPath;
 };
 
 #endif // FRAMEWORK_H
