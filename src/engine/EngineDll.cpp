@@ -18,9 +18,12 @@
 ****************************************************************************************/
 
 #include "Framework.h"
-#include "ISystemGlobalEnvironment.h"
-#include "stdafx.h"
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
+#include <windows.h>
+
+#include "ISystemGlobalEnvironment.h"
 SSystemGlobalEnvironment * gEnv = nullptr;
 
 extern "C"

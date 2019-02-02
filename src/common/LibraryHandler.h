@@ -20,6 +20,10 @@
 #pragma once
 #include <string>
 
+class HINSTANCE__;
+typedef HINSTANCE__* HINSTANCE;
+typedef HINSTANCE HMODULE;
+
 class CLibraryHandler
 {
 	public:

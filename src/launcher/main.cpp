@@ -17,13 +17,16 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-
-#include "ISystemGlobalEnvironment.h"
 #include <IFramework.h>
 #include <LibraryHandler.h>
+#include <iostream>
 
+#include "ISystemGlobalEnvironment.h"
 SSystemGlobalEnvironment * gEnv = nullptr;
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
+#include <windows.h>
 
 static const char * ENGINE_LIBRARY_NAME = "Engine.dll";
 static const char * ENGINE_LIBRARY_ENTRY_POINT_CREATE = "CreateEngine";

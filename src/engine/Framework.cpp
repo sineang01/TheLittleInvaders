@@ -17,15 +17,23 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-
 #include "Framework.h"
 #include "GraphicContainer.h"
 #include "LibraryHandler.h"
 #include "PlatformFactory.h"
 #include "VariablesManager.h"
+#include <ContainersUtils.h>
 #include <Path.h>
+#include <cassert>
 #include <ctime>
+#include <iostream>
+
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
+#include <windows.h>
 
 static const char * GAME_LIBRARY_NAME = "Game.dll";
 static const char * GAME_LIBRARY_ENTRY_POINT_CREATE = "CreateGame";
@@ -210,7 +218,7 @@ unsigned int CFramework::random(size_t maxValue) const
 void CFramework::destroySprite(ISprite * pSprite)
 {
 	assert(pSprite);
-	gPushBackUnique(m_sprites, pSprite);
+	containers::gPushBackUnique(m_sprites, pSprite);
 }
 
 const char * CFramework::applicationPath() const

@@ -18,8 +18,10 @@
 ****************************************************************************************/
 
 #include "VariablesManager.h"
-#include "stdafx.h"
 #include <CSVReader.h>
+#include <algorithm>
+#include <cassert>
+#include <iostream>
 
 static const int VARIABLE_CSV_CELLS = 3;
 static const char * VARIABLE_TYPE_BOOL = "boolean";
@@ -76,7 +78,7 @@ bool CVariablesManager::loadConfig(const char * filePath)
 		name = getLower(name.c_str());
 		const char * name_s = name.c_str();
 
-		if (gMemberFind(m_variables, name))
+		if (m_variables.find(name) != m_variables.end())
 		{
 			std::cerr << "[ERROR] Variable " << name_s << " at line " << line << " already exists" << std::endl;
 			return nullptr;

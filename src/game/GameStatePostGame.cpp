@@ -18,9 +18,11 @@
 ****************************************************************************************/
 
 #include "GameStatePostGame.h"
-#include "stdafx.h"
 #include <IGraphicContainer.h>
 #include <IGraphicTextfield.h>
+
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
 
 CGameStatePostGame::CGameStatePostGame(bool success, int score)
 {

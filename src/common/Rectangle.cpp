@@ -18,7 +18,8 @@
 ****************************************************************************************/
 
 #include "Rectangle.h"
-#include "stdafx.h"
+
+#include "MathUtils.h"
 
 CRectangle::CRectangle(double left, double top, double width, double height)
     :m_x(left)
@@ -74,12 +75,12 @@ bool CRectangle::intersects(const CRectangle &r) const noexcept
 
 bool operator==(const CRectangle &r1, const CRectangle &r2) noexcept
 {
-    return gFuzzyCompare(r1.m_x, r2.m_x) && gFuzzyCompare(r1.m_y, r2.m_y)
-           && gFuzzyCompare(r1.m_width, r2.m_width) && gFuzzyCompare(r1.m_height, r2.m_height);
+    return math::gFuzzyCompare(r1.m_x, r2.m_x) && math::gFuzzyCompare(r1.m_y, r2.m_y)
+           && math::gFuzzyCompare(r1.m_width, r2.m_width) && math::gFuzzyCompare(r1.m_height, r2.m_height);
 }
 
 bool operator!=(const CRectangle &r1, const CRectangle &r2) noexcept
 {
-    return !gFuzzyCompare(r1.m_x, r2.m_x) || !gFuzzyCompare(r1.m_y, r2.m_y)
-           || !gFuzzyCompare(r1.m_width, r2.m_width) || !gFuzzyCompare(r1.m_height, r2.m_height);
+    return !math::gFuzzyCompare(r1.m_x, r2.m_x) || !math::gFuzzyCompare(r1.m_y, r2.m_y)
+           || !math::gFuzzyCompare(r1.m_width, r2.m_width) || !math::gFuzzyCompare(r1.m_height, r2.m_height);
 }

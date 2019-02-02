@@ -17,12 +17,15 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-
 #include "GameStateInGame.h"
+#include <ContainersUtils.h>
 #include <IGraphicBitmap.h>
 #include <IGraphicContainer.h>
 #include <IGraphicTextfield.h>
+#include <cassert>
+
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
 
 static const int DIFFICULY_MULT = 5;
 
@@ -185,13 +188,13 @@ void CGameStateInGame::checkCollisionsWithBorder()
 		else
 		if (isRocket(pItem))
 		{
-			gFindAndErase(m_rockets, pItem);
+			containers::gFindAndErase(m_rockets, pItem);
 			delete pItem;
 		}
 		else
 		if (isBomb(pItem))
 		{
-			gFindAndErase(m_bombs, pItem);
+			containers::gFindAndErase(m_bombs, pItem);
 			m_pContainer->removeItem(pItem);
 		}
 	}
@@ -211,13 +214,13 @@ void CGameStateInGame::checkCollisionsWithPlayer()
 		if (isAlien(pItem))
 		{
             // Aliens vector simulates a bydimentional array of type aliens[ROWS][COLUMNS] so the size is kept unchanged to retrieves aliens position at wish
-			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
+			containers::gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
 			delete pItem;
 		}
 		else
 		if (isBomb(pItem))
 		{
-			gFindAndErase(m_bombs, pItem);
+			containers::gFindAndErase(m_bombs, pItem);
 			delete pItem;
 		}
 
@@ -243,7 +246,7 @@ void CGameStateInGame::checkCollisionsWithRockets()
 
 		if (isAlien(pItem))
 		{
-			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
+			containers::gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
 			delete pItem;
 
 			(*itRocket) = nullptr;
@@ -264,7 +267,7 @@ void CGameStateInGame::checkCollisionsWithRockets()
 		}
 	}
 
-	gFindAndEraseAll(m_rockets, (IGraphicItem *)nullptr);
+	containers::gFindAndEraseAll(m_rockets, (IGraphicItem *)nullptr);
 }
 
 void CGameStateInGame::checkVictoryConditions()
@@ -407,7 +410,7 @@ void CGameStateInGame::updateHealth()
 
 bool CGameStateInGame::isAlien(IGraphicItem * pItem) const
 {
-	return gFind(m_aliens, pItem);
+	return containers::gFind(m_aliens, pItem);
 }
 
 bool CGameStateInGame::isSuperAlien(IGraphicItem * pItem) const
@@ -422,12 +425,12 @@ bool CGameStateInGame::isPlayer(IGraphicItem * pItem) const
 
 bool CGameStateInGame::isRocket(IGraphicItem * pItem) const
 {
-	return gFind(m_rockets, pItem);
+	return containers::gFind(m_rockets, pItem);
 }
 
 bool CGameStateInGame::isBomb(IGraphicItem * pItem) const
 {
-	return gFind(m_bombs, pItem);
+	return containers::gFind(m_bombs, pItem);
 }
 
 IGraphicItem::TGraphicItems CGameStateInGame::aliveAliens() const

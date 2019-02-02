@@ -17,9 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-
 #include "GameTimer.h"
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
 
 CGameTimer::CGameTimer(float interval)
 	:m_interval(interval)

@@ -19,7 +19,11 @@
 
 #include "Framework.h"
 #include "GraphicTextfield.h"
-#include <stdafx.h>
+#include <cassert>
+#include <cstdarg>
+
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
 
 CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent):
 	CGraphicItem(pParent)

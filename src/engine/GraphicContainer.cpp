@@ -17,8 +17,8 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "GraphicContainer.h"
+#include <cassert>
 
 CGraphicContainer::CGraphicContainer(CGraphicItem * pParent):
 	CGraphicItem(pParent)

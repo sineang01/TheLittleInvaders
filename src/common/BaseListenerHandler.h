@@ -18,6 +18,7 @@
 ****************************************************************************************/
 
 #pragma once
+#include "ContainersUtils.h"
 #include <vector>
 
 template <class T>
@@ -26,12 +27,12 @@ class CBaseListenerHandler : protected T
 	public:
 		bool addListener(T * pListener)
 		{
-			return gPushBackUnique(m_listeners, pListener);
+			return containers::gPushBackUnique(m_listeners, pListener);
 		}
 
 		bool removeListener(T * pListener)
 		{
-			return gFindAndErase(m_listeners, pListener);
+			return containers::gFindAndErase(m_listeners, pListener);
 		}
 
 		CBaseListenerHandler() = default;

@@ -18,7 +18,10 @@
 ****************************************************************************************/
 
 #include "Path.h"
-#include "stdafx.h"
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
+#include <windows.h>
 
 namespace PathUtils
 {

@@ -20,12 +20,14 @@ set(SOURCES_INTERFACES
 
 set(SOURCES_UTILS
 	BaseListenerHandler.h
+	ContainersUtils.h
 	CSVReader.cpp
 	CSVReader.h
 	GameTimer.cpp
 	GameTimer.h
 	LibraryHandler.cpp
 	LibraryHandler.h
+	MathUtils.h
 	Path.cpp
 	Path.h)
 
@@ -39,11 +41,7 @@ set(SOURCES_GRAPHIC
 	Size.cpp
 	Size.h)
 
-set(SOURCES_OTHERS
-	stdafx.h)
-
-add_library(${PROJECT_NAME} ${SOURCES_OTHERS} ${SOURCES_INTERFACES} ${SOURCES_UTILS} ${SOURCES_GRAPHIC}) 
-source_group("src" FILES ${SOURCES_OTHERS})
+add_library(${PROJECT_NAME} ${SOURCES_INTERFACES} ${SOURCES_UTILS} ${SOURCES_GRAPHIC}) 
 source_group("src\\interface" FILES ${SOURCES_INTERFACES})
 source_group("src\\utils" FILES ${SOURCES_UTILS})
 source_group("src\\graphic" FILES ${SOURCES_GRAPHIC})

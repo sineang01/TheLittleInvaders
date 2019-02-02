@@ -18,7 +18,9 @@
 ****************************************************************************************/
 
 #include "Size.h"
-#include "stdafx.h"
+
+#include "MathUtils.h"
+#include <cassert>
 
 CSize::CSize(const CSize &sz)
     :m_width(sz.width())
@@ -34,28 +36,28 @@ CSize::CSize(double width, double height)
 
 bool CSize::isNull() const
 {
-    return gIsNull(m_width) && gIsNull(m_height);
+    return math::gIsNull(m_width) && math::gIsNull(m_height);
 }
 
 bool operator==(const CSize &s1, const CSize &s2) noexcept
 {
-    return gFuzzyCompare(s1.m_width, s2.m_width) && gFuzzyCompare(s1.m_height, s2.m_height);
+    return math::gFuzzyCompare(s1.m_width, s2.m_width) && math::gFuzzyCompare(s1.m_height, s2.m_height);
 }
 
 bool operator!=(const CSize &s1, const CSize &s2) noexcept
 {
-    return !gFuzzyCompare(s1.m_width, s2.m_width) || !gFuzzyCompare(s1.m_height, s2.m_height);
+    return !math::gFuzzyCompare(s1.m_width, s2.m_width) || !math::gFuzzyCompare(s1.m_height, s2.m_height);
 }
 
 CSize &CSize::operator/=(double c) noexcept
 {
-    assert(!gFuzzyIsNull(c));
+    assert(!math::gFuzzyIsNull(c));
     m_width = m_width/c; m_height = m_height/c;
     return *this;
 }
 
 const CSize operator/(const CSize &s, double c) noexcept
 {
-    assert(!gFuzzyIsNull(c));
+    assert(!math::gFuzzyIsNull(c));
     return CSize(s.m_width/c, s.m_height/c);
 }

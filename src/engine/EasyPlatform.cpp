@@ -17,8 +17,12 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "EasyPlatform.h"
+#include <cassert>
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
+#include <windows.h>
 
 static const char * PLATFORM_LIBRARY_NAME = "EasyPlatform.dll";
 static const char * PLATFORM_LIBRARY_ENTRY_POINT = "EasyPlatformFactory";

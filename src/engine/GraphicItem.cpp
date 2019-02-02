@@ -18,7 +18,8 @@
 ****************************************************************************************/
 
 #include "GraphicItem.h"
-#include "stdafx.h"
+#include <ContainersUtils.h>
+#include <cassert>
 
 CGraphicItem::CGraphicItem(CGraphicItem * pParent):
 	m_pParent(nullptr)
@@ -114,13 +115,13 @@ void CGraphicItem::setRectangle(double x, double y, double width, double height)
 bool CGraphicItem::addChild(CGraphicItem * pChild)
 {
 	assert(pChild);
-	return gPushBackUnique(m_children, pChild);
+	return containers::gPushBackUnique(m_children, pChild);
 }
 
 bool CGraphicItem::removeChild(CGraphicItem * pChild)
 {
 	assert(pChild);
-	return gFindAndErase(m_children, pChild);
+	return containers::gFindAndErase(m_children, pChild);
 }
 
 const CGraphicItem::TGraphicItems & CGraphicItem::items() const
@@ -165,7 +166,7 @@ CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const IGraphicItem * pI
 			continue;
 
 		if (pItem->collidesWithItem(pOtherItem, mode))
-			gPushBackUnique(collidingItems, pOtherItem);
+			containers::gPushBackUnique(collidingItems, pOtherItem);
 	}
 
 	return collidingItems;
@@ -182,7 +183,7 @@ CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const CRectangle & rect
 		IGraphicItem * pItem = (*it);
 
 		if (pItem->collidesWithRectangle(rectangle, mode))
-			gPushBackUnique(collidingItems, pItem);
+			containers::gPushBackUnique(collidingItems, pItem);
 	}
 
 	return collidingItems;

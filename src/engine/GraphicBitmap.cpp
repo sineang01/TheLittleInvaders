@@ -17,9 +17,12 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "Framework.h"
 #include "GraphicBitmap.h"
+#include <cassert>
+
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
 
 CGraphicBitmap::CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent):
 	CGraphicItem(pParent),

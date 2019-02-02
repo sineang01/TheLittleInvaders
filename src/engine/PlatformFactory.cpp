@@ -17,9 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "EasyPlatform.h"
 #include "PlatformFactory.h"
+#include <cassert>
 
 IPlatformManager * CPlatformFactory::make(const char * platformName)
 {

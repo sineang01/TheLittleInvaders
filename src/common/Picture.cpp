@@ -19,7 +19,7 @@
 
 #include "Path.h"
 #include "Picture.h"
-#include "stdafx.h"
+#include <cassert>
 #include <fstream>
 
 CPicture::CPicture(const char * imagePath)

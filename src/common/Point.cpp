@@ -18,7 +18,8 @@
 ****************************************************************************************/
 
 #include "Point.h"
-#include "stdafx.h"
+
+#include "MathUtils.h"
 
 CPoint::CPoint()
     :m_x(0)
@@ -34,15 +35,15 @@ CPoint::CPoint(double xpos, double ypos)
 
 bool CPoint::isNull() const
 {
-    return gIsNull(m_x) && gIsNull(m_y);
+    return math::gIsNull(m_x) && math::gIsNull(m_y);
 }
 
 bool operator==(const CPoint &p1, const CPoint &p2) noexcept
 {
-    return gFuzzyIsNull(p1.m_x - p2.m_x) && gFuzzyIsNull(p1.m_y - p2.m_y);
+    return math::gFuzzyIsNull(p1.m_x - p2.m_x) && math::gFuzzyIsNull(p1.m_y - p2.m_y);
 }
 
 bool operator!=(const CPoint &p1, const CPoint &p2) noexcept
 {
-    return !gFuzzyIsNull(p1.m_x - p2.m_x) || !gFuzzyIsNull(p1.m_y - p2.m_y);
+    return !math::gFuzzyIsNull(p1.m_x - p2.m_x) || !math::gFuzzyIsNull(p1.m_y - p2.m_y);
 }

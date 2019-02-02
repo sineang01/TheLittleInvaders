@@ -50,7 +50,7 @@ class CVariablesManager final : public IVariablesManager
 		{
 			std::string nameStr = getLower(name);
 
-			if (gMemberFind(m_variables, nameStr))
+			if (m_variables.find(nameStr) != m_variables.end())
 				return nullptr;
 
 			IVariable * pVariable = new CVariable<T>(defaultValue);

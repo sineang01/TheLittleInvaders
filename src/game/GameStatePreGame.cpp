@@ -18,10 +18,12 @@
 ****************************************************************************************/
 
 #include "GameStatePreGame.h"
-#include "stdafx.h"
 #include <IGraphicBitmap.h>
 #include <IGraphicContainer.h>
 #include <IGraphicTextfield.h>
+
+#include "ISystemGlobalEnvironment.h"
+extern SSystemGlobalEnvironment * gEnv;
 
 CGameStatePreGame::CGameStatePreGame()
 {

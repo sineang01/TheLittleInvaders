@@ -17,9 +17,13 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-
 #include "LibraryHandler.h"
+#include <cassert>
+#include <iostream>
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
+#include <windows.h>
 
 CLibraryHandler::CLibraryHandler(const char * library):
 	m_libraryHandler(nullptr)
