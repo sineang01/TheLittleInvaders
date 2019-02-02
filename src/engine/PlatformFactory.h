@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef PLATFORMFACTORY_H
-#define PLATFORMFACTORY_H
+#pragma once
 
 struct IPlatformManager;
 
@@ -34,5 +33,3 @@ class CPlatformFactory
 		CPlatformFactory(const CPlatformFactory &);
 		CPlatformFactory &operator=(const CPlatformFactory &);
 };
-
-#endif // PLATFORMFACTORY_H

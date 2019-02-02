@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef IGRAPHICCONTAINER_H
-#define IGRAPHICCONTAINER_H
-
+#pragma once
 #include "IGraphicItem.h"
 #include "Picture.h"
 
@@ -36,6 +34,3 @@ struct IGraphicContainer : public virtual IGraphicItem
 
 	virtual ~IGraphicContainer() {};
 };
-
-#endif // IGRAPHICCONTAINER_H
-

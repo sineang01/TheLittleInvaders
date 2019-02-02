@@ -17,12 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef GRAPHICBITMAP_H
-#define GRAPHICBITMAP_H
-
+#pragma once
+#include "GraphicItem.h"
 #include <IGraphicBitmap.h>
 #include <Picture.h>
-#include "GraphicItem.h"
 
 struct ISprite;
 
@@ -45,5 +43,3 @@ class CGraphicBitmap : public IGraphicBitmap, public CGraphicItem
 		ISprite * m_pSprite;
 		CRectangle m_shape;
 };
-
-#endif // GRAPHICBITMAP_H

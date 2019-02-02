@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef IGRAPHICITEM_H
-#define IGRAPHICITEM_H
-
+#pragma once
 #include "Rectangle.h"
 #include <vector>
 
@@ -59,5 +57,3 @@ struct IGraphicItem
 
 	virtual ~IGraphicItem() {};
 };
-
-#endif // IGRAPHICITEM_H

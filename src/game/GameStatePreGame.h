@@ -17,11 +17,9 @@
 **
 ****************************************************************************************/
 
-#ifndef GAMESTATEPREGAME_H
-#define GAMESTATEPREGAME_H
-
-#include <IGraphicItem.h>
+#pragma once
 #include "GameStateCommon.h"
+#include <IGraphicItem.h>
 
 struct IGraphicContainer;
 
@@ -43,5 +41,3 @@ class CGameStatePreGame : public CGameStateCommon
 	private:
 		IGraphicContainer * m_pContainer;
 };
-
-#endif // GAMESTATEPREGAME_H

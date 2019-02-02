@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef BASELISTENERHANDLER_H
-#define BASELISTENERHANDLER_H
-
+#pragma once
 #include <vector>
 
 template <class T>
@@ -43,5 +41,3 @@ class CBaseListenerHandler : protected T
 		typedef std::vector<T*> TListeners;
 		TListeners m_listeners;
 };
-
-#endif // BASELISTENERHANDLER_H

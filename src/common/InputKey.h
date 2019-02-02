@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef KEY_H
-#define KEY_H
+#pragma once
 
 /**
  * @brief The CInputKey struct is an helper for the key handling
@@ -56,5 +55,3 @@ class CInputKey
 		EKey m_key;
 		EKeyStatus m_status;
 };
-
-#endif // KEY_H

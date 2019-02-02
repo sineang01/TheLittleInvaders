@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef FRAMEWORK_H
-#define FRAMEWORK_H
-
+#pragma once
 #include <IFramework.h>
 #include <IGame.h>
 #include <IPlatform.h>
@@ -93,5 +91,3 @@ private:
 
 	std::string m_applicationPath;
 };
-
-#endif // FRAMEWORK_H

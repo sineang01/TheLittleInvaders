@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef GAMERULESSTATEBASE_H
-#define GAMERULESSTATEBASE_H
-
+#pragma once
 #include "Game.h"
 
 class CGameStateCommon
@@ -44,5 +42,3 @@ class CGameStateCommon
 		CGameStateCommon(const CGameStateCommon &);
 		CGameStateCommon &operator=(const CGameStateCommon &);
 };
-
-#endif // GAMERULESSTATEBASE_H

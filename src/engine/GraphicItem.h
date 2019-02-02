@@ -17,11 +17,9 @@
 **
 ****************************************************************************************/
 
-#ifndef GRAPHICITEM_H
-#define GRAPHICITEM_H
-
-#include <IPlatformManager.h>
+#pragma once
 #include <IGraphicItem.h>
+#include <IPlatformManager.h>
 #include <Rectangle.h>
 
 /**
@@ -97,5 +95,3 @@ class CGraphicItem : public virtual IGraphicItem
 		IGraphicItem * m_pParent;
 		TGraphicItems m_children;
 };
-
-#endif // GRAPHICITEM_H

@@ -17,14 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef IGRAPHICBITMAP_H
-#define IGRAPHICBITMAP_H
-
+#pragma once
 #include "IGraphicItem.h"
 
 struct IGraphicBitmap : public virtual IGraphicItem
 {
 	virtual ~IGraphicBitmap() {};
 };
-
-#endif // IGRAPHICBITMAP_H

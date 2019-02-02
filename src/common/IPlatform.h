@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef IPLATFORM_H
-#define IPLATFORM_H
+#pragma once
 
 struct ISprite
 {
@@ -85,5 +84,3 @@ struct IPlatform
 	 */
 	virtual void getKeyStatus(KeyStatus& keys) = 0;
 };
-
-#endif // IPLATFORM_H

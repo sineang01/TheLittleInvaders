@@ -17,12 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef CSVREADER_H
-#define CSVREADER_H
-
-#include <vector>
-#include <string>
+#pragma once
 #include <fstream>
+#include <string>
+#include <vector>
 
 class CCSVReader
 {
@@ -59,5 +57,3 @@ class CCSVReader
 		std::string m_filePath;
 		std::ifstream m_file;
 };
-
-#endif // CSVREADER_H

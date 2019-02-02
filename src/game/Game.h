@@ -17,12 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef GAME_H
-#define GAME_H
-
-#include <Picture.h>
-#include <IGame.h>
+#pragma once
 #include <IFramework.h>
+#include <IGame.h>
+#include <Picture.h>
 
 class CGraphicContainer;
 class CGameStateCommon;
@@ -88,5 +86,3 @@ class CGame : public IGame, private IFrameworkListener
 		int m_score;
 		bool m_succeded;
 };
-
-#endif // GAME_H

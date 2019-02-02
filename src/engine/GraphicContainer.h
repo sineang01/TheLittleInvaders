@@ -17,13 +17,11 @@
 **
 ****************************************************************************************/
 
-#ifndef GRAPHICCONTAINER_H
-#define GRAPHICCONTAINER_H
-
-#include <IGraphicContainer.h>
-#include "GraphicItem.h"
+#pragma once
 #include "GraphicBitmap.h"
+#include "GraphicItem.h"
 #include "GraphicTextfield.h"
+#include <IGraphicContainer.h>
 
 class CGraphicContainer : public IGraphicContainer, public CGraphicItem
 {
@@ -46,6 +44,3 @@ class CGraphicContainer : public IGraphicContainer, public CGraphicItem
 	protected:
         virtual void draw(int x, int y) {}
 };
-
-#endif //GRAPHICCONTAINER_H
-

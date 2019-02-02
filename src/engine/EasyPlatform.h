@@ -17,11 +17,9 @@
 **
 ****************************************************************************************/
 
-#ifndef EASYPLATFORM_H
-#define EASYPLATFORM_H
-
-#include <IPlatformManager.h>
+#pragma once
 #include <IPlatform.h>
+#include <IPlatformManager.h>
 #include <LibraryHandler.h>
 
 class CEasyPlatform : public IPlatformManager, public CLibraryHandler
@@ -43,5 +41,3 @@ class CEasyPlatform : public IPlatformManager, public CLibraryHandler
 	private: 
         IPlatform * m_interface;
 };
-
-#endif	// EASYPLATFORM_H

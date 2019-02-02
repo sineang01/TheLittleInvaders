@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef ICVARMANAGER_H
-#define ICVARMANAGER_H
-
+#pragma once
 #include "IVariable.h"
 
 struct IVariablesManager
@@ -34,5 +32,3 @@ struct IVariablesManager
 	virtual IVariable * registerVariable(const char * name, bool defaultValue) = 0;
 	virtual IVariable * registerVariable(const char * name, std::string defaultValue) = 0;
 };
-
-#endif // ICVARMANAGER_H

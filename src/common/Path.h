@@ -17,11 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef PATH_H
-#define PATH_H
-
 #pragma once
-
 #include <string>
 
 namespace PathUtils
@@ -34,5 +30,3 @@ namespace PathUtils
 		return std::string(buffer).substr(0, pos);
 	}
 };
-
-#endif // PATH_H

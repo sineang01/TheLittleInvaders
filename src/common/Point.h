@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef POINT_H
-#define POINT_H
+#pragma once
 
 class CPoint
 {
@@ -56,5 +55,3 @@ class CPoint
         double m_x;
         double m_y;
 };
-
-#endif // POINT_H

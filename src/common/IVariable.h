@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef ICVAR_H
-#define ICVAR_H
-
+#pragma once
 #include <string>
 
 struct IVariable
@@ -94,5 +92,3 @@ CVariable<std::string>::CVariable(const char * value)
 {
 	m_value = value;
 }
-
-#endif // IFRAMEWORK_H

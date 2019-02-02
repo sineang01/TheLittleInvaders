@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef SIZE_H
-#define SIZE_H
+#pragma once
 
 class CSize
 {
@@ -60,5 +59,3 @@ class CSize
         double m_width;
         double m_height;
 };
-
-#endif // SIZE_H

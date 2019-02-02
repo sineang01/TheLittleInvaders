@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef IFRAMEWORK_H
-#define IFRAMEWORK_H
-
+#pragma once
 #include "BaseListenerHandler.h"
 #include "IVariablesManager.h"
 #include "InputKey.h"
@@ -75,5 +73,3 @@ struct IFramework : public CBaseListenerHandler<IFrameworkListener>
 		*/
 	virtual IVariablesManager * variablesManager() const = 0;
 };
-
-#endif // IFRAMEWORK_H

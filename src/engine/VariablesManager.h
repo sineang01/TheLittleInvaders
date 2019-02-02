@@ -17,12 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef VARIABLESMANAGER_H
-#define VARIABLESMANAGER_H
-
-#include <vector>
-#include <map>
+#pragma once
 #include <IVariablesManager.h>
+#include <map>
+#include <vector>
 
 class CVariablesManager : public IVariablesManager
 {
@@ -65,5 +63,3 @@ class CVariablesManager : public IVariablesManager
 		typedef std::pair<std::string, IVariable *> TVariableMapPair;
 		TVariables m_variables;
 };
-
-#endif // VARIABLESMANAGER_H

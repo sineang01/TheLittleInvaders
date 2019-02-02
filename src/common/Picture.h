@@ -17,11 +17,9 @@
 **
 ****************************************************************************************/
 
-#ifndef PICTURE_H
-#define PICTURE_H
-
-#include <string>
+#pragma once
 #include "Rectangle.h"
+#include <string>
 
 class CPicture
 {
@@ -54,5 +52,3 @@ class CPicture
 		CSize m_size;
 		CRectangle m_shape;
 };
-
-#endif // PICTURE_H

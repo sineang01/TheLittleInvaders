@@ -17,11 +17,9 @@
 **
 ****************************************************************************************/
 
-#ifndef GRAPHICTEXTFIELD_H
-#define GRAPHICTEXTFIELD_H
-
-#include <IGraphicTextfield.h>
+#pragma once
 #include "GraphicItem.h"
+#include <IGraphicTextfield.h>
 
 class CGraphicTextfield : public IGraphicTextfield, public CGraphicItem
 {
@@ -43,5 +41,3 @@ class CGraphicTextfield : public IGraphicTextfield, public CGraphicItem
 	private:
 		std::string m_text;
 };
-
-#endif // GRAPHICTEXTFIELD_H

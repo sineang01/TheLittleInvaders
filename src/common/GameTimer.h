@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef GAMETIME_H
-#define GAMETIME_H
-
+#pragma once
 #include "IFramework.h"
 
 struct IGameTimerListener
@@ -66,5 +64,3 @@ class CGameTimer : public CBaseListenerHandler<IGameTimerListener>, public IFram
 		float m_elapsedTime;
 		bool m_active;
 };
-
-#endif // GAMETIME_H

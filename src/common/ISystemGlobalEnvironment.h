@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef ISYSTEMGLOBALENVIRONMENT_H
-#define ISYSTEMGLOBALENVIRONMENT_H
+#pragma once
 
 struct IFramework;
 struct IGame;
@@ -28,5 +27,3 @@ struct SSystemGlobalEnvironment
 	IFramework * pFramework;
 	IGame * pGame;
 };
-
-#endif // ISYSTEMGLOBALENVIRONMENT_H

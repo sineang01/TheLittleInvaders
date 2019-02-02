@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef IGRAPHICTEXTFIELD_H
-#define IGRAPHICTEXTFIELD_H
-
+#pragma once
 #include "IGraphicItem.h"
 
 struct IGraphicTextfield : public virtual IGraphicItem
@@ -29,5 +27,3 @@ struct IGraphicTextfield : public virtual IGraphicItem
 
 	virtual ~IGraphicTextfield() {};
 };
-
-#endif // IGRAPHICTEXTFIELD_H

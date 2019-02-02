@@ -17,14 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef IPLATFORMMANAGER_H
-#define IPLATFORMMANAGER_H
-
+#pragma once
 struct IPlatform;
 
 struct IPlatformManager
 {
 	virtual IPlatform * platform() const = 0;
 };
-
-#endif // IPLATFORMMANAGER_H

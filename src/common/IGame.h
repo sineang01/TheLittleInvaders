@@ -17,8 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef IGAME_H
-#define IGAME_H
+#pragma once
 
 struct IFramework;
 struct SSystemGlobalEnvironment;
@@ -47,5 +46,3 @@ struct IGame
 
 	virtual ~IGame() {}
 };
-
-#endif // IGAME_H

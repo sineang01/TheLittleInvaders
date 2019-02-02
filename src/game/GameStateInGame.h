@@ -17,12 +17,10 @@
 **
 ****************************************************************************************/
 
-#ifndef GAMESTATEINGAME_H
-#define GAMESTATEINGAME_H
-
-#include <IGraphicItem.h>
+#pragma once
 #include "GameStateCommon.h"
 #include "GameTimer.h"
+#include <IGraphicItem.h>
 
 struct IVariablesManager;
 struct IGraphicContainer;
@@ -124,5 +122,3 @@ class CGameStateInGame : public CGameStateCommon, public IGameTimerListener
 		const int VAR_KILL_SCORE_VALUE;
 		const int VAR_KILL_SCORE_SPECIAL_VALUE;
 };
-
-#endif // GAMESTATEINGAME_H

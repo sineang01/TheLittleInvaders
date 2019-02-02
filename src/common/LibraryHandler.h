@@ -17,9 +17,7 @@
 **
 ****************************************************************************************/
 
-#ifndef LIBRARYHANDLER_H
-#define LIBRARYHANDLER_H
-
+#pragma once
 #include <string>
 
 class CLibraryHandler
@@ -41,5 +39,3 @@ class CLibraryHandler
 		std::string m_libraryName;
 		HMODULE m_libraryHandler;
 };
-
-#endif // LIBRARYMANAGER_H

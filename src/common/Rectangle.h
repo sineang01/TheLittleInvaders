@@ -17,11 +17,9 @@
 **
 ****************************************************************************************/
 
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
-
-#include "Size.h"
+#pragma once
 #include "Point.h"
+#include "Size.h"
 
 class CRectangle
 {
@@ -70,5 +68,3 @@ class CRectangle
 
 bool operator==(const CRectangle &, const CRectangle &);
 bool operator!=(const CRectangle &, const CRectangle &);
-
-#endif // RECTANGLE_H
