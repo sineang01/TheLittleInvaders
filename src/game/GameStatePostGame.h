@@ -23,7 +23,7 @@
 
 struct IGraphicContainer;
 
-class CGameStatePostGame : public CGameStateCommon
+class CGameStatePostGame final : public CGameStateCommon
 {
 	public:
 		CGameStatePostGame(bool success, int score);

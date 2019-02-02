@@ -24,7 +24,7 @@
 
 struct ISprite;
 
-class CGraphicBitmap : public IGraphicBitmap, public CGraphicItem
+class CGraphicBitmap final : public IGraphicBitmap, public CGraphicItem
 {
 	public:
 		CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent = nullptr);

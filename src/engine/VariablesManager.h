@@ -22,7 +22,7 @@
 #include <map>
 #include <vector>
 
-class CVariablesManager : public IVariablesManager
+class CVariablesManager final : public IVariablesManager
 {
 	public:
 		CVariablesManager();

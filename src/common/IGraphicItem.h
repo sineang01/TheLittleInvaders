@@ -54,4 +54,6 @@ struct IGraphicItem
 	virtual bool collidesWithRectangle(const CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const = 0;
 	virtual TGraphicItems collidingItems(const IGraphicItem * pItem, ECollisionMode mode = eCM_Intersect) const = 0;
 	virtual TGraphicItems collidingItems(const CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const = 0;
+
+	virtual ~IGraphicItem() {};
 };

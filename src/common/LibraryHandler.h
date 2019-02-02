@@ -25,15 +25,13 @@ class CLibraryHandler
 	public:
 		CLibraryHandler(const char * library);
 		virtual ~CLibraryHandler();
+		CLibraryHandler(const CLibraryHandler &) = delete;
+		CLibraryHandler &operator=(const CLibraryHandler &) = delete;
 
 		virtual bool init();
 
 		HMODULE libraryHandler() const;
 		const char * libraryName() const;
-
-	private: 
-		CLibraryHandler(const CLibraryHandler &) = delete;
-		CLibraryHandler &operator=(const CLibraryHandler &) = delete;
 
 	private:
 		std::string m_libraryName;

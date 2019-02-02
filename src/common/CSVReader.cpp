@@ -17,9 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-#include <sstream>
 #include "CSVReader.h"
+#include <cassert>
+#include <sstream>
 
 CCSVReader::CCSVReader(const char * filePath):
 	m_filePath(filePath)
@@ -33,31 +33,6 @@ bool CCSVReader::open()
 		return true;
 
 	return false;
-}
-
-void CCSVReader::close()
-{
-	m_file.close();
-}
-
-bool CCSVReader::isNull() const
-{
-	return !m_filePath.empty();
-}
-
-bool CCSVReader::isEmpty() const
-{
-	return !m_filePath.empty();
-}
-
-bool CCSVReader::isValid() const
-{
-	return !m_filePath.empty() && m_file.good();
-}
-
-const char * CCSVReader::file() const
-{
-	return m_filePath.c_str();
 }
 
 void CCSVReader::setFile(const char * filePath)

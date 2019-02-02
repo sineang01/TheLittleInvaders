@@ -21,7 +21,7 @@
 #include "Point.h"
 #include "Size.h"
 
-class CRectangle
+class CRectangle final
 {
 	public:
 		CRectangle() = default;

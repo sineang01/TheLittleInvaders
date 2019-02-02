@@ -22,7 +22,7 @@
 #include <IPlatformManager.h>
 #include <LibraryHandler.h>
 
-class CEasyPlatform : public IPlatformManager, public CLibraryHandler
+class CEasyPlatform final : public IPlatformManager, public CLibraryHandler
 {
 	public:
         CEasyPlatform();

@@ -34,7 +34,7 @@ class CBaseListenerHandler : protected T
 			return gFindAndErase(m_listeners, pListener);
 		}
 
-		CBaseListenerHandler() {}
+		CBaseListenerHandler() = default;
 		virtual ~CBaseListenerHandler() {}
 
 	protected:

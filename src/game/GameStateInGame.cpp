@@ -17,8 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "GameStateInGame.h"
 #include "stdafx.h"
+
+#include "GameStateInGame.h"
 #include <IGraphicBitmap.h>
 #include <IGraphicContainer.h>
 #include <IGraphicTextfield.h>

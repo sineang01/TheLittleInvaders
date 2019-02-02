@@ -27,7 +27,7 @@ struct IGraphicContainer;
 struct IGraphicBitmap;
 struct IGraphicTextfield;
 
-class CGameStateInGame : public CGameStateCommon, public IGameTimerListener
+class CGameStateInGame final : public CGameStateCommon, public IGameTimerListener
 {
 	public:
 		CGameStateInGame();

@@ -17,11 +17,12 @@
 **
 ****************************************************************************************/
 
+#include "stdafx.h"
+
 #include "Game.h"
 #include "GameStateInGame.h"
 #include "GameStatePostGame.h"
 #include "GameStatePreGame.h"
-#include "stdafx.h"
 
 const CPicture CGame::PICTURE_ALIEN_1 = CPicture("images\\enemy1.bmp", CRectangle(4, 5, 24, 22));
 const CPicture CGame::PICTURE_ALIEN_2 = CPicture("images\\enemy2.bmp", CRectangle(1, 5, 30, 22));

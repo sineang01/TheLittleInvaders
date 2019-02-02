@@ -25,19 +25,21 @@ struct IGameTimerListener
 	virtual void timeout() = 0;
 };
 
-class CGameTimer : public CBaseListenerHandler<IGameTimerListener>, public IFrameworkListener
+class CGameTimer final : public CBaseListenerHandler<IGameTimerListener>, public IFrameworkListener
 {
 	public:
 		CGameTimer(float interval = 0);
-		~CGameTimer();
+		~CGameTimer() { stop(); }
+		CGameTimer(const CGameTimer &) = delete;
+		CGameTimer &operator=(const CGameTimer &) = delete;
 
-		float interval() const;
-		void setInterval(float interval);
+		inline float interval() const noexcept { return m_interval; }
+		inline void setInterval(float interval) noexcept;
 
-		bool isActive() const;
+		inline bool isActive() const noexcept { return m_active; }
 
-		bool isElapsed() const;
-		float elapsed() const;
+		inline bool isElapsed() const noexcept { return m_elapsedTime >= m_interval; }
+		inline float elapsed() const noexcept { return m_elapsedTime; }
 
 		void start();
 		void stop();
@@ -53,14 +55,16 @@ class CGameTimer : public CBaseListenerHandler<IGameTimerListener>, public IFram
 		void onInput(CInputKey get_key, float deltaTime) {};
 		// ~IFrameworkListener
 
-		void reset();
+		inline void reset() noexcept { m_elapsedTime = 0.0f; }
 
 	private:
-		CGameTimer(const CGameTimer &);
-		CGameTimer &operator=(const CGameTimer &);
-
-	private:
-		float m_interval;
-		float m_elapsedTime;
-		bool m_active;
+		float m_interval{ 0.0f };
+		float m_elapsedTime{ 0.0f };
+		bool m_active{ false };
 };
+
+void CGameTimer::setInterval(float interval) noexcept
+{
+	m_interval = interval;
+	reset();
+}

@@ -21,7 +21,7 @@
 #include "GraphicItem.h"
 #include <IGraphicTextfield.h>
 
-class CGraphicTextfield : public IGraphicTextfield, public CGraphicItem
+class CGraphicTextfield final : public IGraphicTextfield, public CGraphicItem
 {
 	public:
 		CGraphicTextfield(CGraphicItem * pParent = nullptr);

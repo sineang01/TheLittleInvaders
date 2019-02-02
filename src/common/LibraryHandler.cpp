@@ -18,6 +18,7 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
+
 #include "LibraryHandler.h"
 
 CLibraryHandler::CLibraryHandler(const char * library):

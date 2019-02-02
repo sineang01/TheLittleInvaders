@@ -20,7 +20,7 @@
 #pragma once
 #include <algorithm>
 
-class CSize
+class CSize final
 {
     public:
 		CSize() = default;

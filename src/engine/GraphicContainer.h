@@ -23,7 +23,7 @@
 #include "GraphicTextfield.h"
 #include <IGraphicContainer.h>
 
-class CGraphicContainer : public IGraphicContainer, public CGraphicItem
+class CGraphicContainer final : public IGraphicContainer, public CGraphicItem
 {
 	public:
 		CGraphicContainer(CGraphicItem * pParent = nullptr);

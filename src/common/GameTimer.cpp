@@ -18,45 +18,13 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
+
 #include "GameTimer.h"
 
-CGameTimer::CGameTimer(float interval):
-	m_interval(interval),
-	m_elapsedTime(0.0f),
-	m_active(false)
+CGameTimer::CGameTimer(float interval)
+	:m_interval(interval)
 {
 	reset();
-}
-
-CGameTimer::~CGameTimer()
-{
-	stop();
-}
-
-float CGameTimer::interval() const
-{
-	return m_interval;
-}
-
-void CGameTimer::setInterval(float interval)
-{
-	m_interval = interval;
-	reset();
-}
-
-bool CGameTimer::isActive() const
-{
-	return m_active;
-}
-
-bool CGameTimer::isElapsed() const
-{
-	return m_elapsedTime >= m_interval;
-}
-
-float CGameTimer::elapsed() const
-{
-	return m_elapsedTime;
 }
 
 void CGameTimer::onUpdate(float deltaTime)
@@ -87,9 +55,4 @@ void CGameTimer::timeout()
 		(*it)->timeout();
 
 	reset();
-}
-
-void CGameTimer::reset()
-{
-	m_elapsedTime = 0.0f;
 }

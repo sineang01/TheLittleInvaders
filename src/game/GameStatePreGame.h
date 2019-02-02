@@ -23,7 +23,7 @@
 
 struct IGraphicContainer;
 
-class CGameStatePreGame : public CGameStateCommon
+class CGameStatePreGame final : public CGameStateCommon
 {
 	public:
 		CGameStatePreGame();

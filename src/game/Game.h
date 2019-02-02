@@ -25,7 +25,7 @@
 class CGraphicContainer;
 class CGameStateCommon;
 
-class CGame : public IGame, private IFrameworkListener
+class CGame final : public IGame, private IFrameworkListener
 {
 	public:
 		enum EGameEvent 

@@ -22,7 +22,7 @@
 #include <string>
 #include <vector>
 
-class CCSVReader
+class CCSVReader final
 {
 	public:
 		typedef std::string TCell;
@@ -31,25 +31,22 @@ class CCSVReader
 
 	public:
 		CCSVReader(const char * filePath);
-		~CCSVReader() {};
+		CCSVReader() = delete;
+		CCSVReader(const CCSVReader &) = delete;
+		CCSVReader &operator=(const CCSVReader &) = delete;
 
-        bool isNull() const;
-        bool isEmpty() const;
-		bool isValid() const;
+        inline bool isNull() const { return !m_filePath.empty(); }
+        inline bool isEmpty() const { return !m_filePath.empty(); }
+		inline bool isValid() const { return !m_filePath.empty() && m_file.good(); }
 
-		const char * file() const;
+		inline const char * file() const { return m_filePath.c_str(); }
 		void setFile(const char * filePath);
 
 		bool readAll(TContent & ret);
 
-	private: 
-		CCSVReader();
-		CCSVReader(const CCSVReader &);
-		CCSVReader &operator=(const CCSVReader &);
-
 	private:
 		bool open();
-		void close();
+		inline void close() { m_file.close(); }
 
 		TRow readNextLine();
 

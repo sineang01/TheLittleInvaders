@@ -21,7 +21,7 @@
 
 struct IPlatformManager;
 
-class CPlatformFactory
+class CPlatformFactory final
 {
 	public:
 		CPlatformFactory() {};

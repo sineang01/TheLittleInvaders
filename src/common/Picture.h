@@ -21,7 +21,7 @@
 #include "Rectangle.h"
 #include <string>
 
-class CPicture
+class CPicture final
 {
 	public:
 		CPicture() = default;

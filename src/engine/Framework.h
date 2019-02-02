@@ -27,25 +27,25 @@ class CGraphicContainer;
 struct ISprite;
 class CVariablesManager;
 
-class CFramework : public IFramework
+class CFramework final : public IFramework
 {
 public:
 	CFramework();
 	~CFramework();
 
-			/**
-				* @brief Retrieves the platform manager
-				*/
+	/**
+	* @brief Retrieves the platform manager
+	*/
 	IPlatformManager * platformManager();
 
 	/**
-		* @brief Retreives the current platform instancated
-		*/
+	* @brief Retreives the current platform instancated
+	*/
 	IPlatform * platform();
 
 	/**
-		* @brief Schedules a sprite to be destroyed
-		*/
+	* @brief Schedules a sprite to be destroyed
+	*/
 	void destroySprite(ISprite * pSprite);
 
 public:
