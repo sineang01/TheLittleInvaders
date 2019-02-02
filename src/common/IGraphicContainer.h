@@ -17,33 +17,25 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-#include "Game.h"
+#ifndef IGRAPHICCONTAINER_H
+#define IGRAPHICCONTAINER_H
 
-#include "ISystemGlobalEnvironment.h"
-SSystemGlobalEnvironment * gEnv = NULL;
+#include "IGraphicItem.h"
+#include "Picture.h"
 
-extern "C"
+struct IGraphicBitmap;
+struct IGraphicTextfield;
+
+struct IGraphicContainer : public virtual IGraphicItem
 {
-	__declspec(dllexport) IGame * CreateGame(SSystemGlobalEnvironment * env)
-	{
-		gEnv = env;
-		gEnv->pGame = new CGame();
-		return gEnv->pGame;
-	}
+	virtual IGraphicContainer * addContainer() = 0;
+	virtual IGraphicBitmap * addBitmap(const CPicture & picture) = 0;
+	virtual IGraphicTextfield * addTextfield(const char * text = NULL) = 0;
 
-	__declspec(dllexport) void DestroyGame()
-	{
-		if (gEnv->pGame)
-		{
-			CGame * pGame = static_cast<CGame*>(gEnv->pGame);
-			SAFE_DELETE(pGame);
-			gEnv->pGame = NULL;
-		}
-	}
+	virtual void removeItem(IGraphicItem * pItem) = 0;
+
+	virtual ~IGraphicContainer() {};
 };
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
-{
-    return TRUE;
-} 
+#endif // IGRAPHICCONTAINER_H
+

@@ -18,27 +18,27 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
-#include "Framework.h"
-
+#include "Game.h"
 #include "ISystemGlobalEnvironment.h"
+
 SSystemGlobalEnvironment * gEnv = NULL;
 
 extern "C"
 {
-	__declspec(dllexport) IFramework * CreateEngine(SSystemGlobalEnvironment * env)
+	__declspec(dllexport) IGame * CreateGame(SSystemGlobalEnvironment * env)
 	{
 		gEnv = env;
-		gEnv->pFramework = new CFramework();
-		return gEnv->pFramework;
+		gEnv->pGame = new CGame();
+		return gEnv->pGame;
 	}
 
-	__declspec(dllexport) void DestroyEngine()
+	__declspec(dllexport) void DestroyGame()
 	{
-		if (gEnv->pFramework)
+		if (gEnv->pGame)
 		{
-			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-			SAFE_DELETE(pFramework);
-			gEnv->pFramework = NULL;
+			CGame * pGame = static_cast<CGame*>(gEnv->pGame);
+			SAFE_DELETE(pGame);
+			gEnv->pGame = NULL;
 		}
 	}
 };

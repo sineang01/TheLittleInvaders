@@ -17,25 +17,33 @@
 **
 ****************************************************************************************/
 
-#ifndef IGRAPHICCONTAINER_H
-#define IGRAPHICCONTAINER_H
+#include "stdafx.h"
+#include "Framework.h"
+#include "ISystemGlobalEnvironment.h"
 
-#include "Picture.h"
-#include "IGraphicItem.h"
+SSystemGlobalEnvironment * gEnv = NULL;
 
-struct IGraphicBitmap;
-struct IGraphicTextfield;
-
-struct IGraphicContainer : public virtual IGraphicItem
+extern "C"
 {
-	virtual IGraphicContainer * addContainer() = 0;
-	virtual IGraphicBitmap * addBitmap(const CPicture & picture) = 0;
-	virtual IGraphicTextfield * addTextfield(const char * text = NULL) = 0;
+	__declspec(dllexport) IFramework * CreateEngine(SSystemGlobalEnvironment * env)
+	{
+		gEnv = env;
+		gEnv->pFramework = new CFramework();
+		return gEnv->pFramework;
+	}
 
-	virtual void removeItem(IGraphicItem * pItem) = 0;
-
-	virtual ~IGraphicContainer() {};
+	__declspec(dllexport) void DestroyEngine()
+	{
+		if (gEnv->pFramework)
+		{
+			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+			SAFE_DELETE(pFramework);
+			gEnv->pFramework = NULL;
+		}
+	}
 };
 
-#endif // IGRAPHICCONTAINER_H
-
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
+{
+    return TRUE;
+} 

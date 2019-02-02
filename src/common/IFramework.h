@@ -21,9 +21,9 @@
 #define IFRAMEWORK_H
 
 #include "BaseListenerHandler.h"
-#include "Size.h"
-#include "InputKey.h"
 #include "IVariablesManager.h"
+#include "InputKey.h"
+#include "Size.h"
 
 struct IGraphicContainer;
 struct SSystemGlobalEnvironment;

@@ -17,45 +17,51 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-#include "GraphicBitmap.h"
 #include "Framework.h"
+#include "GraphicTextfield.h"
+#include <stdafx.h>
 
-CGraphicBitmap::CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent):
-	CGraphicItem(pParent),
-	m_pSprite(NULL),
-	m_shape(picture.shape())
+CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent):
+	CGraphicItem(pParent)
 {
-	assert(picture.isValid());
+	setPosition(0, 0);
+}
 
+CGraphicTextfield::CGraphicTextfield(const char * text, CGraphicItem * pParent):
+	CGraphicItem(pParent)
+{
+	setText(text);
+	setPosition(0, 0);
+}
+
+const char * CGraphicTextfield::text()
+{
+	return m_text.c_str();
+}
+
+void CGraphicTextfield::setText(const char * format, ...)
+{
+	assert(format && format[0]);
+
+	va_list argList;
+	va_start(argList, format);
+
+	char temp[4096];
+	vsnprintf_s(temp, 4096, format, argList); 
+	temp[4095] = '\0';
+
+	va_end(argList);
+	m_text = temp;
+}
+
+void CGraphicTextfield::draw(int x, int y)
+{
 	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
 	assert(pFramework);
 
 	IPlatform * pPlatform = pFramework->platform();
 	assert(pPlatform);
 
-	m_pSprite = pPlatform->createSprite(picture.image());
-	assert(m_pSprite);
-
-	setPosition(0, 0);
-	setSize(picture.size());
-}
-
-CGraphicBitmap::~CGraphicBitmap()
-{
-    // All the sprites are deferred destroyed
-	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-	assert(pFramework);
-
-	pFramework->destroySprite(m_pSprite);
-}
-
-CRectangle CGraphicBitmap::shape() const
-{
-	return m_shape.translated(position());
-}
-
-void CGraphicBitmap::draw(int x, int y)
-{
-	m_pSprite->draw(x, y);
+	if (!m_text.empty())
+		pPlatform->drawText(x, y, m_text.c_str());
 }

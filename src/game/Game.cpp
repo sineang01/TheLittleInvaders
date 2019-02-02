@@ -17,17 +17,17 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "Game.h"
 #include "GameStateInGame.h"
-#include "GameStatePreGame.h"
 #include "GameStatePostGame.h"
+#include "GameStatePreGame.h"
+#include "stdafx.h"
 
-const CPicture CGame::PICTURE_ALIEN_1 = CPicture("data\\enemy1.bmp", CRectangle(4, 5, 24, 22));
-const CPicture CGame::PICTURE_ALIEN_2 = CPicture("data\\enemy2.bmp", CRectangle(1, 5, 30, 22));
-const CPicture CGame::PICTURE_PLAYER = CPicture("data\\player.bmp", CRectangle(2, 7, 28, 17));
-const CPicture CGame::PICTURE_ROCKET = CPicture("data\\rocket.bmp", CRectangle(14, 7, 4, 19));
-const CPicture CGame::PICTURE_BOMB = CPicture("data\\bomb.bmp", CRectangle(12, 8, 8, 16));
+const CPicture CGame::PICTURE_ALIEN_1 = CPicture("images\\enemy1.bmp", CRectangle(4, 5, 24, 22));
+const CPicture CGame::PICTURE_ALIEN_2 = CPicture("images\\enemy2.bmp", CRectangle(1, 5, 30, 22));
+const CPicture CGame::PICTURE_PLAYER = CPicture("images\\player.bmp", CRectangle(2, 7, 28, 17));
+const CPicture CGame::PICTURE_ROCKET = CPicture("images\\rocket.bmp", CRectangle(14, 7, 4, 19));
+const CPicture CGame::PICTURE_BOMB = CPicture("images\\bomb.bmp", CRectangle(12, 8, 8, 16));
 
 CGame::CGame():
 	m_pState(NULL),

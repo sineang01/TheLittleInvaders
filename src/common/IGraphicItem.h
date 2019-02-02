@@ -20,8 +20,8 @@
 #ifndef IGRAPHICITEM_H
 #define IGRAPHICITEM_H
 
-#include <vector>
 #include "Rectangle.h"
+#include <vector>
 
 struct IGraphicItem
 {

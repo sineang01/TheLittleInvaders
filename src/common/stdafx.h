@@ -28,14 +28,13 @@
 // Disable 'inheritance by dominance' warning
 #pragma warning( disable : 4250 )
 
-#include <windows.h>
+#include "ISystemGlobalEnvironment.h"
+#include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <windows.h>
 
-#include "ISystemGlobalEnvironment.h"
 extern SSystemGlobalEnvironment * gEnv;
-
-#include <algorithm>
 
 #ifndef SAFE_DELETE
 #define SAFE_DELETE(p)			{ if(p) { delete (p);   (p)=NULL; } }

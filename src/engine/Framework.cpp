@@ -18,13 +18,13 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
-#include <ctime>
 #include "Framework.h"
-#include "PlatformFactory.h"
 #include "GraphicContainer.h"
 #include "LibraryHandler.h"
+#include "PlatformFactory.h"
 #include "VariablesManager.h"
 #include <Path.h>
+#include <ctime>
 
 static const char * GAME_LIBRARY_NAME = "Game.dll";
 static const char * GAME_LIBRARY_ENTRY_POINT_CREATE = "CreateGame";

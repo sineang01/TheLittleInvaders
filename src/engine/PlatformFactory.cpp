@@ -18,50 +18,15 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
-#include "GraphicTextfield.h"
-#include "Framework.h"
+#include "EasyPlatform.h"
+#include "PlatformFactory.h"
 
-CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent):
-	CGraphicItem(pParent)
+IPlatformManager * CPlatformFactory::make(const char * platformName)
 {
-	setPosition(0, 0);
-}
+	assert(platformName && platformName[0]);
 
-CGraphicTextfield::CGraphicTextfield(const char * text, CGraphicItem * pParent):
-	CGraphicItem(pParent)
-{
-	setText(text);
-	setPosition(0, 0);
-}
+	if (strcmp(platformName, "win_platform") == 0)
+		return new CEasyPlatform();
 
-const char * CGraphicTextfield::text()
-{
-	return m_text.c_str();
-}
-
-void CGraphicTextfield::setText(const char * format, ...)
-{
-	assert(format && format[0]);
-
-	va_list argList;
-	va_start(argList, format);
-
-	char temp[4096];
-	vsnprintf_s(temp, 4096, format, argList); 
-	temp[4095] = '\0';
-
-	va_end(argList);
-	m_text = temp;
-}
-
-void CGraphicTextfield::draw(int x, int y)
-{
-	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-	assert(pFramework);
-
-	IPlatform * pPlatform = pFramework->platform();
-	assert(pPlatform);
-
-	if (!m_text.empty())
-		pPlatform->drawText(x, y, m_text.c_str());
+	return NULL;
 }

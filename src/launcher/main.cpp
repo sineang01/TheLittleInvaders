@@ -17,22 +17,18 @@
 **
 ****************************************************************************************/
 
+#include "ISystemGlobalEnvironment.h"
 #include "stdafx.h"
 #include <IFramework.h>
 #include <LibraryHandler.h>
 
-#include "ISystemGlobalEnvironment.h"
 SSystemGlobalEnvironment * gEnv = NULL;
 
 static const char * ENGINE_LIBRARY_NAME = "Engine.dll";
 static const char * ENGINE_LIBRARY_ENTRY_POINT_CREATE = "CreateEngine";
 static const char * ENGINE_LIBRARY_ENTRY_POINT_DESTROY = "DestroyEngine";
 
-int APIENTRY WinMain(
-	HINSTANCE instance,
-	HINSTANCE previousInstance,
-	LPSTR commandLine,
-	int commandShow)
+int main(int argc, char ** argv)
 {
 	CLibraryHandler engineDll(ENGINE_LIBRARY_NAME);
 	if (!engineDll.init())

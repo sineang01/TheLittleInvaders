@@ -18,16 +18,44 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
-#include "PlatformFactory.h"
+#include "Framework.h"
+#include "GraphicBitmap.h"
 
-#include "EasyPlatform.h"
-
-IPlatformManager * CPlatformFactory::make(const char * platformName)
+CGraphicBitmap::CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent):
+	CGraphicItem(pParent),
+	m_pSprite(NULL),
+	m_shape(picture.shape())
 {
-	assert(platformName && platformName[0]);
+	assert(picture.isValid());
 
-	if (strcmp(platformName, "win_platform") == 0)
-		return new CEasyPlatform();
+	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+	assert(pFramework);
 
-	return NULL;
+	IPlatform * pPlatform = pFramework->platform();
+	assert(pPlatform);
+
+	m_pSprite = pPlatform->createSprite(picture.image());
+	assert(m_pSprite);
+
+	setPosition(0, 0);
+	setSize(picture.size());
+}
+
+CGraphicBitmap::~CGraphicBitmap()
+{
+    // All the sprites are deferred destroyed
+	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+	assert(pFramework);
+
+	pFramework->destroySprite(m_pSprite);
+}
+
+CRectangle CGraphicBitmap::shape() const
+{
+	return m_shape.translated(position());
+}
+
+void CGraphicBitmap::draw(int x, int y)
+{
+	m_pSprite->draw(x, y);
 }
