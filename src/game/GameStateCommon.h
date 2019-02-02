@@ -36,7 +36,7 @@ class CGameStateCommon
         /**
          * @brief Propagates input events to the game state
          */
-		virtual void onInput(CInputKey key, float deltaTime) = 0;
+		virtual void onInput(CInputKey get_key, float deltaTime) = 0;
 
 	private:
 		CGameStateCommon(const CGameStateCommon &);

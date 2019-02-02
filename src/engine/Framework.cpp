@@ -18,6 +18,7 @@
 ****************************************************************************************/
 
 #include "stdafx.h"
+
 #include "Framework.h"
 #include "GraphicContainer.h"
 #include "LibraryHandler.h"
@@ -35,9 +36,9 @@ CFramework::CFramework():
 	m_pWindow(nullptr),
 	m_pVariablesManager(nullptr),
 	m_time(0.0f),
-	m_keyFire(CInputKey::eK_Fire),
-	m_keyLeft(CInputKey::eK_Left),
-	m_keyRight(CInputKey::eK_Right)
+	m_keyFire(CInputKey::key::fire),
+	m_keyLeft(CInputKey::key::left),
+	m_keyRight(CInputKey::key::right)
 {
 	makeApplicationPath();
 }
@@ -142,16 +143,16 @@ int CFramework::exec()
 
 		onUpdate(delta);
 		
-		IPlatform::KeyStatus keys;
+		IPlatform::key_status keys;
 		pPlatform->getKeyStatus(keys);
 
-		m_keyFire.setStatus( keys.fire ? (m_keyFire.status() == CInputKey::eKS_Inactive ? CInputKey::eKS_Press : CInputKey::eKS_OnHold) : CInputKey::eKS_Inactive );
+		m_keyFire.set_status( keys.fire ? (m_keyFire.get_status() == CInputKey::key_status::inactive ? CInputKey::key_status::press : CInputKey::key_status::on_hold) : CInputKey::key_status::inactive );
 		onInput(m_keyFire, delta);
 
-		m_keyLeft.setStatus( keys.left ? (m_keyLeft.status() == CInputKey::eKS_Inactive ? CInputKey::eKS_Press : CInputKey::eKS_OnHold) : CInputKey::eKS_Inactive );
+		m_keyLeft.set_status( keys.left ? (m_keyLeft.get_status() == CInputKey::key_status::inactive ? CInputKey::key_status::press : CInputKey::key_status::on_hold) : CInputKey::key_status::inactive );
 		onInput(m_keyLeft, delta);
 
-		m_keyRight.setStatus( keys.right ? (m_keyRight.status() == CInputKey::eKS_Inactive ? CInputKey::eKS_Press : CInputKey::eKS_OnHold) : CInputKey::eKS_Inactive );
+		m_keyRight.set_status( keys.right ? (m_keyRight.get_status() == CInputKey::key_status::inactive ? CInputKey::key_status::press : CInputKey::key_status::on_hold) : CInputKey::key_status::inactive );
 		onInput(m_keyRight, delta);
 
 		if (!pGame->refresh())
@@ -239,10 +240,10 @@ void CFramework::onUpdate(float deltaTime)
 		(*it)->onUpdate(deltaTime);
 }
 
-void CFramework::onInput(CInputKey key, float deltaTime)
+void CFramework::onInput(CInputKey get_key, float deltaTime)
 {
 	for(TListeners::iterator it = m_listeners.begin(), itEnd = m_listeners.end(); it != itEnd; ++it)
-		(*it)->onInput(key, deltaTime);
+		(*it)->onInput(get_key, deltaTime);
 }
 
 bool CFramework::initVariables()

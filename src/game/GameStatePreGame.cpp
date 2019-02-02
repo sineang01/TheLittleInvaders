@@ -17,11 +17,11 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-#include <IGraphicTextfield.h>
-#include <IGraphicContainer.h>
-#include <IGraphicBitmap.h>
 #include "GameStatePreGame.h"
+#include "stdafx.h"
+#include <IGraphicBitmap.h>
+#include <IGraphicContainer.h>
+#include <IGraphicTextfield.h>
 
 CGameStatePreGame::CGameStatePreGame()
 {
@@ -50,8 +50,8 @@ CGameStatePreGame::~CGameStatePreGame()
 	gEnv->pFramework->window()->removeItem(m_pContainer);
 }
 
-void CGameStatePreGame::onInput(CInputKey key, float deltaTime)
+void CGameStatePreGame::onInput(CInputKey get_key, float deltaTime)
 {
-	if (key.status() == CInputKey::eKS_Press && key.key() == CInputKey::eK_Fire)
+	if (get_key.get_status() == CInputKey::key_status::press && get_key.get_key() == CInputKey::key::fire)
 		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Exit));
 }

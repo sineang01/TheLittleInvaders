@@ -24,6 +24,6 @@ struct IGame;
 
 struct SSystemGlobalEnvironment
 {
-	IFramework * pFramework;
-	IGame * pGame;
+	IFramework * pFramework{ nullptr };
+	IGame * pGame{ nullptr };
 };

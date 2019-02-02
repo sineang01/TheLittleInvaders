@@ -72,15 +72,15 @@ struct IPlatform
 	 */
 	virtual float getElapsedTime() = 0;
 
-	struct KeyStatus
+	struct key_status
 	{
-		bool fire;	/* space */
-		bool left;	/* left arrow */
-		bool right;	/* right arrow */
+		bool fire{ false };	/* space */
+		bool left{ false };	/* left arrow */
+		bool right{ false };	/* right arrow */
 	};
 
 	/**
 	 * @brief Returns the keyboard status. If a flag is set, the corresponding key is being held down.
 	 */
-	virtual void getKeyStatus(KeyStatus& keys) = 0;
+	virtual void getKeyStatus(key_status& keys) = 0;
 };

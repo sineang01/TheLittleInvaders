@@ -29,7 +29,7 @@ struct SSystemGlobalEnvironment;
 struct IFrameworkListener
 {
 	virtual void onUpdate(float deltaTime) = 0;
-	virtual void onInput(CInputKey key, float deltaTime) = 0;
+	virtual void onInput(CInputKey get_key, float deltaTime) = 0;
 };
 
 struct IFramework : public CBaseListenerHandler<IFrameworkListener>

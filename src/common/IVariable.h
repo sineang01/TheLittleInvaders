@@ -22,7 +22,8 @@
 
 struct IVariable
 {
-	template<typename T> T setValue(T value, bool * ok = nullptr) const
+	template<typename T> 
+	T setValue(T value, bool * ok = nullptr) const
 	{
 		if (ok) *ok = false;
 
@@ -33,7 +34,8 @@ struct IVariable
 		pCVar->setValueInternal(value);
 	}
 
-	template<typename T> T value(bool * ok = nullptr) const
+	template<typename T> 
+	T value(bool * ok = nullptr) const
 	{
 		if (ok) *ok = false;
 
@@ -51,13 +53,12 @@ template <class T>
 class CVariable : public IVariable
 {
 	public:
-		CVariable() {}
+		CVariable() = default;
 		CVariable(const char * value) {};
 		CVariable(T value):m_value(value) {}
-		~CVariable() {};
 
-		void setValueInternal(T value) { m_value = value; }
-		T valueInternal() const { return m_value; }
+		inline void setValueInternal(T value) { m_value = value; }
+		inline T valueInternal() const { return m_value; }
 
 	private:
 		T m_value;

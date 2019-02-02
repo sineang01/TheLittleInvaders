@@ -17,11 +17,11 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-#include <IGraphicTextfield.h>
-#include <IGraphicContainer.h>
-#include <IGraphicBitmap.h>
 #include "GameStateInGame.h"
+#include "stdafx.h"
+#include <IGraphicBitmap.h>
+#include <IGraphicContainer.h>
+#include <IGraphicTextfield.h>
 
 static const int DIFFICULY_MULT = 5;
 
@@ -113,19 +113,19 @@ void CGameStateInGame::timeout()
 	checkVictoryConditions();
 }
 
-void CGameStateInGame::onInput(CInputKey key, float deltaTime)
+void CGameStateInGame::onInput(CInputKey get_key, float deltaTime)
 {
 	assert(m_pPlayer);
 	assert(m_pGameArea);
 
-	if (key.status() == CInputKey::eKS_Inactive)
+	if (get_key.get_status() == CInputKey::key_status::inactive)
 		return;
 
-	switch (key.key())
+	switch (get_key.get_key())
 	{
-		case CInputKey::eK_Fire:
+		case CInputKey::key::fire:
 		{
-			if (key.status() == CInputKey::eKS_Press)
+			if (get_key.get_status() == CInputKey::key_status::press)
 			{
 				assert(m_pGameArea);
 				IGraphicBitmap * pRocket = m_pGameArea->addBitmap(CGame::PICTURE_ROCKET);
@@ -137,7 +137,7 @@ void CGameStateInGame::onInput(CInputKey key, float deltaTime)
 		}
 		break;
 
-		case CInputKey::eK_Left:
+		case CInputKey::key::left:
 		{
 			CPoint pos = m_pPlayer->position();
             pos.rx() -= (deltaTime * VAR_PLAYER_SPEED_VALUE);
@@ -146,7 +146,7 @@ void CGameStateInGame::onInput(CInputKey key, float deltaTime)
 		}
 		break;
 
-		case CInputKey::eK_Right:
+		case CInputKey::key::right:
 		{
 			CPoint pos = m_pPlayer->position();
             pos.rx() += (deltaTime * VAR_PLAYER_SPEED_VALUE);

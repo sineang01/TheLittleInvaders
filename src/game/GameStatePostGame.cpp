@@ -17,10 +17,10 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
-#include <IGraphicTextfield.h>
-#include <IGraphicContainer.h>
 #include "GameStatePostGame.h"
+#include "stdafx.h"
+#include <IGraphicContainer.h>
+#include <IGraphicTextfield.h>
 
 CGameStatePostGame::CGameStatePostGame(bool success, int score)
 {
@@ -52,8 +52,8 @@ CGameStatePostGame::~CGameStatePostGame()
 	gEnv->pFramework->window()->removeItem(m_pContainer);
 }
 
-void CGameStatePostGame::onInput(CInputKey key, float deltaTime)
+void CGameStatePostGame::onInput(CInputKey get_key, float deltaTime)
 {
-	if (key.status() == CInputKey::eKS_Press && key.key() == CInputKey::eK_Fire)
+	if (get_key.get_status() == CInputKey::key_status::press && get_key.get_key() == CInputKey::key::fire)
 		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Exit));
 }

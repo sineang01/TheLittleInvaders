@@ -144,10 +144,10 @@ inline bool gFind( Container& container,const Value &value )
  * @brief Find element in map.
  * @return true if item found
  */
-template <class Container,class Key>
-inline bool gMemberFind( Container& container,const Key &key )
+template <class Container,class key>
+inline bool gMemberFind( Container& container,const key &get_key )
 {
-	return container.find(key) != container.end();
+	return container.find(get_key) != container.end();
 }
 
 /**

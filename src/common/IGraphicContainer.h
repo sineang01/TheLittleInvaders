@@ -32,5 +32,5 @@ struct IGraphicContainer : public virtual IGraphicItem
 
 	virtual void removeItem(IGraphicItem * pItem) = 0;
 
-	virtual ~IGraphicContainer() {};
+	virtual ~IGraphicContainer() override {};
 };

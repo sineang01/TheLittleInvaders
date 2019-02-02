@@ -25,33 +25,31 @@
 class CInputKey
 {
 	public:
-		enum EKey
+		enum class key
 		{
-			eK_Fire = 0,
-			eK_Left,
-			eK_Right,
+			fire = 0,
+			left,
+			right,
 		};
 
-		enum EKeyStatus
+		enum class key_status
 		{
-			eKS_Inactive = 0,
-			eKS_Press,
-			eKS_OnHold
+			inactive = 0,
+			press,
+			on_hold
 		};
 
-		EKey key() const { return m_key; }
-
-		EKeyStatus status() const { return m_status; }
-		void setStatus(EKeyStatus s) { m_status = s; }
+		inline key get_key() const noexcept { return m_key; }
+		 
+		inline key_status get_status() const noexcept { return m_status; }
+		inline void set_status(key_status s) noexcept { m_status = s; }
 
 	public:
-		CInputKey(EKey _key):m_key(_key),m_status(eKS_Inactive) {}
-		CInputKey(EKey _key, EKeyStatus _status):m_key(_key),m_status(_status) {}
+		CInputKey() = delete;
+		CInputKey(key _key):m_key(_key) {}
+		CInputKey(key _key, key_status _status):m_key(_key),m_status(_status) {}
 
 	private:
-		CInputKey() {}
-
-	private:
-		EKey m_key;
-		EKeyStatus m_status;
+		key m_key;
+		key_status m_status{ key_status::inactive };
 };

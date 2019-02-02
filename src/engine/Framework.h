@@ -62,7 +62,7 @@ public:
 protected:
 	// IFrameworkListener
 	void onUpdate(float deltaTime);
-	void onInput(CInputKey key, float deltaTime);
+	void onInput(CInputKey get_key, float deltaTime);
 	// ~IFrameworkListener
 
 private:

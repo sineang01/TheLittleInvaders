@@ -32,8 +32,8 @@ class CLibraryHandler
 		const char * libraryName() const;
 
 	private: 
-		CLibraryHandler(const CLibraryHandler &);
-		CLibraryHandler &operator=(const CLibraryHandler &);
+		CLibraryHandler(const CLibraryHandler &) = delete;
+		CLibraryHandler &operator=(const CLibraryHandler &) = delete;
 
 	private:
 		std::string m_libraryName;

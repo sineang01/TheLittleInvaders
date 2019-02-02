@@ -128,10 +128,10 @@ void CGame::onUpdate(float deltaTime)
 		m_pState->onUpdate(deltaTime);
 }
 
-void CGame::onInput(CInputKey key, float deltaTime)
+void CGame::onInput(CInputKey get_key, float deltaTime)
 {
 	if (m_pState)
-		m_pState->onInput(key, deltaTime);
+		m_pState->onInput(get_key, deltaTime);
 }
 
 int CGame::lifes() const

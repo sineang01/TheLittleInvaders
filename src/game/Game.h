@@ -67,7 +67,7 @@ class CGame : public IGame, private IFrameworkListener
 	private:
 		// IFrameworkListener
 		void onUpdate(float deltaTime);
-		void onInput(CInputKey key, float deltaTime);
+		void onInput(CInputKey get_key, float deltaTime);
 		// ~IFrameworkListener
 
 		bool setGameState(EGameState state);

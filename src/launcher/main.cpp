@@ -17,8 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "ISystemGlobalEnvironment.h"
 #include "stdafx.h"
+
+#include "ISystemGlobalEnvironment.h"
 #include <IFramework.h>
 #include <LibraryHandler.h>
 
