@@ -31,6 +31,4 @@ struct IGraphicContainer : public virtual IGraphicItem
 	virtual IGraphicTextfield * addTextfield(const char * text = nullptr) = 0;
 
 	virtual void removeItem(IGraphicItem * pItem) = 0;
-
-	virtual ~IGraphicContainer() override {};
 };

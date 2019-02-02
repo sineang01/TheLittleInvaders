@@ -43,6 +43,4 @@ struct IGame
 	virtual bool refresh() = 0;
 
 	virtual void onEvent(SGameEvent e) = 0;
-
-	virtual ~IGame() {}
 };

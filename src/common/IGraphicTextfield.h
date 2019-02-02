@@ -24,6 +24,4 @@ struct IGraphicTextfield : public virtual IGraphicItem
 {
 	virtual const char * text() = 0;
 	virtual void setText(const char * format, ...) = 0;
-
-	virtual ~IGraphicTextfield() override {};
 };

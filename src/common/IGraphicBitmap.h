@@ -22,5 +22,4 @@
 
 struct IGraphicBitmap : public virtual IGraphicItem
 {
-	virtual ~IGraphicBitmap() override {};
 };
