@@ -21,7 +21,7 @@
 #include "Game.h"
 #include "ISystemGlobalEnvironment.h"
 
-SSystemGlobalEnvironment * gEnv = NULL;
+SSystemGlobalEnvironment * gEnv = nullptr;
 
 extern "C"
 {
@@ -38,7 +38,7 @@ extern "C"
 		{
 			CGame * pGame = static_cast<CGame*>(gEnv->pGame);
 			SAFE_DELETE(pGame);
-			gEnv->pGame = NULL;
+			gEnv->pGame = nullptr;
 		}
 	}
 };

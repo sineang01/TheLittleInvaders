@@ -28,5 +28,5 @@ IPlatformManager * CPlatformFactory::make(const char * platformName)
 	if (strcmp(platformName, "win_platform") == 0)
 		return new CEasyPlatform();
 
-	return NULL;
+	return nullptr;
 }

@@ -28,14 +28,14 @@
 class CGraphicContainer : public IGraphicContainer, public CGraphicItem
 {
 	public:
-		CGraphicContainer(CGraphicItem * pParent = NULL);
+		CGraphicContainer(CGraphicItem * pParent = nullptr);
 		virtual ~CGraphicContainer() {};
 
 		void paint();
 
 		IGraphicContainer * addContainer();
 		IGraphicBitmap * addBitmap(const CPicture & picture);
-		IGraphicTextfield * addTextfield(const char * text = NULL);
+		IGraphicTextfield * addTextfield(const char * text = nullptr);
 
 		void removeItem(IGraphicItem * pItem);
 

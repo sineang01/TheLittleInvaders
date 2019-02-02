@@ -29,7 +29,7 @@ struct ISprite;
 class CGraphicBitmap : public IGraphicBitmap, public CGraphicItem
 {
 	public:
-		CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent = NULL);
+		CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent = nullptr);
 		virtual ~CGraphicBitmap();
 
 		CRectangle shape() const;

@@ -21,7 +21,7 @@
 #include "GraphicItem.h"
 
 CGraphicItem::CGraphicItem(CGraphicItem * pParent):
-	m_pParent(NULL)
+	m_pParent(nullptr)
 {
 	setParent(pParent);
 }
@@ -219,7 +219,7 @@ CPoint CGraphicItem::drawOffset(const IGraphicItem * pItem)
 {
 	CPoint position;
 
-	while(pItem != NULL)
+	while(pItem != nullptr)
 	{
 		IGraphicItem * pParent = pItem->parent();
 		if (pParent)

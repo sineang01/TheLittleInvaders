@@ -24,7 +24,7 @@
 
 struct IVariable
 {
-	template<typename T> T setValue(T value, bool * ok = NULL) const
+	template<typename T> T setValue(T value, bool * ok = nullptr) const
 	{
 		if (ok) *ok = false;
 
@@ -35,7 +35,7 @@ struct IVariable
 		pCVar->setValueInternal(value);
 	}
 
-	template<typename T> T value(bool * ok = NULL) const
+	template<typename T> T value(bool * ok = nullptr) const
 	{
 		if (ok) *ok = false;
 
@@ -72,7 +72,7 @@ CVariable<bool>::CVariable(const char * value)
 
 CVariable<unsigned int>::CVariable(const char * value)
 {
-	m_value = (unsigned int)std::strtoul(value, NULL, 0);
+	m_value = (unsigned int)std::strtoul(value, nullptr, 0);
 }
 
 CVariable<int>::CVariable(const char * value)

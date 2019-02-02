@@ -23,7 +23,7 @@
 
 CGraphicBitmap::CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent):
 	CGraphicItem(pParent),
-	m_pSprite(NULL),
+	m_pSprite(nullptr),
 	m_shape(picture.shape())
 {
 	assert(picture.isValid());

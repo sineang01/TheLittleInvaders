@@ -30,7 +30,7 @@ struct IGraphicContainer : public virtual IGraphicItem
 {
 	virtual IGraphicContainer * addContainer() = 0;
 	virtual IGraphicBitmap * addBitmap(const CPicture & picture) = 0;
-	virtual IGraphicTextfield * addTextfield(const char * text = NULL) = 0;
+	virtual IGraphicTextfield * addTextfield(const char * text = nullptr) = 0;
 
 	virtual void removeItem(IGraphicItem * pItem) = 0;
 

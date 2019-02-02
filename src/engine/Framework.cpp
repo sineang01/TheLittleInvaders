@@ -31,9 +31,9 @@ static const char * GAME_LIBRARY_ENTRY_POINT_CREATE = "CreateGame";
 static const char * GAME_LIBRARY_ENTRY_POINT_DESTROY = "DestroyGame";
 
 CFramework::CFramework():
-	m_pPlatformManager(NULL),
-	m_pWindow(NULL),
-	m_pVariablesManager(NULL),
+	m_pPlatformManager(nullptr),
+	m_pWindow(nullptr),
+	m_pVariablesManager(nullptr),
 	m_time(0.0f),
 	m_keyFire(CInputKey::eK_Fire),
 	m_keyLeft(CInputKey::eK_Left),
@@ -52,7 +52,7 @@ CFramework::~CFramework()
 void CFramework::makeApplicationPath()
 {
     char buffer[MAX_PATH];
-    GetModuleFileName(NULL, buffer, MAX_PATH);
+    GetModuleFileName(nullptr, buffer, MAX_PATH);
 
 	std::string bufferString(buffer);
     std::string::size_type pos = bufferString.find_last_of( "\\/" );
@@ -61,7 +61,7 @@ void CFramework::makeApplicationPath()
 
 bool CFramework::init()
 {
-	srand((unsigned int)time(NULL));
+	srand((unsigned int)time(nullptr));
 
 	if (!initVariables())
 		return false;
@@ -186,7 +186,7 @@ IPlatformManager * CFramework::platformManager()
 IPlatform * CFramework::platform()
 {
 	if (!m_pPlatformManager)
-		return NULL;
+		return nullptr;
 
 	return m_pPlatformManager->platform();
 }

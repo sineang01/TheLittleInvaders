@@ -33,7 +33,7 @@ class CGraphicItem : public virtual IGraphicItem
 		/**
 		 * @brief Constructs a CGraphicItem with the given pParent item
 		 */
-		CGraphicItem(CGraphicItem * pParent = NULL);
+		CGraphicItem(CGraphicItem * pParent = nullptr);
 
 		/**
 		 * @brief Destroys the CGraphicItem and all its children

@@ -37,11 +37,11 @@
 extern SSystemGlobalEnvironment * gEnv;
 
 #ifndef SAFE_DELETE
-#define SAFE_DELETE(p)			{ if(p) { delete (p);   (p)=NULL; } }
+#define SAFE_DELETE(p)			{ if(p) { delete (p);   (p)=nullptr; } }
 #endif
 
 #ifndef SAFE_DELETE_ARRAY
-#define SAFE_DELETE_ARRAY(p)	{ if(p) { delete[] (p); (p)=NULL; } }
+#define SAFE_DELETE_ARRAY(p)	{ if(p) { delete[] (p); (p)=nullptr; } }
 #endif
 
 #define G_INT64_C(c) static_cast<long long>(c ## LL)			/* signed 64 bit constant */

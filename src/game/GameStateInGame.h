@@ -94,7 +94,7 @@ class CGameStateInGame : public CGameStateCommon, public IGameTimerListener
 
 		IGraphicBitmap * m_pPlayer;
 
-        IGraphicItem::TGraphicItems m_aliens; /* The vector behaves like a bydimentional array. Aliens deleted are set to NULL, but not removed from array */
+        IGraphicItem::TGraphicItems m_aliens; /* The vector behaves like a bydimentional array. Aliens deleted are set to nullptr, but not removed from array */
 		bool m_aliensMoveLeft;
 		bool m_aliensMoveDown;
 

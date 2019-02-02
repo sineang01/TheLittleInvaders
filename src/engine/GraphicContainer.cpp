@@ -45,7 +45,7 @@ void CGraphicContainer::removeItem(IGraphicItem * pItem)
 {
 	assert(pItem);
 	CGraphicItem * pFullItem = dynamic_cast<CGraphicItem *>(pItem);
-	pItem->setParent(NULL);
+	pItem->setParent(nullptr);
 }
 
 void CGraphicContainer::paint()

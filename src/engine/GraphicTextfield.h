@@ -26,8 +26,8 @@
 class CGraphicTextfield : public IGraphicTextfield, public CGraphicItem
 {
 	public:
-		CGraphicTextfield(CGraphicItem * pParent = NULL);
-		CGraphicTextfield(const char * text, CGraphicItem * pParent = NULL);
+		CGraphicTextfield(CGraphicItem * pParent = nullptr);
+		CGraphicTextfield(const char * text, CGraphicItem * pParent = nullptr);
 		virtual ~CGraphicTextfield() {};
 
 		const char * text();

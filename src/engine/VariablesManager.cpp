@@ -79,7 +79,7 @@ bool CVariablesManager::loadConfig(const char * filePath)
 		if (gMemberFind(m_variables, name))
 		{
 			std::cerr << "[ERROR] Variable " << name_s << " at line " << line << " already exists" << std::endl;
-			return NULL;
+			return nullptr;
 		}
 
 		std::string type = csvRow[1];
@@ -132,7 +132,7 @@ IVariable * CVariablesManager::variable(const char * name) const
 	TVariables::const_iterator it_end = m_variables.end();
 	TVariables::const_iterator it = m_variables.find(nameStr);
 	if (it == it_end)
-		return NULL;
+		return nullptr;
 
 	return it->second;
 }

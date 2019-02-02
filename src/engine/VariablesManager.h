@@ -53,7 +53,7 @@ class CVariablesManager : public IVariablesManager
 			std::string nameStr = getLower(name);
 
 			if (gMemberFind(m_variables, nameStr))
-				return NULL;
+				return nullptr;
 
 			IVariable * pVariable = new CVariable<T>(defaultValue);
 			m_variables.insert(TVariableMapPair(nameStr, pVariable));

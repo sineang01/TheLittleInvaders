@@ -30,7 +30,7 @@ const CPicture CGame::PICTURE_ROCKET = CPicture("images\\rocket.bmp", CRectangle
 const CPicture CGame::PICTURE_BOMB = CPicture("images\\bomb.bmp", CRectangle(12, 8, 8, 16));
 
 CGame::CGame():
-	m_pState(NULL),
+	m_pState(nullptr),
 	m_gameState(eGS_Invalid),
 	m_deferredState(eGS_Invalid)
 {

@@ -26,13 +26,13 @@
 static const int DIFFICULY_MULT = 5;
 
 CGameStateInGame::CGameStateInGame():
-	m_pGameArea(NULL),
-	m_pPlayer(NULL),
+	m_pGameArea(nullptr),
+	m_pPlayer(nullptr),
 	m_aliensMoveLeft(false),
 	m_aliensMoveDown(false),
-	m_pSuperAlien(NULL),
-	m_pScoreTextField(NULL),
-	m_pHealthTextField(NULL),
+	m_pSuperAlien(nullptr),
+	m_pScoreTextField(nullptr),
+	m_pHealthTextField(nullptr),
     m_difficulty(1),
 	m_timer(1/60.0f),	//60 fps
 	m_pVariables(gEnv->pFramework->variablesManager()),
@@ -210,7 +210,7 @@ void CGameStateInGame::checkCollisionsWithPlayer()
 		if (isAlien(pItem))
 		{
             // Aliens vector simulates a bydimentional array of type aliens[ROWS][COLUMNS] so the size is kept unchanged to retrieves aliens position at wish
-			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)NULL);
+			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
 			SAFE_DELETE(pItem);
 		}
 		else
@@ -242,10 +242,10 @@ void CGameStateInGame::checkCollisionsWithRockets()
 
 		if (isAlien(pItem))
 		{
-			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)NULL);
+			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
 			SAFE_DELETE(pItem);
 
-			(*itRocket) = NULL;
+			(*itRocket) = nullptr;
 			SAFE_DELETE(pRocket);
 
 			gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_VALUE));
@@ -255,14 +255,14 @@ void CGameStateInGame::checkCollisionsWithRockets()
 		{
 			SAFE_DELETE(m_pSuperAlien);
 
-			(*itRocket) = NULL;
+			(*itRocket) = nullptr;
 			SAFE_DELETE(pRocket);
 
 			gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_SPECIAL_VALUE));
 		}
 	}
 
-	gFindAndEraseAll(m_rockets, (IGraphicItem *)NULL);
+	gFindAndEraseAll(m_rockets, (IGraphicItem *)nullptr);
 }
 
 void CGameStateInGame::checkVictoryConditions()
@@ -467,7 +467,7 @@ IGraphicItem::TGraphicItems CGameStateInGame::freeAliens() const
     // From "bottom" to "top" retrieves the aliens able to shoot
 	for (int column = 0; column < VAR_ALIEN_COLUMNS_VALUE; ++column)
 	{
-		IGraphicItem * pAlien = NULL;
+		IGraphicItem * pAlien = nullptr;
 
 		for (int row = VAR_ALIEN_ROWS_VALUE - 1; row >= 0; --row)
 		{

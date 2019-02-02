@@ -25,7 +25,7 @@ static const char * PLATFORM_LIBRARY_ENTRY_POINT = "EasyPlatformFactory";
 
 CEasyPlatform::CEasyPlatform():
 	CLibraryHandler(PLATFORM_LIBRARY_NAME),
-	m_interface(NULL)
+	m_interface(nullptr)
 {
 	assert(init());
 }

@@ -22,7 +22,7 @@
 #include <IFramework.h>
 #include <LibraryHandler.h>
 
-SSystemGlobalEnvironment * gEnv = NULL;
+SSystemGlobalEnvironment * gEnv = nullptr;
 
 static const char * ENGINE_LIBRARY_NAME = "Engine.dll";
 static const char * ENGINE_LIBRARY_ENTRY_POINT_CREATE = "CreateEngine";

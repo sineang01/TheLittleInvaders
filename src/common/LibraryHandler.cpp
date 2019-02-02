@@ -21,7 +21,7 @@
 #include "LibraryHandler.h"
 
 CLibraryHandler::CLibraryHandler(const char * library):
-	m_libraryHandler(NULL)
+	m_libraryHandler(nullptr)
 {
 	assert(library && library[0]);
 	m_libraryName = library;

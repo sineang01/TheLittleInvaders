@@ -21,7 +21,7 @@
 #include "Framework.h"
 #include "ISystemGlobalEnvironment.h"
 
-SSystemGlobalEnvironment * gEnv = NULL;
+SSystemGlobalEnvironment * gEnv = nullptr;
 
 extern "C"
 {
@@ -38,7 +38,7 @@ extern "C"
 		{
 			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
 			SAFE_DELETE(pFramework);
-			gEnv->pFramework = NULL;
+			gEnv->pFramework = nullptr;
 		}
 	}
 };
