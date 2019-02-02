@@ -19,33 +19,19 @@
 
 #pragma once
 
-// Exclude rarely-used stuff from Windows headers
-#define WIN32_LEAN_AND_MEAN
-
-// Exclude annoying mix-max defines provided from Windows
-#define NOMINMAX 
-
 // Disable 'inheritance by dominance' warning
 #pragma warning( disable : 4250 )
 
-#include "ISystemGlobalEnvironment.h"
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX 
 #include <windows.h>
 
+#include "ISystemGlobalEnvironment.h"
 extern SSystemGlobalEnvironment * gEnv;
-
-#ifndef SAFE_DELETE
-#define SAFE_DELETE(p)			{ if(p) { delete (p);   (p)=nullptr; } }
-#endif
-
-#ifndef SAFE_DELETE_ARRAY
-#define SAFE_DELETE_ARRAY(p)	{ if(p) { delete[] (p); (p)=nullptr; } }
-#endif
-
-#define G_INT64_C(c) static_cast<long long>(c ## LL)			/* signed 64 bit constant */
-#define G_UINT64_C(c) static_cast<unsigned long long>(c ## ULL) /* unsigned 64 bit constant */
 
 /**
  * @brief Rounds value to the nearest integer (7.5 => 8, -7.5 => 7)
@@ -100,7 +86,7 @@ static inline bool gIsNull(double d)
 
     U val;
     val.d = d;
-    return (val.u & G_UINT64_C(0x7fffffffffffffff)) == 0;
+    return (val.u & 0x7fffffffffffffffULL) == 0;
 }
 
 static inline bool gIsNull(float f)

@@ -17,8 +17,8 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "GraphicItem.h"
+#include "stdafx.h"
 
 CGraphicItem::CGraphicItem(CGraphicItem * pParent):
 	m_pParent(nullptr)
@@ -37,7 +37,7 @@ CGraphicItem::~CGraphicItem()
 
 	for (TGraphicItems::iterator it = children.begin(); it != children.end(); ++it)
 	{
-		SAFE_DELETE(*it);
+		delete *it;
 	}
 
 	m_children.clear();

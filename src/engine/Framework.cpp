@@ -46,8 +46,8 @@ CFramework::CFramework():
 CFramework::~CFramework()
 {
 	spriteDeferredDestruction();
-	SAFE_DELETE(m_pPlatformManager);
-	SAFE_DELETE(m_pVariablesManager);
+	delete m_pPlatformManager;
+	delete m_pVariablesManager;
 }
 
 void CFramework::makeApplicationPath()

@@ -179,20 +179,20 @@ void CGameStateInGame::checkCollisionsWithBorder()
 		else
 		if (isSuperAlien(pItem))
 		{
- 			SAFE_DELETE(m_pSuperAlien);
+ 			delete m_pSuperAlien;
+			m_pSuperAlien = nullptr;
 		}
 		else
 		if (isRocket(pItem))
 		{
 			gFindAndErase(m_rockets, pItem);
-			SAFE_DELETE(pItem);
+			delete pItem;
 		}
 		else
 		if (isBomb(pItem))
 		{
 			gFindAndErase(m_bombs, pItem);
 			m_pContainer->removeItem(pItem);
-			//SAFE_DELETE(pItem);
 		}
 	}
 }
@@ -203,8 +203,8 @@ void CGameStateInGame::checkCollisionsWithPlayer()
 
 	IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pPlayer, IGraphicItem::eCM_Intersect);
 
-	IGraphicItem::TGraphicItems::const_iterator it_end = collidingitems.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = collidingitems.begin(); it != it_end; ++it)
+	auto it_end = collidingitems.end();
+	for (auto it = collidingitems.begin(); it != it_end; ++it)
 	{
 		IGraphicItem * pItem = (*it);
 
@@ -212,13 +212,13 @@ void CGameStateInGame::checkCollisionsWithPlayer()
 		{
             // Aliens vector simulates a bydimentional array of type aliens[ROWS][COLUMNS] so the size is kept unchanged to retrieves aliens position at wish
 			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
-			SAFE_DELETE(pItem);
+			delete pItem;
 		}
 		else
 		if (isBomb(pItem))
 		{
 			gFindAndErase(m_bombs, pItem);
-			SAFE_DELETE(pItem);
+			delete pItem;
 		}
 
 		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Health, VAR_HEALTH_DAMAGE_VALUE));
@@ -229,8 +229,8 @@ void CGameStateInGame::checkCollisionsWithRockets()
 {
 	assert(m_pGameArea);
 
-	IGraphicItem::TGraphicItems::iterator itRocket_end = m_rockets.end();
-	for (IGraphicItem::TGraphicItems::iterator itRocket = m_rockets.begin(); itRocket != itRocket_end; ++itRocket)
+	auto itRocket_end = m_rockets.end();
+	for (auto itRocket = m_rockets.begin(); itRocket != itRocket_end; ++itRocket)
 	{
 		IGraphicItem * pRocket = (*itRocket);
 		IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(pRocket, IGraphicItem::eCM_Intersect);
@@ -244,20 +244,21 @@ void CGameStateInGame::checkCollisionsWithRockets()
 		if (isAlien(pItem))
 		{
 			gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
-			SAFE_DELETE(pItem);
+			delete pItem;
 
 			(*itRocket) = nullptr;
-			SAFE_DELETE(pRocket);
+			delete pRocket;
 
 			gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_VALUE));
 		}
 		else
 		if (isSuperAlien(pItem))
 		{
-			SAFE_DELETE(m_pSuperAlien);
+			delete m_pSuperAlien;
+			m_pSuperAlien = nullptr;
 
 			(*itRocket) = nullptr;
-			SAFE_DELETE(pRocket);
+			delete pRocket;
 
 			gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_SPECIAL_VALUE));
 		}

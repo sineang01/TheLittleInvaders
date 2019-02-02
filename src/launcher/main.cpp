@@ -67,7 +67,7 @@ int main(int argc, char ** argv)
 	}
 
 	DestroyEngine();
-	SAFE_DELETE(gEnv);
+	delete gEnv;
 
 	return ret_value;
 }

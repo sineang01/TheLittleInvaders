@@ -17,9 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "Game.h"
 #include "ISystemGlobalEnvironment.h"
+#include "stdafx.h"
 
 SSystemGlobalEnvironment * gEnv = nullptr;
 
@@ -37,7 +37,7 @@ extern "C"
 		if (gEnv->pGame)
 		{
 			CGame * pGame = static_cast<CGame*>(gEnv->pGame);
-			SAFE_DELETE(pGame);
+			delete pGame;
 			gEnv->pGame = nullptr;
 		}
 	}

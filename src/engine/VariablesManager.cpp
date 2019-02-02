@@ -17,8 +17,8 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "VariablesManager.h"
+#include "stdafx.h"
 #include <CSVReader.h>
 
 static const int VARIABLE_CSV_CELLS = 3;
@@ -40,7 +40,7 @@ CVariablesManager::~CVariablesManager()
 
 	for (TVariables::iterator it = m_variables.begin(); it != m_variables.end(); ++it)
 	{
-		SAFE_DELETE(it->second);
+		delete it->second;
 	}
 
 	m_variables.clear();

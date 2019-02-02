@@ -17,9 +17,9 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "Framework.h"
 #include "ISystemGlobalEnvironment.h"
+#include "stdafx.h"
 
 SSystemGlobalEnvironment * gEnv = nullptr;
 
@@ -37,7 +37,7 @@ extern "C"
 		if (gEnv->pFramework)
 		{
 			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-			SAFE_DELETE(pFramework);
+			delete pFramework;
 			gEnv->pFramework = nullptr;
 		}
 	}

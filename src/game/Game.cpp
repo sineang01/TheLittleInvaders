@@ -74,7 +74,8 @@ bool CGame::setGameState(EGameState state)
 	if (state == m_gameState)
 		return true;
 
-	SAFE_DELETE(m_pState);
+	delete m_pState;
+	m_pState = nullptr;
 
 	switch (state)
 	{
