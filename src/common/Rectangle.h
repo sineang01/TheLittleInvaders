@@ -24,47 +24,65 @@
 class CRectangle
 {
 	public:
-        CRectangle();
+		CRectangle() = default;
 		CRectangle(const CPoint &topleft, const CSize &size);
 		CRectangle(const CPoint &topleft, const CPoint &bottomRight);
 		CRectangle(double left, double top, double width, double height);
-		~CRectangle() {}
 
-		bool isNull() const;
-		bool isEmpty() const;
-		bool isValid() const;
+		inline bool isNull() const noexcept { return m_width == 0. && m_height == 0.; }
+		inline bool isEmpty() const noexcept { return m_width <= 0. || m_height <= 0.; }
+		inline bool isValid() const noexcept { return m_width > 0. && m_height > 0.; }
 
-		double x() const;
-		double y() const;
-		void setX(double pos);
-		void setY(double pos);
+		inline double x() const noexcept { return m_x; }
+		inline double y() const noexcept { return m_y; }
 
-		void setPosition(double x, double y);
-		void setPosition(const CPoint &p);
-		CPoint position() const;
+		inline void setX(double pos) noexcept { m_x = pos; }
+		inline void setY(double pos) noexcept { m_y = pos; }
 
-		CRectangle translated(double dx, double dy) const;
-		CRectangle translated(const CPoint &p) const;
+		inline void setPosition(double x, double y) noexcept;
+		inline void setPosition(const CPoint &p) noexcept;
+		CPoint position() const noexcept { return CPoint(m_x, m_y); }
 
-		CSize size() const;
-		double width() const;
-		double height() const;
-        void setWidth(double width);
-        void setHeight(double height);
-		void setSize(const CSize &s);
+		inline CRectangle translated(double dx, double dy) const noexcept { return CRectangle(m_x + dx, m_y + dy, m_width, m_height); }
+		inline CRectangle translated(const CPoint &p) const noexcept { return CRectangle(m_x + p.x(), m_y + p.y(), m_width, m_height); }
 
-		bool contains(const CRectangle &r) const;
-		bool intersects(const CRectangle &r) const;
+		inline CSize size() const noexcept { return CSize(m_width, m_height); }
+		inline double width() const noexcept  { return m_width; }
+		inline double height() const noexcept { return m_height; }
+        inline void setWidth(double width) noexcept { m_width = width; }
+		inline void setHeight(double height) noexcept { m_height = height; }
+		inline void setSize(const CSize &s) noexcept;
 
-		friend bool operator==(const CRectangle &, const CRectangle &);
-		friend bool operator!=(const CRectangle &, const CRectangle &);
+		bool contains(const CRectangle &r) const noexcept;
+		bool intersects(const CRectangle &r) const noexcept;
+
+		friend bool operator==(const CRectangle &, const CRectangle &) noexcept;
+		friend bool operator!=(const CRectangle &, const CRectangle &) noexcept;
 
 	private:
-        double m_x;
-        double m_y;
-        double m_width;
-        double m_height;
+		double m_x{0};
+        double m_y{ 0 };
+        double m_width{ 0 };
+        double m_height{ 0 };
 };
 
-bool operator==(const CRectangle &, const CRectangle &);
-bool operator!=(const CRectangle &, const CRectangle &);
+bool operator==(const CRectangle &, const CRectangle &) noexcept;
+bool operator!=(const CRectangle &, const CRectangle &) noexcept;
+
+void CRectangle::setPosition(const CPoint &p) noexcept
+{
+	setX(p.x());
+	setY(p.y());
+}
+
+void CRectangle::setPosition(double x, double y) noexcept
+{
+	setX(x);
+	setY(y);
+}
+
+void CRectangle::setSize(const CSize &s) noexcept
+{
+	m_width = s.width();
+	m_height = s.height();
+}

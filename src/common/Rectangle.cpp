@@ -17,135 +17,34 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "Rectangle.h"
+#include "stdafx.h"
 
-CRectangle::CRectangle():
-    m_x(0.),
-    m_y(0.),
-    m_width(0.),
-    m_height(0.)
+CRectangle::CRectangle(double left, double top, double width, double height)
+    :m_x(left)
+    ,m_y(top)
+    ,m_width(width)
+    ,m_height(height)
 {
 }
 
-CRectangle::CRectangle(double left, double top, double width, double height):
-    m_x(left),
-    m_y(top),
-    m_width(width),
-    m_height(height)
+CRectangle::CRectangle(const CPoint &topLeft, const CSize &size)
+    :m_x(topLeft.x())
+    ,m_y(topLeft.y())
+    ,m_width(size.width())
+    ,m_height(size.height())
 {
 }
 
-CRectangle::CRectangle(const CPoint &topLeft, const CSize &size):
-    m_x(topLeft.x()),
-    m_y(topLeft.y()),
-    m_width(size.width()),
-    m_height(size.height())
+CRectangle::CRectangle(const CPoint &topLeft, const CPoint &bottomRight)
+    :m_x(topLeft.x())
+    ,m_y(topLeft.y())
+    ,m_width(bottomRight.x() - topLeft.x())
+    ,m_height(bottomRight.y() - topLeft.y())
 {
 }
 
-CRectangle::CRectangle(const CPoint &topLeft, const CPoint &bottomRight):
-    m_x(topLeft.x()),
-    m_y(topLeft.y()),
-    m_width(bottomRight.x() - topLeft.x()),
-    m_height(bottomRight.y() - topLeft.y())
-{
-}
-
-bool CRectangle::isNull() const
-{
-    return m_width == 0. && m_height == 0.;
-}
-
-bool CRectangle::isEmpty() const
-{
-    return m_width <= 0. || m_height <= 0.;
-}
-
-bool CRectangle::isValid() const
-{
-    return m_width > 0. && m_height > 0.;
-}
-
-double CRectangle::x() const
-{
-    return m_x;
-}
-
-double CRectangle::y() const
-{
-    return m_y;
-}
-
-void CRectangle::setX(double pos) 
-{
-    m_x = pos;
-}
-
-void CRectangle::setY(double pos)
-{ 
-    m_y = pos;
-}
-
-void CRectangle::setPosition(const CPoint &p)
-{
-	setX(p.x()); 
-	setY(p.y());
-}
-
-void CRectangle::setPosition(double x, double y)
-{
-	setX(x); 
-	setY(y);
-}
-
-CPoint CRectangle::position() const
-{
-	return CPoint(m_x, m_y);
-}
-
-double CRectangle::width() const
-{ 
-    return m_width;
-}
-
-double CRectangle::height() const
-{ 
-    return m_height;
-}
-
-CSize CRectangle::size() const
-{ 
-    return CSize(m_width, m_height);
-}
-
-CRectangle CRectangle::translated(double dx, double dy) const
-{ 
-    return CRectangle(m_x + dx, m_y + dy, m_width, m_height);
-}
-
-CRectangle CRectangle::translated(const CPoint &p) const
-{ 
-    return CRectangle(m_x + p.x(), m_y + p.y(), m_width, m_height);
-}
-
-void CRectangle::setWidth(double width)
-{ 
-    m_width = width;
-}
-
-void CRectangle::setHeight(double height)
-{ 
-    m_height = height;
-}
-
-void CRectangle::setSize(const CSize &s)
-{
-    m_width = s.width();
-    m_height = s.height();
-}
-
-bool CRectangle::contains(const CRectangle &r) const
+bool CRectangle::contains(const CRectangle &r) const noexcept
 {
 	if (!isValid())
 		return false;
@@ -159,7 +58,7 @@ bool CRectangle::contains(const CRectangle &r) const
     return true;
 }
 
-bool CRectangle::intersects(const CRectangle &r) const
+bool CRectangle::intersects(const CRectangle &r) const noexcept
 {
 	if (!isValid())
 		return false;
@@ -173,13 +72,13 @@ bool CRectangle::intersects(const CRectangle &r) const
     return true;
 }
 
-bool operator==(const CRectangle &r1, const CRectangle &r2)
+bool operator==(const CRectangle &r1, const CRectangle &r2) noexcept
 {
     return gFuzzyCompare(r1.m_x, r2.m_x) && gFuzzyCompare(r1.m_y, r2.m_y)
            && gFuzzyCompare(r1.m_width, r2.m_width) && gFuzzyCompare(r1.m_height, r2.m_height);
 }
 
-bool operator!=(const CRectangle &r1, const CRectangle &r2)
+bool operator!=(const CRectangle &r1, const CRectangle &r2) noexcept
 {
     return !gFuzzyCompare(r1.m_x, r2.m_x) || !gFuzzyCompare(r1.m_y, r2.m_y)
            || !gFuzzyCompare(r1.m_width, r2.m_width) || !gFuzzyCompare(r1.m_height, r2.m_height);

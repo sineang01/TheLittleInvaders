@@ -24,34 +24,96 @@ class CPoint
     public:
         CPoint();
         CPoint(double xpos, double ypos);
-		~CPoint() {}
 
         bool isNull() const;
 
-        double x() const;
-        double y() const;
-        void setX(double x);
-        void setY(double y);
+        inline double x() const noexcept { return m_x; }
+        inline double y() const noexcept { return m_y; }
+        inline void setX(double x) noexcept { m_x = x; }
+        inline void setY(double y) noexcept { m_y = y; }
 
-        double &rx();
-        double &ry();
+        inline double &rx() noexcept { return m_x; }
+        inline double &ry() noexcept { return m_y; }
 
-        CPoint &operator+=(const CPoint &p);
-        CPoint &operator-=(const CPoint &p);
-        CPoint &operator*=(double c);
-        CPoint &operator/=(double c);
+        inline CPoint &operator+=(const CPoint &p) noexcept;
+        inline CPoint &operator-=(const CPoint &p) noexcept;
+        inline CPoint &operator*=(double c) noexcept;
+        inline CPoint &operator/=(double c) noexcept;
 
-        friend bool operator==(const CPoint &, const CPoint &);
-        friend bool operator!=(const CPoint &, const CPoint &);
-        friend const CPoint operator+(const CPoint &, const CPoint &);
-        friend const CPoint operator-(const CPoint &, const CPoint &);
-        friend const CPoint operator*(double, const CPoint &);
-        friend const CPoint operator*(const CPoint &, double);
-        friend const CPoint operator+(const CPoint &);
-        friend const CPoint operator-(const CPoint &);
-        friend const CPoint operator/(const CPoint &, double);
+        friend bool operator==(const CPoint &, const CPoint &) noexcept;
+        friend bool operator!=(const CPoint &, const CPoint &) noexcept;
+        friend inline const CPoint operator+(const CPoint &, const CPoint &) noexcept;
+        friend inline const CPoint operator-(const CPoint &, const CPoint &) noexcept;
+        friend inline const CPoint operator*(double, const CPoint &) noexcept;
+        friend inline const CPoint operator*(const CPoint &, double) noexcept;
+        friend inline const CPoint operator+(const CPoint &) noexcept;
+        friend inline const CPoint operator-(const CPoint &) noexcept;
+        friend inline const CPoint operator/(const CPoint &, double) noexcept;
 
     private:
         double m_x;
         double m_y;
 };
+
+CPoint &CPoint::operator+=(const CPoint &p) noexcept
+{
+	m_x += p.m_x;
+	m_y += p.m_y;
+	return *this;
+}
+
+CPoint &CPoint::operator-=(const CPoint &p) noexcept
+{
+	m_x -= p.m_x;
+	m_y -= p.m_y;
+	return *this;
+}
+
+CPoint &CPoint::operator*=(double c) noexcept
+{
+	m_x *= c;
+	m_y *= c;
+	return *this;
+}
+
+CPoint &CPoint::operator/=(double divisor) noexcept
+{
+	m_x /= divisor;
+	m_y /= divisor;
+	return *this;
+}
+
+const CPoint operator+(const CPoint &p1, const CPoint &p2) noexcept
+{
+	return CPoint(p1.m_x + p2.m_x, p1.m_y + p2.m_y);
+}
+
+const CPoint operator-(const CPoint &p1, const CPoint &p2) noexcept
+{
+	return CPoint(p1.m_x - p2.m_x, p1.m_y - p2.m_y);
+}
+
+const CPoint operator*(const CPoint &p, double c) noexcept
+{
+	return CPoint(p.m_x*c, p.m_y*c);
+}
+
+const CPoint operator*(double c, const CPoint &p) noexcept
+{
+	return CPoint(p.m_x*c, p.m_y*c);
+}
+
+const CPoint operator+(const CPoint &p) noexcept
+{
+	return p;
+}
+
+const CPoint operator-(const CPoint &p) noexcept
+{
+	return CPoint(-p.m_x, -p.m_y);
+}
+
+const CPoint operator/(const CPoint &p, double divisor) noexcept
+{
+	return CPoint(p.m_x / divisor, p.m_y / divisor);
+}

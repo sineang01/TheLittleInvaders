@@ -24,25 +24,24 @@
 class CPicture
 {
 	public:
-		CPicture() {};
+		CPicture() = default;
 		CPicture(const char * imagePath);
 		CPicture(const char * imagePath, const CRectangle & shape);
-		~CPicture() {};
 
-        bool isNull() const;
-        bool isEmpty() const;
-        bool isValid() const;
+        inline bool isNull() const { return m_imagePath.empty(); }
+        inline bool isEmpty() const { return m_imagePath.empty(); }
+        inline bool isValid() const { return !m_imagePath.empty() && rectangle().contains(m_shape); }
 
-		const char * image() const;
-		void setImage(const char * imagePath);
+		inline const char * image() const { return m_imagePath.c_str(); }
+		inline void setImage(const char * imagePath);
 
-		CSize size () const;
-		void setSize(const CSize & size);
+		inline const CSize & size() const noexcept { return m_size; }
+		inline void setSize(const CSize & size) noexcept { m_size = size; }
 
-		CRectangle shape() const;
-		void setShape(const CRectangle& shape);
+		inline const CRectangle & shape() const noexcept { return m_shape; }
+		inline void setShape(const CRectangle& shape) noexcept { m_shape = shape; }
 
-		CRectangle rectangle() const;
+		inline CRectangle rectangle() const noexcept { return CRectangle(0, 0, m_size.width(), m_size.height()); }
 
 	private:
 		bool readImage();

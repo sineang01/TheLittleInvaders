@@ -17,45 +17,16 @@
 **
 ****************************************************************************************/
 
-#include "Size.h"
+#include "Path.h"
 #include "stdafx.h"
 
-CSize::CSize(const CSize &sz)
-    :m_width(sz.width())
-    ,m_height(sz.height())
+namespace PathUtils
 {
-}
-
-CSize::CSize(double width, double height)
-    :m_width(width)
-    ,m_height(height)
-{
-}
-
-bool CSize::isNull() const
-{
-    return gIsNull(m_width) && gIsNull(m_height);
-}
-
-bool operator==(const CSize &s1, const CSize &s2) noexcept
-{
-    return gFuzzyCompare(s1.m_width, s2.m_width) && gFuzzyCompare(s1.m_height, s2.m_height);
-}
-
-bool operator!=(const CSize &s1, const CSize &s2) noexcept
-{
-    return !gFuzzyCompare(s1.m_width, s2.m_width) || !gFuzzyCompare(s1.m_height, s2.m_height);
-}
-
-CSize &CSize::operator/=(double c) noexcept
-{
-    assert(!gFuzzyIsNull(c));
-    m_width = m_width/c; m_height = m_height/c;
-    return *this;
-}
-
-const CSize operator/(const CSize &s, double c) noexcept
-{
-    assert(!gFuzzyIsNull(c));
-    return CSize(s.m_width/c, s.m_height/c);
-}
+	std::string executablePath()
+	{
+		char buffer[MAX_PATH];
+		GetModuleFileName(nullptr, buffer, MAX_PATH);
+		std::string::size_type pos = std::string(buffer).find_last_of( "\\/" );
+		return std::string(buffer).substr(0, pos);
+	}
+};

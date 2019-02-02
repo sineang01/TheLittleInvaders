@@ -18,44 +18,92 @@
 ****************************************************************************************/
 
 #pragma once
+#include <algorithm>
 
 class CSize
 {
     public:
-        CSize();
+		CSize() = default;
         CSize(const CSize &sz);
         CSize(double width, double height);
-		~CSize() {}
 
         bool isNull() const;
-        bool isEmpty() const;
-        bool isValid() const;
+        inline bool isEmpty() const noexcept { return m_width <= 0. || m_height <= 0.; }
+        inline bool isValid() const noexcept { return m_width >= 0. && m_height >= 0.; }
 
-        double width() const;
-        double height() const;
-        void setWidth(double width);
-        void setHeight(double height);
+        inline double width() const noexcept { return m_width; }
+        inline double height() const noexcept { return m_height; }
+        inline void setWidth(double width) noexcept { m_width = width; }
+        inline void setHeight(double height) noexcept { m_height = height; }
 
-        CSize expandedTo(const CSize &) const;
-        CSize boundedTo(const CSize &) const;
+        inline CSize expandedTo(const CSize &) const noexcept;
+        inline CSize boundedTo(const CSize &) const noexcept;
 
-        double &rwidth();
-        double &rheight();
+        inline double &rwidth() noexcept { return m_width; }
+        inline double &rheight() noexcept { return m_height; }
 
-        CSize &operator+=(const CSize &);
-        CSize &operator-=(const CSize &);
-        CSize &operator*=(double c);
-        CSize &operator/=(double c);
+        inline CSize &operator+=(const CSize &) noexcept;
+        inline CSize &operator-=(const CSize &) noexcept;
+        inline CSize &operator*=(double c) noexcept;
+        CSize &operator/=(double c) noexcept;
 
-        friend bool operator==(const CSize &, const CSize &);
-        friend bool operator!=(const CSize &, const CSize &);
-        friend const CSize operator+(const CSize &, const CSize &);
-        friend const CSize operator-(const CSize &, const CSize &);
-        friend const CSize operator*(const CSize &, double);
-        friend const CSize operator*(double, const CSize &);
-        friend const CSize operator/(const CSize &, double);
+        friend bool operator==(const CSize &, const CSize &) noexcept;
+        friend bool operator!=(const CSize &, const CSize &) noexcept;
+        friend inline const CSize operator+(const CSize &, const CSize &) noexcept;
+        friend inline const CSize operator-(const CSize &, const CSize &) noexcept;
+        friend inline const CSize operator*(const CSize &, double) noexcept;
+        friend inline const CSize operator*(double, const CSize &) noexcept;
+        friend const CSize operator/(const CSize &, double) noexcept;
 
     private:
-        double m_width;
-        double m_height;
+		double m_width{-1.0};
+		double m_height{-1.0};
 };
+
+CSize &CSize::operator+=(const CSize &s) noexcept
+{
+	m_width += s.m_width; m_height += s.m_height;
+	return *this;
+}
+
+CSize &CSize::operator-=(const CSize &s) noexcept
+{
+	m_width -= s.m_width; m_height -= s.m_height;
+	return *this;
+}
+
+CSize &CSize::operator*=(double c) noexcept
+{
+	m_width *= c; m_height *= c;
+	return *this;
+}
+
+const CSize operator+(const CSize & s1, const CSize & s2) noexcept
+{
+	return CSize(s1.m_width + s2.m_width, s1.m_height + s2.m_height);
+}
+
+const CSize operator-(const CSize &s1, const CSize &s2) noexcept
+{
+	return CSize(s1.m_width - s2.m_width, s1.m_height - s2.m_height);
+}
+
+const CSize operator*(const CSize &s, double c) noexcept
+{
+	return CSize(s.m_width*c, s.m_height*c);
+}
+
+const CSize operator*(double c, const CSize &s) noexcept
+{
+	return CSize(s.m_width*c, s.m_height*c);
+}
+
+CSize CSize::expandedTo(const CSize & otherSize) const noexcept
+{
+	return CSize(std::max(m_width, otherSize.m_width), std::max(m_height, otherSize.m_height));
+}
+
+CSize CSize::boundedTo(const CSize & otherSize) const noexcept
+{
+	return CSize(std::min(m_width, otherSize.m_width), std::min(m_height, otherSize.m_height));
+}

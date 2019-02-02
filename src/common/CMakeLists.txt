@@ -26,6 +26,7 @@ set(SOURCES_UTILS
 	GameTimer.h
 	LibraryHandler.cpp
 	LibraryHandler.h
+	Path.cpp
 	Path.h)
 
 set(SOURCES_GRAPHIC

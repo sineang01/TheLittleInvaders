@@ -17,10 +17,10 @@
 **
 ****************************************************************************************/
 
+#include "Path.h"
+#include "Picture.h"
 #include "stdafx.h"
 #include <fstream>
-#include "Picture.h"
-#include "Path.h"
 
 CPicture::CPicture(const char * imagePath)
 {
@@ -33,26 +33,6 @@ CPicture::CPicture(const char * imagePath, const CRectangle & shape):
 	setImage(imagePath);
 }
 
-bool CPicture::isNull() const
-{
-	return m_imagePath.empty();
-}
-
-bool CPicture::isEmpty() const
-{
-	return m_imagePath.empty();
-}
-
-bool CPicture::isValid() const
-{
-	return !m_imagePath.empty() && rectangle().contains(m_shape);
-}
-
-const char * CPicture::image() const
-{
-	return m_imagePath.c_str();
-}
-
 void CPicture::setImage(const char * imagePath)
 {
 	assert(imagePath && imagePath[0]);
@@ -60,31 +40,6 @@ void CPicture::setImage(const char * imagePath)
 
 	//m_size = CSize(32, 32);
 	assert(readImage());
-}
-
-CSize CPicture::size() const
-{
-	return m_size;
-}
-
-void CPicture::setSize(const CSize & size)
-{
-	m_size = size;
-}
-
-CRectangle CPicture::shape() const
-{
-	return m_shape;
-}
-
-void CPicture::setShape(const CRectangle& shape)
-{
-	m_shape = shape;
-}
-
-CRectangle CPicture::rectangle() const
-{
-	return CRectangle(0, 0, m_size.width(), m_size.height());
 }
 
 bool CPicture::readImage()

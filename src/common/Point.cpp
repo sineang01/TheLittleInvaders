@@ -17,18 +17,18 @@
 **
 ****************************************************************************************/
 
-#include "stdafx.h"
 #include "Point.h"
+#include "stdafx.h"
 
-CPoint::CPoint():
-    m_x(0),
-    m_y(0)
+CPoint::CPoint()
+    :m_x(0)
+    ,m_y(0)
 {
 }
 
-CPoint::CPoint(double xpos, double ypos):
-    m_x(xpos),
-    m_y(ypos)
+CPoint::CPoint(double xpos, double ypos)
+    :m_x(xpos)
+    ,m_y(ypos)
 {
 }
 
@@ -37,103 +37,12 @@ bool CPoint::isNull() const
     return gIsNull(m_x) && gIsNull(m_y);
 }
 
-double CPoint::x() const
-{
-    return m_x;
-}
-
-double CPoint::y() const
-{
-    return m_y;
-}
-
-void CPoint::setX(double xpos)
-{
-    m_x = xpos;
-}
-
-void CPoint::setY(double ypos)
-{
-    m_y = ypos;
-}
-
-double &CPoint::rx()
-{
-    return m_x;
-}
-
-double &CPoint::ry()
-{
-    return m_y;
-}
-
-CPoint &CPoint::operator+=(const CPoint &p)
-{
-    m_x+=p.m_x;
-    m_y+=p.m_y;
-    return *this;
-}
-
-CPoint &CPoint::operator-=(const CPoint &p)
-{
-    m_x-=p.m_x; m_y-=p.m_y;
-    return *this;
-}
-
-CPoint &CPoint::operator*=(double c)
-{
-    m_x*=c; m_y*=c;
-    return *this;
-}
-
-bool operator==(const CPoint &p1, const CPoint &p2)
+bool operator==(const CPoint &p1, const CPoint &p2) noexcept
 {
     return gFuzzyIsNull(p1.m_x - p2.m_x) && gFuzzyIsNull(p1.m_y - p2.m_y);
 }
 
-bool operator!=(const CPoint &p1, const CPoint &p2)
+bool operator!=(const CPoint &p1, const CPoint &p2) noexcept
 {
     return !gFuzzyIsNull(p1.m_x - p2.m_x) || !gFuzzyIsNull(p1.m_y - p2.m_y);
-}
-
-const CPoint operator+(const CPoint &p1, const CPoint &p2)
-{
-    return CPoint(p1.m_x+p2.m_x, p1.m_y+p2.m_y);
-}
-
-const CPoint operator-(const CPoint &p1, const CPoint &p2)
-{
-    return CPoint(p1.m_x-p2.m_x, p1.m_y-p2.m_y);
-}
-
-const CPoint operator*(const CPoint &p, double c)
-{
-    return CPoint(p.m_x*c, p.m_y*c);
-}
-
-const CPoint operator*(double c, const CPoint &p)
-{
-    return CPoint(p.m_x*c, p.m_y*c);
-}
-
-const CPoint operator+(const CPoint &p)
-{
-    return p;
-}
-
-const CPoint operator-(const CPoint &p)
-{
-    return CPoint(-p.m_x, -p.m_y);
-}
-
-CPoint &CPoint::operator/=(double divisor)
-{
-    m_x/=divisor;
-    m_y/=divisor;
-    return *this;
-}
-
-const CPoint operator/(const CPoint &p, double divisor)
-{
-    return CPoint(p.m_x/divisor, p.m_y/divisor);
 }
