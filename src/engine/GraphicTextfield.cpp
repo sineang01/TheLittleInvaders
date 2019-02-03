@@ -23,50 +23,51 @@
 #include <cstdarg>
 
 #include "ISystemGlobalEnvironment.h"
-extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * g_env;
 
 namespace engine {
-	namespace graphic {
+    namespace graphic {
 
-		CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent)
-			:CGraphicItem(pParent)
-		{
-			setPosition(0, 0);
-		}
+        CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent) : CGraphicItem(pParent)
+        {
+            setPosition(0, 0);
+        }
 
-		CGraphicTextfield::CGraphicTextfield(const char * text, CGraphicItem * pParent) :
-			CGraphicItem(pParent)
-		{
-			setText(text);
-			setPosition(0, 0);
-		}
+        CGraphicTextfield::CGraphicTextfield(const char * text, CGraphicItem * pParent)
+            : CGraphicItem(pParent)
+        {
+            setText(text);
+            setPosition(0, 0);
+        }
 
-		void CGraphicTextfield::setText(const char * format, ...)
-		{
-			assert(format && format[0]);
+        void CGraphicTextfield::setText(const char * format, ...)
+        {
+            assert(format && format[0]);
 
-			va_list argList;
-			va_start(argList, format);
+            va_list arg_list;
+            va_start(arg_list, format);
 
-			char temp[4096];
-			vsnprintf_s(temp, 4096, format, argList);
-			temp[4095] = '\0';
+            char temp[4096];
+            vsnprintf_s(temp, 4096, format, arg_list);
+            temp[4095] = '\0';
 
-			va_end(argList);
-			m_text = temp;
-		}
+            va_end(arg_list);
+            m_text = temp;
+        }
 
-		void CGraphicTextfield::draw(int x, int y)
-		{
-			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-			assert(pFramework);
+        void CGraphicTextfield::draw(int x, int y)
+        {
+            auto * p_framework = static_cast<CFramework *>(g_env->pFramework);
+            assert(p_framework);
 
-			utils::interfaces::IPlatform * pPlatform = pFramework->platform();
-			assert(pPlatform);
+            utils::interfaces::IPlatform * p_platform = p_framework->platform();
+            assert(p_platform);
 
-			if (!m_text.empty())
-				pPlatform->drawText(x, y, m_text.c_str());
-		}
+            if (!m_text.empty())
+            {
+                p_platform->drawText(x, y, m_text.c_str());
+            }
+        }
 
-	} // namespace graphic
+    } // namespace graphic
 } // namespace engine

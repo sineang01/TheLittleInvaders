@@ -36,7 +36,7 @@ namespace utils {
 
 	CLibraryHandler::~CLibraryHandler()
 	{
-		if (m_libraryHandler)
+		if (m_libraryHandler != nullptr)
 		{
 			FreeLibrary(m_libraryHandler);
 		}
@@ -44,14 +44,14 @@ namespace utils {
 
 	bool CLibraryHandler::init()
 	{
-		if (m_libraryHandler)
+		if (m_libraryHandler != nullptr)
 		{
 			std::cerr << "[ERROR] Library " << m_libraryName.c_str() << " is already open" << std::endl;
 			return false;
 		}
 
 		m_libraryHandler = LoadLibraryA(m_libraryName.c_str());
-		if (!m_libraryHandler)
+		if (m_libraryHandler == nullptr)
 		{
 			std::cerr << "[ERROR] Failed to open the DLL " << m_libraryName.c_str() << std::endl;
 			return false;

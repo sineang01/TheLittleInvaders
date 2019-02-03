@@ -31,10 +31,7 @@ namespace utils {
 	bool CCSVReader::open()
 	{
 		m_file.open(m_filePath.c_str(), std::ios::in | std::ios::binary);
-		if (m_file.is_open())
-			return true;
-
-		return false;
+		return m_file.is_open();
 	}
 
 	void CCSVReader::setFile(const char * filePath)
@@ -47,8 +44,9 @@ namespace utils {
 	{
 		ret.clear();
 
-		if (!open())
+		if (!open()) {
 			return false;
+}
 
 		while (m_file.good())
 		{
@@ -68,14 +66,15 @@ namespace utils {
 		std::string line;
 		std::getline(m_file, line);
 
-		if (line[line.size() - 1] == '\r')
+		if (line[line.size() - 1] == '\r') {
 			line.resize(line.size() - 1);
+}
 
-		std::stringstream lineStream(line);
+		std::stringstream line_stream(line);
 		std::string cell;
 
 		//doesn't care about escaping comma and newline, can't embed comma and newline in quotes
-		while (std::getline(lineStream, cell, ';'))
+		while (std::getline(line_stream, cell, ';'))
 		{
 			ret.push_back(cell);
 		}

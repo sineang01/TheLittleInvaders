@@ -20,33 +20,34 @@
 #include "Framework.h"
 
 #define WIN32_LEAN_AND_MEAN
-#define NOMINMAX 
+#define NOMINMAX
 #include <windows.h>
 
 #include "ISystemGlobalEnvironment.h"
-utils::interfaces::SSystemGlobalEnvironment * gEnv = nullptr;
+utils::interfaces::SSystemGlobalEnvironment * g_env = nullptr;
 
 extern "C"
 {
-	__declspec(dllexport) utils::interfaces::IFramework * CreateEngine(utils::interfaces::SSystemGlobalEnvironment * env)
-	{
-		gEnv = env;
-		gEnv->pFramework = new engine::CFramework();
-		return gEnv->pFramework;
-	}
+    __declspec(dllexport) utils::interfaces::IFramework * create_engine(
+        utils::interfaces::SSystemGlobalEnvironment * env)
+    {
+        g_env = env;
+        g_env->pFramework = new engine::CFramework();
+        return g_env->pFramework;
+    }
 
-	__declspec(dllexport) void DestroyEngine()
-	{
-		if (gEnv->pFramework)
-		{
-			engine::CFramework * pFramework = static_cast<engine::CFramework*>(gEnv->pFramework);
-			delete pFramework;
-			gEnv->pFramework = nullptr;
-		}
-	}
+    __declspec(dllexport) void destroy_engine()
+    {
+        if (g_env->pFramework != nullptr)
+        {
+            auto * p_framework = static_cast<engine::CFramework *>(g_env->pFramework);
+            delete p_framework;
+            g_env->pFramework = nullptr;
+        }
+    }
 };
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
+BOOL APIENTRY dllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
     return TRUE;
-} 
+}

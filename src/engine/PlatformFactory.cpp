@@ -22,17 +22,19 @@
 #include <cassert>
 
 namespace engine {
-	namespace platform {
+    namespace platform {
 
-		utils::interfaces::IPlatformManager * CPlatformFactory::make(const char * platformName)
-		{
-			assert(platformName && platformName[0]);
+        utils::interfaces::IPlatformManager * CPlatformFactory::make(const char * platformName)
+        {
+            assert(platformName && platformName[0]);
 
-			if (strcmp(platformName, "win_platform") == 0)
-				return new CEasyPlatform();
+            if (strcmp(platformName, "win_platform") == 0)
+            {
+                return new CEasyPlatform();
+            }
 
-			return nullptr;
-		}
+            return nullptr;
+        }
 
-	} // namespace platform
+    } // namespace platform
 } // namespace engine

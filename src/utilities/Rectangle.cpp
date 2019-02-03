@@ -48,28 +48,34 @@ namespace utils {
 
 	bool CRectangle::contains(const CRectangle &r) const noexcept
 	{
-		if (!isValid())
+		if (!isValid()) {
 			return false;
+}
 
-		if (r.m_x < m_x || (r.m_x + r.m_width) >(m_x + m_width))
+		if (r.m_x < m_x || (r.m_x + r.m_width) >(m_x + m_width)) {
 			return false;
+}
 
-		if (r.m_y < m_y || (r.m_y + r.m_height) >(m_y + m_height))
+		if (r.m_y < m_y || (r.m_y + r.m_height) >(m_y + m_height)) {
 			return false;
+}
 
 		return true;
 	}
 
 	bool CRectangle::intersects(const CRectangle &r) const noexcept
 	{
-		if (!isValid())
+		if (!isValid()) {
 			return false;
+}
 
-		if (m_x >= (r.m_x + r.m_width) || r.m_x >= (m_x + m_width))
+		if (m_x >= (r.m_x + r.m_width) || r.m_x >= (m_x + m_width)) {
 			return false;
+}
 
-		if (m_y >= (r.m_y + r.m_height) || r.m_y >= (m_y + m_height))
+		if (m_y >= (r.m_y + r.m_height) || r.m_y >= (m_y + m_height)) {
 			return false;
+}
 
 		return true;
 	}

@@ -20,33 +20,34 @@
 #include "Game.h"
 
 #define WIN32_LEAN_AND_MEAN
-#define NOMINMAX 
+#define NOMINMAX
 #include <windows.h>
 
 #include "ISystemGlobalEnvironment.h"
-utils::interfaces::SSystemGlobalEnvironment * gEnv = nullptr;
+utils::interfaces::SSystemGlobalEnvironment * g_env = nullptr;
 
 extern "C"
 {
-	__declspec(dllexport) utils::interfaces::IGame * CreateGame(utils::interfaces::SSystemGlobalEnvironment * env)
-	{
-		gEnv = env;
-		gEnv->pGame = new game::CGame();
-		return gEnv->pGame;
-	}
+    __declspec(dllexport) utils::interfaces::IGame * create_game(
+        utils::interfaces::SSystemGlobalEnvironment * env)
+    {
+        g_env = env;
+        g_env->pGame = new game::CGame();
+        return g_env->pGame;
+    }
 
-	__declspec(dllexport) void DestroyGame()
-	{
-		if (gEnv->pGame)
-		{
-			game::CGame * pGame = static_cast<game::CGame*>(gEnv->pGame);
-			delete pGame;
-			gEnv->pGame = nullptr;
-		}
-	}
+    __declspec(dllexport) void destroy_game()
+    {
+        if (g_env->pGame != nullptr)
+        {
+            auto * p_game = static_cast<game::CGame *>(g_env->pGame);
+            delete p_game;
+            g_env->pGame = nullptr;
+        }
+    }
 };
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
+BOOL APIENTRY dllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
     return TRUE;
-} 
+}

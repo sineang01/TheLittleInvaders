@@ -20,7 +20,7 @@
 #include "GameTimer.h"
 #include "ISystemGlobalEnvironment.h"
 
-extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * g_env;
 
 namespace utils {
 
@@ -32,30 +32,33 @@ namespace utils {
 
 	void CGameTimer::onUpdate(float deltaTime)
 	{
-		if (!m_active)
+		if (!m_active) {
 			return;
+}
 
 		m_elapsedTime += deltaTime;
 
-		if (isElapsed())
+		if (isElapsed()) {
 			timeout();
+}
 	}
 
 	void CGameTimer::start()
 	{
-		m_active = gEnv->pFramework->addListener(this);
+		m_active = g_env->pFramework->addListener(this);
 	}
 
 	void CGameTimer::stop()
 	{
 		m_active = false;
-		gEnv->pFramework->removeListener(this);
+		g_env->pFramework->removeListener(this);
 	}
 
 	void CGameTimer::timeout()
 	{
-		for (auto it = m_listeners.begin(), itEnd = m_listeners.end(); it != itEnd; ++it)
-			(*it)->timeout();
+		for (auto & m_listener : m_listeners) {
+			m_listener->timeout();
+}
 
 		reset();
 	}

@@ -20,19 +20,19 @@
 #include "Path.h"
 
 #define WIN32_LEAN_AND_MEAN
-#define NOMINMAX 
+#define NOMINMAX
 #include <windows.h>
 
 namespace utils {
-	namespace PathUtils	{
+    namespace path_utils {
 
-		std::string executablePath()
-		{
-			char buffer[MAX_PATH];
-			GetModuleFileName(nullptr, buffer, MAX_PATH);
-			std::string::size_type pos = std::string(buffer).find_last_of("\\/");
-			return std::string(buffer).substr(0, pos);
-		}
+        std::string executablePath()
+        {
+            char buffer[MAX_PATH];
+            GetModuleFileName(nullptr, buffer, MAX_PATH);
+            std::string::size_type pos = std::string(buffer).find_last_of("\\/");
+            return std::string(buffer).substr(0, pos);
+        }
 
-	} // namespace PathUtils
+    } // namespace path_utils
 } // namespace utils

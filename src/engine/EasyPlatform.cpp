@@ -21,38 +21,40 @@
 #include <cassert>
 
 #define WIN32_LEAN_AND_MEAN
-#define NOMINMAX 
+#define NOMINMAX
 #include <windows.h>
 
-static const char * PLATFORM_LIBRARY_NAME = "EasyPlatform.dll";
-static const char * PLATFORM_LIBRARY_ENTRY_POINT = "EasyPlatformFactory";
+static const char * platform_library_name = "EasyPlatform.dll";
+static const char * platform_library_entry_point = "EasyPlatformFactory";
 
 namespace engine {
-	namespace platform {
+    namespace platform {
 
-		CEasyPlatform::CEasyPlatform()
-			:CLibraryHandler(PLATFORM_LIBRARY_NAME)
-		{
-			assert(init());
-		}
+        CEasyPlatform::CEasyPlatform() : CLibraryHandler(platform_library_name) { assert(init()); }
 
-		CEasyPlatform::~CEasyPlatform()
-		{
-			if (m_interface)
-				m_interface->destroy();
-		}
+        CEasyPlatform::~CEasyPlatform()
+        {
+            if (m_interface != nullptr)
+            {
+                m_interface->destroy();
+            }
+        }
 
-		bool CEasyPlatform::init()
-		{
-			if (!CLibraryHandler::init())
-				return false;
+        bool CEasyPlatform::init()
+        {
+            if (!CLibraryHandler::init())
+            {
+                return false;
+            }
 
-			utils::interfaces::IPlatform::TEntryFunction* factory = (utils::interfaces::IPlatform::TEntryFunction*)GetProcAddress(libraryHandler(), PLATFORM_LIBRARY_ENTRY_POINT);
-			m_interface = factory();
-			assert(m_interface);
+            auto * factory =
+                (utils::interfaces::IPlatform::TEntryFunction *)
+                    GetProcAddress(libraryHandler(), platform_library_entry_point);
+            m_interface = factory();
+            assert(m_interface);
 
-			return true;
-		}
+            return true;
+        }
 
-	} // namespace platform
+    } // namespace platform
 } // namespace engine

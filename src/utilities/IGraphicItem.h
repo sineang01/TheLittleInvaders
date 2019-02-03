@@ -22,44 +22,55 @@
 #include <vector>
 
 namespace utils {
-	namespace interfaces {
+    namespace interfaces {
 
-		struct IGraphicItem
-		{
-			typedef std::vector<IGraphicItem*> TGraphicItems;
+        struct IGraphicItem
+        {
+            typedef std::vector<IGraphicItem *> TGraphicItems;
 
-			enum class collision_mode
-			{
-				contain = 0,            /* The output list contains only items whose shapes are fully contained in the shape of the current item */
-				intersect_not_contain,    /* The output list contains only items whose shapes interesct with the one of the current item, but is not fully contained */
-				intersect               /* The output list contains only items whose shapes are intersecting at least by 1 pixel with the one of the current item */
-			};
+            enum class collision_mode
+            {
+                contain = 0, /* The output list contains only items whose shapes are fully contained
+                                in the shape of the current item */
+                intersect_not_contain, /* The output list contains only items whose shapes interesct
+                                          with the one of the current item, but is not fully
+                                          contained */
+                intersect /* The output list contains only items whose shapes are intersecting at
+                             least by 1 pixel with the one of the current item */
+            };
 
-			virtual IGraphicItem * parent() const = 0;
-			virtual void setParent(IGraphicItem * pParent) = 0;
+            virtual IGraphicItem * parent() const = 0;
 
-			virtual CPoint position() const = 0;
-			virtual void setPosition(const CPoint & position) = 0;
-			virtual void setPosition(double x, double y) = 0;
+            virtual CPoint position() const = 0;
+            virtual void setPosition(const CPoint & position) = 0;
+            virtual void setPosition(double x, double y) = 0;
 
-			virtual CSize size() const = 0;
-			virtual void setSize(const CSize & size) = 0;
-			virtual void setSize(double w, double h) = 0;
+            virtual CSize size() const = 0;
+            virtual void setSize(const CSize & size) = 0;
+            virtual void setSize(double w, double h) = 0;
 
-			virtual CRectangle rectangle() const = 0;
-			virtual void setRectangle(const CRectangle & rectangle) = 0;
-			virtual void setRectangle(double x, double y, double width, double height) = 0;
+            virtual CRectangle rectangle() const = 0;
+            virtual void setRectangle(const CRectangle & rectangle) = 0;
+            virtual void setRectangle(double x, double y, double width, double height) = 0;
 
-			virtual const TGraphicItems & items() const = 0;
-			virtual CRectangle shape() const = 0;
+            virtual const TGraphicItems & items() const = 0;
+            virtual CRectangle shape() const = 0;
 
-			virtual bool collidesWithItem(const IGraphicItem * pOther, collision_mode mode = collision_mode::intersect) const = 0;
-			virtual bool collidesWithRectangle(const CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect) const = 0;
-			virtual TGraphicItems collidingItems(const IGraphicItem * pItem, collision_mode mode = collision_mode::intersect) const = 0;
-			virtual TGraphicItems collidingItems(const CRectangle & rectangle, collision_mode mode = collision_mode::intersect) const = 0;
+            virtual bool collidesWithItem(
+                const IGraphicItem * pOther,
+                collision_mode mode = collision_mode::intersect) const = 0;
+            virtual bool collidesWithRectangle(
+                const CRectangle & otherRectangle,
+                collision_mode mode = collision_mode::intersect) const = 0;
+            virtual TGraphicItems collidingItems(
+                const IGraphicItem * pItem,
+                collision_mode mode = collision_mode::intersect) const = 0;
+            virtual TGraphicItems collidingItems(
+                const CRectangle & rectangle,
+                collision_mode mode = collision_mode::intersect) const = 0;
 
-			virtual ~IGraphicItem() {};
-		};
+            virtual ~IGraphicItem(){};
+        };
 
-	} // namespace interfaces
+    } // namespace interfaces
 } // namespace utils

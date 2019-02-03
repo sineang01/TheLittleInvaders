@@ -21,9 +21,9 @@
 #include <string>
 
 namespace utils {
-	namespace PathUtils	{
+    namespace path_utils {
 
-		std::string executablePath();
+        std::string executablePath();
 
-	} // namespace PathUtils
+    } // namespace path_utils
 } // namespace utils

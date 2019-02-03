@@ -26,68 +26,69 @@ class CGraphicContainer;
 
 namespace game {
 
-	class CGameStateCommon;
+    class CGameStateCommon;
 
-	class CGame final : public utils::interfaces::IGame, private utils::interfaces::IFrameworkListener
-	{
-	public:
-		enum game_event
-		{
-			gameevent_exit = 0,
-			gameevent_score,
-			gameevent_health
-		};
+    class CGame final
+        : public utils::interfaces::IGame
+        , private utils::interfaces::IFrameworkListener
+    {
+      public:
+        enum game_event
+        {
+            gameevent_exit = 0,
+            gameevent_score,
+            gameevent_health
+        };
 
-		enum class game_state
-		{
-			invalid = -1,
-			pregame = 0,
-			ingame,
-			postgame
-		};
+        enum class game_state
+        {
+            invalid = -1,
+            pregame = 0,
+            ingame,
+            postgame
+        };
 
-	public:
-		CGame();
-		virtual ~CGame();
-		CGame(const CGame &) = delete;
-		CGame &operator=(const CGame &) = delete;
+      public:
+        CGame();
+        virtual ~CGame();
+        CGame(const CGame &) = delete;
+        CGame & operator=(const CGame &) = delete;
 
-		inline int lifes() const { return m_lifes; }
-		inline int score() const { return m_score; }
+        inline int lifes() const { return m_lifes; }
+        inline int score() const { return m_score; }
 
-	public:
-		static const utils::CPicture PICTURE_ALIEN_1;
-		static const utils::CPicture PICTURE_ALIEN_2;
-		static const utils::CPicture PICTURE_PLAYER;
-		static const utils::CPicture PICTURE_ROCKET;
-		static const utils::CPicture PICTURE_BOMB;
+      public:
+        static const utils::CPicture picture_alien_1;
+        static const utils::CPicture picture_alien_2;
+        static const utils::CPicture picture_player;
+        static const utils::CPicture picture_rocket;
+        static const utils::CPicture picture_bomb;
 
-	public:
-		// IGame
-		bool init();
-		bool refresh();
-		void onEvent(utils::interfaces::SGameEvent eventId);
-		//~IGame
+      public:
+        // IGame
+        bool init();
+        bool refresh();
+        void onEvent(utils::interfaces::SGameEvent eventId);
+        //~IGame
 
+      private:
+        // IFrameworkListener
+        void onUpdate(float deltaTime);
+        void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
+        //~IFrameworkListener
 
-	private:
-		// IFrameworkListener
-		void onUpdate(float deltaTime);
-		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
-		//~IFrameworkListener
+        bool setGameState(game_state state);
+        void resetGame();
 
+      private:
+        CGameStateCommon * m_pState{nullptr};
+        game_state m_gameState{game_state::invalid};
+        game_state m_deferredState{
+            game_state::invalid}; /* Memorizes the game state to set it at the end of the frame */
 
-		bool setGameState(game_state state);
-		void resetGame();
-
-	private:
-		CGameStateCommon * m_pState{ nullptr };
-		game_state m_gameState{ game_state::invalid };
-		game_state m_deferredState{ game_state::invalid }; /* Memorizes the game state to set it at the end of the frame */
-
-		int m_lifes;
-		int m_score;
-		bool m_succeded;
-	};
+        int m_lifes;
+        int m_score;
+        bool m_succeded;
+    };
 
 } // namespace game

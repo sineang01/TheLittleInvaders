@@ -24,53 +24,53 @@
 
 namespace utils {
 
-	CPicture::CPicture(const char * imagePath)
-	{
-		setImage(imagePath);
-	}
+    CPicture::CPicture(const char * imagePath) { setImage(imagePath); }
 
-	CPicture::CPicture(const char * imagePath, const CRectangle & shape) :
-		m_shape(shape)
-	{
-		setImage(imagePath);
-	}
+    CPicture::CPicture(const char * imagePath, const CRectangle & shape) : m_shape(shape)
+    {
+        setImage(imagePath);
+    }
 
-	void CPicture::setImage(const char * imagePath)
-	{
-		assert(imagePath && imagePath[0]);
-		m_imagePath = imagePath;
+    void CPicture::setImage(const char * imagePath)
+    {
+        assert(imagePath && imagePath[0]);
+        m_imagePath = imagePath;
 
-		//m_size = CSize(32, 32);
-		assert(readImage());
-	}
+        // m_size = CSize(32, 32);
+        assert(readImage());
+    }
 
-	bool CPicture::readImage()
-	{
-		std::string path = PathUtils::executablePath();
-		path += "\\";
-		path += m_imagePath;
+    bool CPicture::readImage()
+    {
+        std::string path = path_utils::executablePath();
+        path += "\\";
+        path += m_imagePath;
 
-		std::ifstream fileInput(path.c_str(), std::ios::in | std::ios::binary);
-		if (!fileInput.is_open())
-			return false;
+        std::ifstream file_input(path.c_str(), std::ios::in | std::ios::binary);
+        if (!file_input.is_open())
+        {
+            return false;
+        }
 
-		static const int FORMAT_SIZE = 2;
-		char fileFormat[FORMAT_SIZE + 1] = { '\0' };
-		fileInput.read(fileFormat, FORMAT_SIZE);
-		if (strncmp(fileFormat, "BM", FORMAT_SIZE) != 0)
-			return false;
+        static const int s_format_size = 2;
+        char file_format[s_format_size + 1] = {'\0'};
+        file_input.read(file_format, s_format_size);
+        if (strncmp(file_format, "BM", s_format_size) != 0)
+        {
+            return false;
+        }
 
-		fileInput.seekg(0x12, std::ios::beg);
-		unsigned int width = 0;
-		fileInput.read((char*)&width, sizeof(unsigned int));
+        file_input.seekg(0x12, std::ios::beg);
+        unsigned int width = 0;
+        file_input.read((char *)&width, sizeof(unsigned int));
 
-		unsigned int height = 0;
-		fileInput.read((char*)&height, sizeof(unsigned int));
+        unsigned int height = 0;
+        file_input.read((char *)&height, sizeof(unsigned int));
 
-		m_size = CSize(width, height);
-		fileInput.close();
+        m_size = CSize(width, height);
+        file_input.close();
 
-		return true;
-	}
+        return true;
+    }
 
 } // namespace utils

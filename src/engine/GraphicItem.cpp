@@ -22,163 +22,183 @@
 #include <cassert>
 
 namespace engine {
-	namespace graphic {
+    namespace graphic {
 
-		CGraphicItem::CGraphicItem(CGraphicItem * pParent)
-		{
-			setParent(pParent);
-		}
+        CGraphicItem::CGraphicItem(CGraphicItem * pParent) { setParent(pParent); }
 
-		CGraphicItem::~CGraphicItem()
-		{
-			if (m_pParent)
-				dynamic_cast<CGraphicItem*>(m_pParent)->removeChild(this);
+        CGraphicItem::~CGraphicItem()
+        {
+            if (m_pParent != nullptr)
+            {
+                dynamic_cast<CGraphicItem *>(m_pParent)->removeChild(this);
+            }
 
-			TGraphicItems children = m_children;
-			if (children.empty())
-				return;
+            TGraphicItems children = m_children;
+            if (children.empty())
+            {
+                return;
+            }
 
-			auto it_end = children.end();
-			for (auto it = children.begin(); it != it_end; ++it)
-			{
-				delete *it;
-			}
+            auto it_end = children.end();
+            for (auto it = children.begin(); it != it_end; ++it)
+            {
+                delete *it;
+            }
 
-			m_children.clear();
-		}
+            m_children.clear();
+        }
 
-		utils::interfaces::IGraphicItem * CGraphicItem::parent() const
-		{
-			return m_pParent;
-		}
+        utils::interfaces::IGraphicItem * CGraphicItem::parent() const { return m_pParent; }
 
-		void CGraphicItem::setParent(IGraphicItem * pParent)
-		{
-			if (m_pParent == pParent)
-				return;
+        void CGraphicItem::setParent(IGraphicItem * pParent)
+        {
+            if (m_pParent == pParent)
+            {
+                return;
+            }
 
-			if (m_pParent)
-				dynamic_cast<CGraphicItem*>(m_pParent)->removeChild(this);
+            if (m_pParent != nullptr)
+            {
+                dynamic_cast<CGraphicItem *>(m_pParent)->removeChild(this);
+            }
 
-			m_pParent = pParent;
+            m_pParent = pParent;
 
-			if (m_pParent)
-				dynamic_cast<CGraphicItem*>(m_pParent)->addChild(this);
-		}
+            if (m_pParent != nullptr)
+            {
+                dynamic_cast<CGraphicItem *>(m_pParent)->addChild(this);
+            }
+        }
 
-		void CGraphicItem::setRectangle(const utils::CRectangle & rectangle)
-		{
-			m_rectangle.setPosition(rectangle.position());
-			m_rectangle.setSize(rectangle.size());
-		}
+        void CGraphicItem::setRectangle(const utils::CRectangle & rectangle)
+        {
+            m_rectangle.setPosition(rectangle.position());
+            m_rectangle.setSize(rectangle.size());
+        }
 
-		void CGraphicItem::setRectangle(double x, double y, double width, double height)
-		{
-			m_rectangle.setX(x);
-			m_rectangle.setY(y);
-			m_rectangle.setWidth(width);
-			m_rectangle.setHeight(height);
-		}
+        void CGraphicItem::setRectangle(double x, double y, double width, double height)
+        {
+            m_rectangle.setX(x);
+            m_rectangle.setY(y);
+            m_rectangle.setWidth(width);
+            m_rectangle.setHeight(height);
+        }
 
-		bool CGraphicItem::addChild(CGraphicItem * pChild)
-		{
-			assert(pChild);
-			return utils::containers::gPushBackUnique(m_children, pChild);
-		}
+        bool CGraphicItem::addChild(CGraphicItem * pChild)
+        {
+            assert(pChild);
+            return utils::containers::gPushBackUnique(m_children, pChild);
+        }
 
-		bool CGraphicItem::removeChild(CGraphicItem * pChild)
-		{
-			assert(pChild);
-			return utils::containers::gFindAndErase(m_children, pChild);
-		}
+        bool CGraphicItem::removeChild(CGraphicItem * pChild)
+        {
+            assert(pChild);
+            return utils::containers::gFindAndErase(m_children, pChild);
+        }
 
-		bool CGraphicItem::collidesWithItem(const IGraphicItem * pOther, collision_mode mode) const
-		{
-			assert(pOther);
+        bool CGraphicItem::collidesWithItem(const IGraphicItem * pOther, collision_mode mode) const
+        {
+            assert(pOther);
 
-			utils::CRectangle itemRectangle = shape().translated(drawOffset(this));
-			utils::CRectangle otherRectangle = pOther->shape().translated(drawOffset(pOther));
-			return collides(itemRectangle, otherRectangle, mode);
-		}
+            utils::CRectangle item_rectangle = shape().translated(draw_offset(this));
+            utils::CRectangle other_rectangle = pOther->shape().translated(draw_offset(pOther));
+            return collides(item_rectangle, other_rectangle, mode);
+        }
 
-		bool CGraphicItem::collidesWithRectangle(const utils::CRectangle & otherRectangle, collision_mode mode) const
-		{
-			assert(otherRectangle.isValid());
+        bool CGraphicItem::collidesWithRectangle(const utils::CRectangle & otherRectangle,
+                                                 collision_mode mode) const
+        {
+            assert(otherRectangle.isValid());
 
-			utils::CRectangle itemRectangle = shape().translated(drawOffset(this));
-			utils::CRectangle otherRectangleTranslated = otherRectangle.translated(drawOffset(this));
-			return collides(itemRectangle, otherRectangleTranslated, mode);
-		}
+            utils::CRectangle item_rectangle = shape().translated(draw_offset(this));
+            utils::CRectangle other_rectangle_translated =
+                otherRectangle.translated(draw_offset(this));
+            return collides(item_rectangle, other_rectangle_translated, mode);
+        }
 
-		CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const IGraphicItem * pItem, collision_mode mode) const
-		{
-			TGraphicItems collidingItems;
+        CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const IGraphicItem * pItem,
+                                                                 collision_mode mode) const
+        {
+            TGraphicItems colliding_items;
 
-			const TGraphicItems & graphicItems = items();
-			auto it_end = graphicItems.end();
-			for (auto it = graphicItems.begin(); it != it_end; ++it)
-			{
-				IGraphicItem * pOtherItem = (*it);
+            const TGraphicItems & graphic_items = items();
+            auto it_end = graphic_items.end();
+            for (auto it = graphic_items.begin(); it != it_end; ++it)
+            {
+                IGraphicItem * p_other_item = (*it);
 
-				if (pOtherItem == pItem)
-					continue;
+                if (p_other_item == pItem)
+                {
+                    continue;
+                }
 
-				if (pItem->collidesWithItem(pOtherItem, mode))
-					utils::containers::gPushBackUnique(collidingItems, pOtherItem);
-			}
+                if (pItem->collidesWithItem(p_other_item, mode))
+                {
+                    utils::containers::gPushBackUnique(colliding_items, p_other_item);
+                }
+            }
 
-			return collidingItems;
-		}
+            return colliding_items;
+        }
 
-		CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const utils::CRectangle & rectangle, collision_mode mode) const
-		{
-			TGraphicItems collidingItems;
+        CGraphicItem::TGraphicItems CGraphicItem::collidingItems(
+            const utils::CRectangle & rectangle,
+            collision_mode mode) const
+        {
+            TGraphicItems colliding_items;
 
-			const TGraphicItems & graphicItems = items();
-			auto it_end = graphicItems.end();
-			for (auto it = graphicItems.begin(); it != it_end; ++it)
-			{
-				IGraphicItem * pItem = (*it);
+            const TGraphicItems & graphic_items = items();
+            auto it_end = graphic_items.end();
+            for (auto it = graphic_items.begin(); it != it_end; ++it)
+            {
+                IGraphicItem * p_item = (*it);
 
-				if (pItem->collidesWithRectangle(rectangle, mode))
-					utils::containers::gPushBackUnique(collidingItems, pItem);
-			}
+                if (p_item->collidesWithRectangle(rectangle, mode))
+                {
+                    utils::containers::gPushBackUnique(colliding_items, p_item);
+                }
+            }
 
-			return collidingItems;
-		}
+            return colliding_items;
+        }
 
-		bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, collision_mode mode)
-		{
-			switch (mode)
-			{
-			case collision_mode::contain:
-				return rectangle.contains(otherRectangle);
+        bool CGraphicItem::collides(const utils::CRectangle & rectangle,
+                                    const utils::CRectangle & otherRectangle,
+                                    collision_mode mode)
+        {
+            switch (mode)
+            {
+                case collision_mode::contain:
+                    return rectangle.contains(otherRectangle);
 
-			case collision_mode::intersect_not_contain:
-				return rectangle.intersects(otherRectangle) && !rectangle.contains(otherRectangle);
+                case collision_mode::intersect_not_contain:
+                    return rectangle.intersects(otherRectangle) &&
+                           !rectangle.contains(otherRectangle);
 
-			case collision_mode::intersect:
-				return rectangle.intersects(otherRectangle);
-			}
+                case collision_mode::intersect:
+                    return rectangle.intersects(otherRectangle);
+            }
 
-			return false;
-		}
+            return false;
+        }
 
-		utils::CPoint CGraphicItem::drawOffset(const IGraphicItem * pItem)
-		{
-			utils::CPoint position;
+        utils::CPoint CGraphicItem::draw_offset(const IGraphicItem * pItem)
+        {
+            utils::CPoint position;
 
-			while (pItem != nullptr)
-			{
-				IGraphicItem * pParent = pItem->parent();
-				if (pParent)
-					position += pParent->position();
+            while (pItem != nullptr)
+            {
+                IGraphicItem * p_parent = pItem->parent();
+                if (p_parent != nullptr)
+                {
+                    position += p_parent->position();
+                }
 
-				pItem = pParent;
-			}
+                pItem = p_parent;
+            }
 
-			return position;
-		}
+            return position;
+        }
 
-		} // namespace graphic
+    } // namespace graphic
 } // namespace engine

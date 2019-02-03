@@ -18,37 +18,39 @@
 ****************************************************************************************/
 
 #include "GraphicContainer.h"
+#include "GraphicItem.h"
 #include <cassert>
 
 namespace engine {
-	namespace graphic {
+    namespace graphic {
 
-		CGraphicContainer::CGraphicContainer(CGraphicItem * pParent)
-			:CGraphicItem(pParent)
-		{
-		}
+        CGraphicContainer::CGraphicContainer(CGraphicItem * pParent) : CGraphicItem(pParent) {}
 
-		utils::interfaces::IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)
-		{
-			if (text) return new CGraphicTextfield(text, this);
-			else return new CGraphicTextfield(this);
-		}
+        utils::interfaces::IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)
+        {
+            if (text != nullptr)
+            {
+                return new CGraphicTextfield(text, this);
+            }
 
-		void CGraphicContainer::removeItem(IGraphicItem * pItem)
-		{
-			assert(pItem);
-			pItem->setParent(nullptr);
-		}
+            return new CGraphicTextfield(this);
+        }
 
-		void CGraphicContainer::paint()
-		{
-			const TGraphicItems & graphicItems = items();
-			auto it_end = graphicItems.end();
-			for (auto it = graphicItems.begin(); it != it_end; ++it)
-			{
-				dynamic_cast<CGraphicItem *>(*it)->paint();
-			}
-		}
+        void CGraphicContainer::removeItem(IGraphicItem * pItem)
+        {
+            assert(pItem);
+            dynamic_cast<CGraphicItem *>(pItem)->setParent(nullptr);
+        }
 
-	} // namespace graphic
+        void CGraphicContainer::paint()
+        {
+            const TGraphicItems & graphic_items = items();
+            auto it_end = graphic_items.end();
+            for (auto it = graphic_items.begin(); it != it_end; ++it)
+            {
+                dynamic_cast<CGraphicItem *>(*it)->paint();
+            }
+        }
+
+    } // namespace graphic
 } // namespace engine

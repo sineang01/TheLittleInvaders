@@ -22,7 +22,7 @@
 #include <cassert>
 
 #include "ISystemGlobalEnvironment.h"
-extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * g_env;
 
 namespace engine {
 	namespace graphic {
@@ -33,13 +33,13 @@ namespace engine {
 		{
 			assert(picture.isValid());
 
-			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-			assert(pFramework);
+			auto * p_framework = static_cast<CFramework*>(g_env->pFramework);
+			assert(p_framework);
 
-			utils::interfaces::IPlatform * pPlatform = pFramework->platform();
-			assert(pPlatform);
+			utils::interfaces::IPlatform * p_platform = p_framework->platform();
+			assert(p_platform);
 
-			m_pSprite = pPlatform->createSprite(picture.image());
+			m_pSprite = p_platform->createSprite(picture.image());
 			assert(m_pSprite);
 
 			setPosition(0, 0);
@@ -49,10 +49,10 @@ namespace engine {
 		CGraphicBitmap::~CGraphicBitmap()
 		{
 			// All the sprites are deferred destroyed
-			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-			assert(pFramework);
+			auto * p_framework = static_cast<CFramework*>(g_env->pFramework);
+			assert(p_framework);
 
-			pFramework->destroySprite(m_pSprite);
+			p_framework->destroySprite(m_pSprite);
 		}
 
 		void CGraphicBitmap::draw(int x, int y)

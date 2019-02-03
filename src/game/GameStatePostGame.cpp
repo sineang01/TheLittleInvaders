@@ -22,14 +22,14 @@
 #include <IGraphicTextfield.h>
 
 #include "ISystemGlobalEnvironment.h"
-extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * g_env;
 
 namespace game {
 
 	CGameStatePostGame::CGameStatePostGame(bool success, int score)
 	{
-		m_pContainer = gEnv->pFramework->window()->addContainer();
-		m_pContainer->setSize(gEnv->pFramework->window()->size());
+		m_pContainer = g_env->pFramework->window()->addContainer();
+		m_pContainer->setSize(g_env->pFramework->window()->size());
 
 		if (success)
 		{
@@ -45,21 +45,22 @@ namespace game {
 		}
 
 		m_pContainer->addTextfield("You scored")->setPosition(160, 270);
-		utils::interfaces::IGraphicTextfield * pTextScore = m_pContainer->addTextfield();
-		pTextScore->setText("%d", score);
-		pTextScore->setPosition(270, 280);
+		utils::interfaces::IGraphicTextfield * p_text_score = m_pContainer->addTextfield();
+		p_text_score->setText("%d", score);
+		p_text_score->setPosition(270, 280);
 		m_pContainer->addTextfield("points")->setPosition(195, 290);
 	}
 
 	CGameStatePostGame::~CGameStatePostGame()
 	{
-		gEnv->pFramework->window()->removeItem(m_pContainer);
+		g_env->pFramework->window()->removeItem(m_pContainer);
 	}
 
 	void CGameStatePostGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
 	{
-		if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
-			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_exit));
+		if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire) {
+			g_env->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_exit));
+}
 	}
 
 } // namespace game

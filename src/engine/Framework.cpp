@@ -29,230 +29,258 @@
 #include <iostream>
 
 #include "ISystemGlobalEnvironment.h"
-extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * g_env;
 
 #define WIN32_LEAN_AND_MEAN
-#define NOMINMAX 
+#define NOMINMAX
 #include <windows.h>
 
 namespace engine {
 
-	static const char * GAME_LIBRARY_NAME = "Game.dll";
-	static const char * GAME_LIBRARY_ENTRY_POINT_CREATE = "CreateGame";
-	static const char * GAME_LIBRARY_ENTRY_POINT_DESTROY = "DestroyGame";
+    static const char * game_library_name = "Game.dll";
+    static const char * game_library_entry_point_create = "create_game";
+    static const char * game_library_entry_point_destroy = "destroy_game";
 
-	CFramework::CFramework()
-	{
-		makeApplicationPath();
-	}
+    CFramework::CFramework() { makeApplicationPath(); }
 
-	CFramework::~CFramework()
-	{
-		spriteDeferredDestruction();
-		delete m_pPlatformManager;
-		delete m_pVariablesManager;
-	}
+    CFramework::~CFramework()
+    {
+        spriteDeferredDestruction();
+        delete m_pPlatformManager;
+        delete m_pVariablesManager;
+    }
 
-	void CFramework::makeApplicationPath()
-	{
-		char buffer[MAX_PATH];
-		GetModuleFileName(nullptr, buffer, MAX_PATH);
+    void CFramework::makeApplicationPath()
+    {
+        char buffer[MAX_PATH];
+        GetModuleFileName(nullptr, buffer, MAX_PATH);
 
-		std::string bufferString(buffer);
-		std::string::size_type pos = bufferString.find_last_of("\\/");
-		m_applicationPath = bufferString.substr(0, pos + 1);
-	}
+        std::string buffer_string(buffer);
+        std::string::size_type pos = buffer_string.find_last_of("\\/");
+        m_applicationPath = buffer_string.substr(0, pos + 1);
+    }
 
-	bool CFramework::init()
-	{
-		srand((unsigned int)time(nullptr));
+    bool CFramework::init()
+    {
+        srand((unsigned int)time(nullptr));
 
-		if (!initVariables())
-			return false;
+        if (!initVariables())
+        {
+            return false;
+        }
 
-		m_pPlatformManager = platform::CPlatformFactory::make(m_pVariablesManager->variable("sys_platform")->value<std::string>().c_str());
-		if (!m_pPlatformManager)
-		{
-			std::cerr << "[ERROR] Platform manager cannot be initialized" << std::endl;
-			return false;
-		}
+        m_pPlatformManager = platform::CPlatformFactory::make(
+            m_pVariablesManager->variable("sys_platform")->value<std::string>().c_str());
+        if (m_pPlatformManager == nullptr)
+        {
+            std::cerr << "[ERROR] Platform manager cannot be initialized" << std::endl;
+            return false;
+        }
 
-		utils::interfaces::IPlatform* pPlatform = m_pPlatformManager->platform();
-		if (!pPlatform)
-		{
-			std::cerr << "[ERROR] Platform cannot be retrieved" << std::endl;
-			return false;
-		}
+        utils::interfaces::IPlatform * p_platform = m_pPlatformManager->platform();
+        if (p_platform == nullptr)
+        {
+            std::cerr << "[ERROR] Platform cannot be retrieved" << std::endl;
+            return false;
+        }
 
-		const int width = m_pVariablesManager->variable("sys_width")->value<unsigned int>();
-		const int height = m_pVariablesManager->variable("sys_height")->value<unsigned int>();
-		if (!pPlatform->init(width, height))
-		{
-			std::cerr << "[ERROR] Platform cannot initialize" << std::endl;
-			return false;
-		}
+        const int width = m_pVariablesManager->variable("sys_width")->value<unsigned int>();
+        const int height = m_pVariablesManager->variable("sys_height")->value<unsigned int>();
+        if (!p_platform->init(width, height))
+        {
+            std::cerr << "[ERROR] Platform cannot initialize" << std::endl;
+            return false;
+        }
 
-		m_pWindow = new graphic::CGraphicContainer();
-		m_pWindow->setSize(width, height);
+        m_pWindow = new graphic::CGraphicContainer();
+        m_pWindow->setSize(width, height);
 
-		return true;
-	}
+        return true;
+    }
 
-	int CFramework::exec()
-	{
-		if (!m_pPlatformManager)
-		{
-			std::cerr << "[ERROR] Platform manager not initialized" << std::endl;
-			return -1;
-		}
+    int CFramework::exec()
+    {
+        if (m_pPlatformManager == nullptr)
+        {
+            std::cerr << "[ERROR] Platform manager not initialized" << std::endl;
+            return -1;
+        }
 
-		utils::interfaces::IPlatform* pPlatform = m_pPlatformManager->platform();
-		if (!pPlatform)
-		{
-			std::cerr << "[ERROR] Platform not initialized" << std::endl;
-			return -1;
-		}
+        utils::interfaces::IPlatform * p_platform = m_pPlatformManager->platform();
+        if (p_platform == nullptr)
+        {
+            std::cerr << "[ERROR] Platform not initialized" << std::endl;
+            return -1;
+        }
 
-		utils::CLibraryHandler gameDLL(GAME_LIBRARY_NAME);
-		if (!gameDLL.init())
-			return -1;
+        utils::CLibraryHandler game_dll(game_library_name);
+        if (!game_dll.init())
+        {
+            return -1;
+        }
 
-		utils::interfaces::IGame::TEntryFunctionCreate CreateGame = (utils::interfaces::IGame::TEntryFunctionCreate)GetProcAddress(gameDLL.libraryHandler(), GAME_LIBRARY_ENTRY_POINT_CREATE);
-		if (!CreateGame)
-		{
-			std::cerr << "[ERROR] Specified " << gameDLL.libraryName() << " doesn't have a valid CreateGame entry point" << std::endl;
-			return -1;
-		}
+        auto create_game = (utils::interfaces::IGame::TEntryFunctionCreate)
+            GetProcAddress(game_dll.libraryHandler(), game_library_entry_point_create);
+        if (create_game == nullptr)
+        {
+            std::cerr << "[ERROR] Specified " << game_dll.libraryName() << " doesn't have a valid "
+                      << game_library_entry_point_create << " entry point" << std::endl;
 
-		utils::interfaces::IGame * pGame = CreateGame(gEnv);
-		if (!pGame)
-		{
-			std::cerr << "[ERROR] Failed to create the game interface" << std::endl;
-			return -1;
-		}
+            return -1;
+        }
 
-		if (!pGame->init())
-		{
-			std::cerr << "[ERROR] Game not initialized" << std::endl;
-			return -1;
-		}
+        utils::interfaces::IGame * p_game = create_game(g_env);
+        if (p_game == nullptr)
+        {
+            std::cerr << "[ERROR] Failed to create the game interface" << std::endl;
+            return -1;
+        }
 
-		while (pPlatform->update())
-		{
-			float time = pPlatform->getElapsedTime();
-			float delta = time - m_time;
+        if (!p_game->init())
+        {
+            std::cerr << "[ERROR] Game not initialized" << std::endl;
+            return -1;
+        }
 
-			m_pWindow->paint();
+        while (p_platform->update())
+        {
+            float time = p_platform->getElapsedTime();
+            float delta = time - m_time;
 
-			onUpdate(delta);
+            m_pWindow->paint();
 
-			utils::interfaces::IPlatform::key_status keys;
-			pPlatform->getKeyStatus(keys);
+            onUpdate(delta);
 
-			m_keyFire.set_status(keys.fire ? (m_keyFire.get_status() == utils::interfaces::CInputKey::key_status::inactive ? utils::interfaces::CInputKey::key_status::press : utils::interfaces::CInputKey::key_status::on_hold) : utils::interfaces::CInputKey::key_status::inactive);
-			onInput(m_keyFire, delta);
+            utils::interfaces::IPlatform::key_status keys;
+            p_platform->getKeyStatus(keys);
 
-			m_keyLeft.set_status(keys.left ? (m_keyLeft.get_status() == utils::interfaces::CInputKey::key_status::inactive ? utils::interfaces::CInputKey::key_status::press : utils::interfaces::CInputKey::key_status::on_hold) : utils::interfaces::CInputKey::key_status::inactive);
-			onInput(m_keyLeft, delta);
+            m_keyFire.set_status(
+                keys.fire
+                    ? (m_keyFire.get_status() == utils::interfaces::CInputKey::key_status::inactive
+                           ? utils::interfaces::CInputKey::key_status::press
+                           : utils::interfaces::CInputKey::key_status::on_hold)
+                    : utils::interfaces::CInputKey::key_status::inactive);
+            onInput(m_keyFire, delta);
 
-			m_keyRight.set_status(keys.right ? (m_keyRight.get_status() == utils::interfaces::CInputKey::key_status::inactive ? utils::interfaces::CInputKey::key_status::press : utils::interfaces::CInputKey::key_status::on_hold) : utils::interfaces::CInputKey::key_status::inactive);
-			onInput(m_keyRight, delta);
+            m_keyLeft.set_status(
+                keys.left
+                    ? (m_keyLeft.get_status() == utils::interfaces::CInputKey::key_status::inactive
+                           ? utils::interfaces::CInputKey::key_status::press
+                           : utils::interfaces::CInputKey::key_status::on_hold)
+                    : utils::interfaces::CInputKey::key_status::inactive);
+            onInput(m_keyLeft, delta);
 
-			if (!pGame->refresh())
-			{
-				std::cerr << "[ERROR] Game can't refresh" << std::endl;
-				break;
-			}
+            m_keyRight.set_status(
+                keys.right
+                    ? (m_keyRight.get_status() == utils::interfaces::CInputKey::key_status::inactive
+                           ? utils::interfaces::CInputKey::key_status::press
+                           : utils::interfaces::CInputKey::key_status::on_hold)
+                    : utils::interfaces::CInputKey::key_status::inactive);
+            onInput(m_keyRight, delta);
 
-			m_time = time;
-		}
+            if (!p_game->refresh())
+            {
+                std::cerr << "[ERROR] Game can't refresh" << std::endl;
+                break;
+            }
 
-		spriteDeferredDestruction();
-		pPlatform->destroy();
+            m_time = time;
+        }
 
-		utils::interfaces::IGame::TEntryFunctionDestroy DestroyGame = (utils::interfaces::IGame::TEntryFunctionDestroy)GetProcAddress(gameDLL.libraryHandler(), GAME_LIBRARY_ENTRY_POINT_DESTROY);
-		if (!DestroyGame)
-		{
-			std::cerr << "[ERROR] Specified " << gameDLL.libraryName() << " doesn't have a valid DestroyGame entry point" << std::endl;
-			return -1;
-		}
+        spriteDeferredDestruction();
+        p_platform->destroy();
 
-		DestroyGame();
+        auto destroy_game = (utils::interfaces::IGame::TEntryFunctionDestroy)
+            GetProcAddress(game_dll.libraryHandler(), game_library_entry_point_destroy);
+        if (destroy_game == nullptr)
+        {
+            std::cerr << "[ERROR] Specified " << game_dll.libraryName() << " doesn't have a valid "
+                      << game_library_entry_point_destroy << " entry point" << std::endl;
 
-		return 0;
-	}
+            return -1;
+        }
 
-	utils::interfaces::IPlatformManager * CFramework::platformManager()
-	{
-		return m_pPlatformManager;
-	}
+        destroy_game();
 
-	utils::interfaces::IPlatform * CFramework::platform()
-	{
-		if (!m_pPlatformManager)
-			return nullptr;
+        return 0;
+    }
 
-		return m_pPlatformManager->platform();
-	}
+    utils::interfaces::IPlatformManager * CFramework::platformManager()
+    {
+        return m_pPlatformManager;
+    }
 
-	utils::interfaces::IGraphicContainer * CFramework::window() const
-	{
-		return m_pWindow;
-	}
+    utils::interfaces::IPlatform * CFramework::platform()
+    {
+        if (m_pPlatformManager == nullptr)
+        {
+            return nullptr;
+        }
 
-	void CFramework::destroySprite(utils::interfaces::ISprite * pSprite)
-	{
-		assert(pSprite);
-		utils::containers::gPushBackUnique(m_sprites, pSprite);
-	}
+        return m_pPlatformManager->platform();
+    }
 
-	utils::interfaces::IVariablesManager * CFramework::variablesManager() const
-	{
-		return m_pVariablesManager;
-	}
+    utils::interfaces::IGraphicContainer * CFramework::window() const { return m_pWindow; }
 
-	void CFramework::spriteDeferredDestruction()
-	{
-		auto it_end = m_sprites.end();
-		for (auto it = m_sprites.begin(); it != it_end; ++it)
-		{
-			(*it)->destroy();
-		}
+    void CFramework::destroySprite(utils::interfaces::ISprite * pSprite)
+    {
+        assert(pSprite);
+        utils::containers::gPushBackUnique(m_sprites, pSprite);
+    }
 
-		m_sprites.clear();
-	}
+    utils::interfaces::IVariablesManager * CFramework::variablesManager() const
+    {
+        return m_pVariablesManager;
+    }
 
-	void CFramework::onUpdate(float deltaTime)
-	{
-		for (auto it = m_listeners.begin(), itEnd = m_listeners.end(); it != itEnd; ++it)
-			(*it)->onUpdate(deltaTime);
-	}
+    void CFramework::spriteDeferredDestruction()
+    {
+        auto it_end = m_sprites.end();
+        for (auto it = m_sprites.begin(); it != it_end; ++it)
+        {
+            (*it)->destroy();
+        }
 
-	void CFramework::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
-	{
-		for (auto it = m_listeners.begin(), itEnd = m_listeners.end(); it != itEnd; ++it)
-			(*it)->onInput(get_key, deltaTime);
-	}
+        m_sprites.clear();
+    }
 
-	bool CFramework::initVariables()
-	{
-		m_pVariablesManager = new CVariablesManager();
+    void CFramework::onUpdate(float deltaTime)
+    {
+        for (auto & m_listener : m_listeners)
+        {
+            m_listener->onUpdate(deltaTime);
+        }
+    }
 
-		std::string systemFile = utils::PathUtils::executablePath() + "\\system.csv";
-		if (!m_pVariablesManager->loadConfig(systemFile.c_str()))
-		{
-			std::cerr << "[ERROR] Variables manager cannot load file " << systemFile.c_str() << std::endl;
-			return false;
-		}
+    void CFramework::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
+    {
+        for (auto & m_listener : m_listeners)
+        {
+            m_listener->onInput(get_key, deltaTime);
+        }
+    }
 
-		std::string variablesFile = utils::PathUtils::executablePath() + "\\variables.csv";
-		if (!m_pVariablesManager->loadConfig(variablesFile.c_str()))
-		{
-			std::cerr << "[ERROR] Variables manager cannot load file " << variablesFile.c_str() << std::endl;
-			return false;
-		}
+    bool CFramework::initVariables()
+    {
+        m_pVariablesManager = new CVariablesManager();
 
-		return true;
-	}
+        std::string system_file = utils::path_utils::executablePath() + "\\system.csv";
+        if (!m_pVariablesManager->loadConfig(system_file.c_str()))
+        {
+            std::cerr << "[ERROR] Variables manager cannot load file " << system_file.c_str()
+                      << std::endl;
+            return false;
+        }
+
+        std::string variables_file = utils::path_utils::executablePath() + "\\variables.csv";
+        if (!m_pVariablesManager->loadConfig(variables_file.c_str()))
+        {
+            std::cerr << "[ERROR] Variables manager cannot load file " << variables_file.c_str()
+                      << std::endl;
+            return false;
+        }
+
+        return true;
+    }
 
 } // namespace engine
