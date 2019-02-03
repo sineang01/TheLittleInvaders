@@ -28,8 +28,8 @@ extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 namespace engine {
 	namespace graphic {
 
-		CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent) :
-			CGraphicItem(pParent)
+		CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent)
+			:CGraphicItem(pParent)
 		{
 			setPosition(0, 0);
 		}
@@ -39,11 +39,6 @@ namespace engine {
 		{
 			setText(text);
 			setPosition(0, 0);
-		}
-
-		const char * CGraphicTextfield::text()
-		{
-			return m_text.c_str();
 		}
 
 		void CGraphicTextfield::setText(const char * format, ...)

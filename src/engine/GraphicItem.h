@@ -43,25 +43,25 @@ namespace engine {
 			CGraphicItem(const CGraphicItem &) = delete;
 			CGraphicItem &operator=(const CGraphicItem &) = delete;
 
-			virtual void paint();
+			virtual void paint() { draw(drawOffset(this) + position()); }
 
 			utils::interfaces::IGraphicItem * parent() const;
 			void setParent(utils::interfaces::IGraphicItem * pParent);
 
-			utils::CPoint position() const;
-			void setPosition(const utils::CPoint & position);
-			void setPosition(double x, double y);
+			utils::CPoint position() const { return m_rectangle.position(); }
+			void setPosition(const utils::CPoint & position) { m_rectangle.setPosition(position); }
+			void setPosition(double x, double y) { m_rectangle.setPosition(x, y); }
 
-			utils::CSize size() const;
-			void setSize(const utils::CSize & size);
-			void setSize(double w, double h);
+			utils::CSize size() const { return m_rectangle.size(); }
+			void setSize(const utils::CSize & size) { m_rectangle.setSize(size); }
+			void setSize(double w, double h) { m_rectangle.setSize(utils::CSize(w, h)); }
 
-			utils::CRectangle rectangle() const;
+			utils::CRectangle rectangle() const { return m_rectangle; }
 			void setRectangle(const utils::CRectangle & rectangle);
 			void setRectangle(double x, double y, double width, double height);
 
-			const TGraphicItems & items() const;
-			virtual utils::CRectangle shape() const;
+			const TGraphicItems & items() const { return m_children; }
+			virtual utils::CRectangle shape() const { return m_rectangle; }
 
 			bool collidesWithItem(const IGraphicItem * pOther, collision_mode mode = collision_mode::intersect) const;
 			bool collidesWithRectangle(const utils::CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect) const;
@@ -69,7 +69,7 @@ namespace engine {
 			TGraphicItems collidingItems(const utils::CRectangle & rectangle, collision_mode mode = collision_mode::intersect) const;
 
 		protected:
-			void draw(const utils::CPoint & position);
+			void draw(const utils::CPoint & position) { draw((int)position.x(), (int)position.y()); }
 			virtual void draw(int x, int y) = 0;
 
 			static bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect);
@@ -93,7 +93,7 @@ namespace engine {
 		private:
 			utils::CRectangle m_rectangle;
 
-			IGraphicItem * m_pParent;
+			IGraphicItem * m_pParent{ nullptr };
 			TGraphicItems m_children;
 		};
 	

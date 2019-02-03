@@ -30,9 +30,8 @@ static const char * PLATFORM_LIBRARY_ENTRY_POINT = "EasyPlatformFactory";
 namespace engine {
 	namespace platform {
 
-		CEasyPlatform::CEasyPlatform() :
-			CLibraryHandler(PLATFORM_LIBRARY_NAME),
-			m_interface(nullptr)
+		CEasyPlatform::CEasyPlatform()
+			:CLibraryHandler(PLATFORM_LIBRARY_NAME)
 		{
 			assert(init());
 		}
@@ -53,11 +52,6 @@ namespace engine {
 			assert(m_interface);
 
 			return true;
-		}
-
-		utils::interfaces::IPlatform* CEasyPlatform::platform() const
-		{
-			return m_interface;
 		}
 
 	} // namespace platform

@@ -33,10 +33,6 @@ namespace engine {
 	static const char * VARIABLE_TYPE_DOUBLE = "double";
 	static const char * VARIABLE_TYPE_STRING = "string";
 
-	CVariablesManager::CVariablesManager()
-	{
-	}
-
 	CVariablesManager::~CVariablesManager()
 	{
 		if (m_variables.empty())
@@ -133,36 +129,6 @@ namespace engine {
 			return nullptr;
 
 		return it->second;
-	}
-
-	utils::interfaces::IVariable * CVariablesManager::registerVariable(const char * name, unsigned int defaultValue)
-	{
-		return registerVariable<unsigned int>(name, defaultValue);
-	}
-
-	utils::interfaces::IVariable * CVariablesManager::registerVariable(const char * name, int defaultValue)
-	{
-		return registerVariable<int>(name, defaultValue);
-	}
-
-	utils::interfaces::IVariable * CVariablesManager::registerVariable(const char * name, float defaultValue)
-	{
-		return registerVariable<float>(name, defaultValue);
-	}
-
-	utils::interfaces::IVariable * CVariablesManager::registerVariable(const char * name, double defaultValue)
-	{
-		return registerVariable<double>(name, defaultValue);
-	}
-
-	utils::interfaces::IVariable * CVariablesManager::registerVariable(const char * name, bool defaultValue)
-	{
-		return registerVariable<bool>(name, defaultValue);
-	}
-
-	utils::interfaces::IVariable * CVariablesManager::registerVariable(const char * name, std::string defaultValue)
-	{
-		return registerVariable<std::string>(name, defaultValue);
 	}
 
 	std::string CVariablesManager::getLower(const char * value) const

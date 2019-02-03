@@ -62,19 +62,19 @@ namespace engine {
 
 	public:
 		// IFramework
-		bool init();
-		int exec();
-		float elapsedTime() const;
-		utils::interfaces::IGraphicContainer * window() const;
-		unsigned int random(size_t maxValue) const;
-		const char * applicationPath() const;
-		utils::interfaces::IVariablesManager * variablesManager() const;
+		bool init() override;
+		int exec() override;
+		utils::interfaces::IGraphicContainer * window() const override;
+		inline float elapsedTime() const override { return m_time; }
+		inline unsigned int random(size_t maxValue) const override { return rand() % maxValue; }
+		inline const char * applicationPath() const override { return m_applicationPath.c_str(); }
+		utils::interfaces::IVariablesManager * variablesManager() const override;
 		// ~IFramework
 
 	protected:
 		// IFrameworkListener
-		void onUpdate(float deltaTime);
-		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
+		void onUpdate(float deltaTime) override;
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime) override;
 		// ~IFrameworkListener
 
 	private:
@@ -84,18 +84,18 @@ namespace engine {
 		bool initVariables();
 
 	private:
-		utils::interfaces::IPlatformManager * m_pPlatformManager;
-		graphic::CGraphicContainer * m_pWindow;
-		CVariablesManager * m_pVariablesManager;
+		utils::interfaces::IPlatformManager * m_pPlatformManager{ nullptr };
+		graphic::CGraphicContainer * m_pWindow{ nullptr };
+		CVariablesManager * m_pVariablesManager{ nullptr };
 
 		typedef std::vector<utils::interfaces::ISprite *> TSprites;
 		TSprites m_sprites;
 
-		float m_time;
+		float m_time{ 0.0f };
 
-		utils::interfaces::CInputKey m_keyFire;
-		utils::interfaces::CInputKey m_keyLeft;
-		utils::interfaces::CInputKey m_keyRight;
+		utils::interfaces::CInputKey m_keyFire{ utils::interfaces::CInputKey::key::fire };
+		utils::interfaces::CInputKey m_keyLeft{ utils::interfaces::CInputKey::key::left };
+		utils::interfaces::CInputKey m_keyRight{ utils::interfaces::CInputKey::key::right };
 
 		std::string m_applicationPath;
 	};

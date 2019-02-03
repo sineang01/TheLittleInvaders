@@ -37,18 +37,18 @@ namespace game {
 	{
 	public:
 		CGameStateInGame();
-		~CGameStateInGame();
+		~CGameStateInGame() override;
 		CGameStateInGame(const CGameStateInGame &) = delete;
 		CGameStateInGame &operator=(const CGameStateInGame &) = delete;
 
-		bool init();
+		bool init() override;
 
-		void onUpdate(float deltaTime) {};
-		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
+		void onUpdate(float deltaTime) override {};
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime) override;
 
 	protected:
 		// IGameTimerListener
-		void timeout();
+		void timeout() override;
 		// ~IGameTimerListener
 
 	private:
@@ -68,11 +68,11 @@ namespace game {
 		void updateScore();
 		void updateHealth();
 
-		bool isAlien(utils::interfaces::IGraphicItem * pItem) const;
-		bool isSuperAlien(utils::interfaces::IGraphicItem * pItem) const;
-		bool isPlayer(utils::interfaces::IGraphicItem * pItem) const;
-		bool isRocket(utils::interfaces::IGraphicItem * pItem) const;
-		bool isBomb(utils::interfaces::IGraphicItem * pItem) const;
+		inline bool isAlien(utils::interfaces::IGraphicItem * pItem) const { return utils::containers::gFind(m_aliens, pItem); }
+		inline bool isSuperAlien(utils::interfaces::IGraphicItem * pItem) const;
+		inline bool isPlayer(utils::interfaces::IGraphicItem * pItem) const;
+		inline bool isRocket(utils::interfaces::IGraphicItem * pItem) const { return utils::containers::gFind(m_rockets, pItem); }
+		inline bool isBomb(utils::interfaces::IGraphicItem * pItem) const { return utils::containers::gFind(m_bombs, pItem); }
 
 		/**
 		 * @brief Retreives a list of aliens able to shoot bombs
@@ -91,28 +91,28 @@ namespace game {
 		bool isAnyAlienBypassed() const;
 
 	private:
-		utils::interfaces::IGraphicContainer * m_pContainer;
-		utils::interfaces::IGraphicContainer * m_pGameArea;
+		utils::interfaces::IGraphicContainer * m_pContainer{ nullptr };
+		utils::interfaces::IGraphicContainer * m_pGameArea{ nullptr };
 
-		utils::interfaces::IGraphicBitmap * m_pPlayer;
+		utils::interfaces::IGraphicBitmap * m_pPlayer{ nullptr };
 
 		utils::interfaces::IGraphicItem::TGraphicItems m_aliens; /* The vector behaves like a bydimentional array. Aliens deleted are set to nullptr, but not removed from array */
-		bool m_aliensMoveLeft;
-		bool m_aliensMoveDown;
+		bool m_aliensMoveLeft{ false };
+		bool m_aliensMoveDown{ false };
 
-		utils::interfaces::IGraphicBitmap * m_pSuperAlien;
+		utils::interfaces::IGraphicBitmap * m_pSuperAlien{ nullptr };
 
 		utils::interfaces::IGraphicItem::TGraphicItems m_rockets;
 		utils::interfaces::IGraphicItem::TGraphicItems m_bombs;
 
-		utils::interfaces::IGraphicTextfield * m_pScoreTextField;
-		utils::interfaces::IGraphicTextfield * m_pHealthTextField;
+		utils::interfaces::IGraphicTextfield * m_pScoreTextField{ nullptr };
+		utils::interfaces::IGraphicTextfield * m_pHealthTextField{ nullptr };
 
-		int m_difficulty;
+		int m_difficulty{ 1 };
 
-		utils::CGameTimer m_timer;
+		utils::CGameTimer m_timer{ 1 / 60.0f }; // 60 fps
 
-		utils::interfaces::IVariablesManager * m_pVariables;
+		utils::interfaces::IVariablesManager * m_pVariables{ nullptr };
 
 		const int VAR_ALIEN_ROWS_VALUE;
 		const int VAR_ALIEN_COLUMNS_VALUE;

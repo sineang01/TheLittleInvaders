@@ -52,8 +52,8 @@ namespace game {
 		CGame(const CGame &) = delete;
 		CGame &operator=(const CGame &) = delete;
 
-		int lifes() const;
-		int score() const;
+		inline int lifes() const { return m_lifes; }
+		inline int score() const { return m_score; }
 
 	public:
 		static const utils::CPicture PICTURE_ALIEN_1;
@@ -79,9 +79,9 @@ namespace game {
 		void resetGame();
 
 	private:
-		CGameStateCommon * m_pState;
-		game_state m_gameState;
-		game_state m_deferredState; /* Memorizes the game state to set it at the end of the frame */
+		CGameStateCommon * m_pState{ nullptr };
+		game_state m_gameState{ game_state::invalid };
+		game_state m_deferredState{ game_state::invalid }; /* Memorizes the game state to set it at the end of the frame */
 
 		int m_lifes;
 		int m_score;

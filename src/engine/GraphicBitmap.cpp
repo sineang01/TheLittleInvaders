@@ -27,10 +27,9 @@ extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 namespace engine {
 	namespace graphic {
 
-		CGraphicBitmap::CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent) :
-			CGraphicItem(pParent),
-			m_pSprite(nullptr),
-			m_shape(picture.shape())
+		CGraphicBitmap::CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent)
+			:CGraphicItem(pParent)
+			,m_shape(picture.shape())
 		{
 			assert(picture.isValid());
 
@@ -54,11 +53,6 @@ namespace engine {
 			assert(pFramework);
 
 			pFramework->destroySprite(m_pSprite);
-		}
-
-		utils::CRectangle CGraphicBitmap::shape() const
-		{
-			return m_shape.translated(position());
 		}
 
 		void CGraphicBitmap::draw(int x, int y)

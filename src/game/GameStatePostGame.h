@@ -33,14 +33,14 @@ namespace game {
 	{
 	public:
 		CGameStatePostGame(bool success, int score);
-		~CGameStatePostGame();
+		~CGameStatePostGame() override;
 		CGameStatePostGame(const CGameStatePostGame &) = delete;
 		CGameStatePostGame &operator=(const CGameStatePostGame &) = delete;
 
-		bool init() { return true; }
+		bool init() override { return true; }
 
-		void onUpdate(float deltaTime) {};
-		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
+		void onUpdate(float deltaTime) override {};
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime) override;
 
 	private:
 		utils::interfaces::IGraphicContainer * m_pContainer;

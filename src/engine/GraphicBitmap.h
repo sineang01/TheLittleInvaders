@@ -35,17 +35,19 @@ namespace engine {
 		{
 		public:
 			CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent = nullptr);
-			virtual ~CGraphicBitmap();
 			CGraphicBitmap(const CGraphicBitmap &) = delete;
 			CGraphicBitmap &operator=(const CGraphicBitmap &) = delete;
+			virtual ~CGraphicBitmap() override;
 
-			utils::CRectangle shape() const;
+			utils::CRectangle shape() const { return m_shape.translated(position()); }
 
 		protected:
-			void draw(int x, int y);
+			// CGraphicItem
+			void draw(int x, int y) override;
+			//~CGraphicItem
 
 		private:
-			utils::interfaces::ISprite * m_pSprite;
+			utils::interfaces::ISprite * m_pSprite{ nullptr };
 			utils::CRectangle m_shape;
 		};
 

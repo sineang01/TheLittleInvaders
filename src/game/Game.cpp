@@ -33,10 +33,7 @@ namespace game {
 	const utils::CPicture CGame::PICTURE_ROCKET = utils::CPicture("images\\rocket.bmp", utils::CRectangle(14, 7, 4, 19));
 	const utils::CPicture CGame::PICTURE_BOMB = utils::CPicture("images\\bomb.bmp", utils::CRectangle(12, 8, 8, 16));
 
-	CGame::CGame() :
-		m_pState(nullptr),
-		m_gameState(game_state::invalid),
-		m_deferredState(game_state::invalid)
+	CGame::CGame()
 	{
 		resetGame();
 	}
@@ -137,16 +134,6 @@ namespace game {
 	{
 		if (m_pState)
 			m_pState->onInput(get_key, deltaTime);
-	}
-
-	int CGame::lifes() const
-	{
-		return m_lifes;
-	}
-
-	int CGame::score() const
-	{
-		return m_score;
 	}
 
 } // namespace game

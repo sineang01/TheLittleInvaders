@@ -31,29 +31,20 @@ namespace game {
 
 	static const int DIFFICULY_MULT = 5;
 
-	CGameStateInGame::CGameStateInGame() :
-		m_pGameArea(nullptr),
-		m_pPlayer(nullptr),
-		m_aliensMoveLeft(false),
-		m_aliensMoveDown(false),
-		m_pSuperAlien(nullptr),
-		m_pScoreTextField(nullptr),
-		m_pHealthTextField(nullptr),
-		m_difficulty(1),
-		m_timer(1 / 60.0f),	//60 fps
-		m_pVariables(gEnv->pFramework->variablesManager()),
+	CGameStateInGame::CGameStateInGame()
+		:m_pVariables(gEnv->pFramework->variablesManager())
 		//VARIABLE VALUES - optimization to avoid retrieving the same value every cycle
-		VAR_ALIEN_ROWS_VALUE(m_pVariables->variable("g_AlienRows")->value<unsigned int>()),
-		VAR_ALIEN_COLUMNS_VALUE(m_pVariables->variable("g_AlienColumns")->value<unsigned int>()),
-		VAR_PLAYER_SPEED_VALUE(m_pVariables->variable("g_PlayerSpeedPxSec")->value<float>()),
-		VAR_ALIEN_SPEED_VALUE(m_pVariables->variable("g_AlienSpeedPxSec")->value<float>()),
-		VAR_ROCKET_SPEED_VALUE(m_pVariables->variable("g_RocketSpeedPxSec")->value<float>()),
-		VAR_BOMB_SPEED_VALUE(m_pVariables->variable("g_BombSpeedPxSec")->value<float>()),
-		VAR_BOMB_MAX_ON_SCREEN_VALUE(m_pVariables->variable("g_BombMaxOnScreen")->value<unsigned int>()),
-		VAR_BOMB_PROBABILITY_VALUE(m_pVariables->variable("g_BombProbablityPercentage")->value<unsigned int>()),
-		VAR_HEALTH_DAMAGE_VALUE(m_pVariables->variable("g_healthDamage")->value<unsigned int>()),
-		VAR_KILL_SCORE_VALUE(m_pVariables->variable("g_killScore")->value<unsigned int>()),
-		VAR_KILL_SCORE_SPECIAL_VALUE(m_pVariables->variable("g_killScoreSpecial")->value<unsigned int>())
+		,VAR_ALIEN_ROWS_VALUE(m_pVariables->variable("g_AlienRows")->value<unsigned int>())
+		,VAR_ALIEN_COLUMNS_VALUE(m_pVariables->variable("g_AlienColumns")->value<unsigned int>())
+		,VAR_PLAYER_SPEED_VALUE(m_pVariables->variable("g_PlayerSpeedPxSec")->value<float>())
+		,VAR_ALIEN_SPEED_VALUE(m_pVariables->variable("g_AlienSpeedPxSec")->value<float>())
+		,VAR_ROCKET_SPEED_VALUE(m_pVariables->variable("g_RocketSpeedPxSec")->value<float>())
+		,VAR_BOMB_SPEED_VALUE(m_pVariables->variable("g_BombSpeedPxSec")->value<float>())
+		,VAR_BOMB_MAX_ON_SCREEN_VALUE(m_pVariables->variable("g_BombMaxOnScreen")->value<unsigned int>())
+		,VAR_BOMB_PROBABILITY_VALUE(m_pVariables->variable("g_BombProbablityPercentage")->value<unsigned int>())
+		,VAR_HEALTH_DAMAGE_VALUE(m_pVariables->variable("g_healthDamage")->value<unsigned int>())
+		,VAR_KILL_SCORE_VALUE(m_pVariables->variable("g_killScore")->value<unsigned int>())
+		,VAR_KILL_SCORE_SPECIAL_VALUE(m_pVariables->variable("g_killScoreSpecial")->value<unsigned int>())
 	{
 		m_pContainer = gEnv->pFramework->window()->addContainer();
 		m_pContainer->setSize(gEnv->pFramework->window()->size());
@@ -181,24 +172,21 @@ namespace game {
 				m_aliensMoveDown = true;
 				return; // One alien reaching the borders is enough to say that aliens have to move down
 			}
-			else
-				if (isSuperAlien(pItem))
-				{
-					delete m_pSuperAlien;
-					m_pSuperAlien = nullptr;
-				}
-				else
-					if (isRocket(pItem))
-					{
-						utils::containers::gFindAndErase(m_rockets, pItem);
-						delete pItem;
-					}
-					else
-						if (isBomb(pItem))
-						{
-							utils::containers::gFindAndErase(m_bombs, pItem);
-							m_pContainer->removeItem(pItem);
-						}
+			else if (isSuperAlien(pItem))
+			{
+				delete m_pSuperAlien;
+				m_pSuperAlien = nullptr;
+			}
+			else if (isRocket(pItem))
+			{
+				utils::containers::gFindAndErase(m_rockets, pItem);
+				delete pItem;
+			}
+			else if (isBomb(pItem))
+			{
+				utils::containers::gFindAndErase(m_bombs, pItem);
+				m_pContainer->removeItem(pItem);
+			}
 		}
 	}
 
@@ -219,12 +207,11 @@ namespace game {
 				utils::containers::gFindAndReplace(m_aliens, pItem, (utils::interfaces::IGraphicItem *)nullptr);
 				delete pItem;
 			}
-			else
-				if (isBomb(pItem))
-				{
-					utils::containers::gFindAndErase(m_bombs, pItem);
-					delete pItem;
-				}
+			else if (isBomb(pItem))
+			{
+				utils::containers::gFindAndErase(m_bombs, pItem);
+				delete pItem;
+			}
 
 			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_health, VAR_HEALTH_DAMAGE_VALUE));
 		}
@@ -256,17 +243,16 @@ namespace game {
 
 				gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_score, VAR_KILL_SCORE_VALUE));
 			}
-			else
-				if (isSuperAlien(pItem))
-				{
-					delete m_pSuperAlien;
-					m_pSuperAlien = nullptr;
+			else if (isSuperAlien(pItem))
+			{
+				delete m_pSuperAlien;
+				m_pSuperAlien = nullptr;
 
-					(*itRocket) = nullptr;
-					delete pRocket;
+				(*itRocket) = nullptr;
+				delete pRocket;
 
-					gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_score, VAR_KILL_SCORE_SPECIAL_VALUE));
-				}
+				gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_score, VAR_KILL_SCORE_SPECIAL_VALUE));
+			}
 		}
 
 		utils::containers::gFindAndEraseAll(m_rockets, (utils::interfaces::IGraphicItem *)nullptr);
@@ -410,11 +396,6 @@ namespace game {
 		m_pHealthTextField->setText("HEALTH: %d", static_cast<CGame*>(gEnv->pGame)->lifes());
 	}
 
-	bool CGameStateInGame::isAlien(utils::interfaces::IGraphicItem * pItem) const
-	{
-		return utils::containers::gFind(m_aliens, pItem);
-	}
-
 	bool CGameStateInGame::isSuperAlien(utils::interfaces::IGraphicItem * pItem) const
 	{
 		return pItem == m_pSuperAlien;
@@ -423,16 +404,6 @@ namespace game {
 	bool CGameStateInGame::isPlayer(utils::interfaces::IGraphicItem * pItem) const
 	{
 		return pItem == m_pPlayer;
-	}
-
-	bool CGameStateInGame::isRocket(utils::interfaces::IGraphicItem * pItem) const
-	{
-		return utils::containers::gFind(m_rockets, pItem);
-	}
-
-	bool CGameStateInGame::isBomb(utils::interfaces::IGraphicItem * pItem) const
-	{
-		return utils::containers::gFind(m_bombs, pItem);
 	}
 
 	utils::interfaces::IGraphicItem::TGraphicItems CGameStateInGame::aliveAliens() const

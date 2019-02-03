@@ -30,23 +30,24 @@ namespace engine {
 		{
 		public:
 			CGraphicContainer(CGraphicItem * pParent = nullptr);
-			virtual ~CGraphicContainer() {};
 			CGraphicContainer(const CGraphicContainer &) = delete;
 			CGraphicContainer &operator=(const CGraphicContainer &) = delete;
+			virtual ~CGraphicContainer() override {};
 
 			void paint();
 
-			utils::interfaces::IGraphicContainer * addContainer();
-			utils::interfaces::IGraphicBitmap * addBitmap(const utils::CPicture & picture);
-			utils::interfaces::IGraphicTextfield * addTextfield(const char * text = nullptr);
+			// IGraphicContainer
+			inline utils::interfaces::IGraphicContainer * addContainer() override { return new CGraphicContainer(this); }
+			inline utils::interfaces::IGraphicBitmap * addBitmap(const utils::CPicture & picture) override { return new CGraphicBitmap(picture, this); }
+			utils::interfaces::IGraphicTextfield * addTextfield(const char * text = nullptr) override;
+			//~IGraphicContainer
 
 			void removeItem(IGraphicItem * pItem);
 
-		private:
-
-
 		protected:
-			virtual void draw(int x, int y) {}
+			// CGraphicItem
+			virtual void draw(int x, int y) override {}
+			//~CGraphicItem
 		};
 
 	} // namespace graphic

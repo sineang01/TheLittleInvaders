@@ -29,15 +29,15 @@ namespace engine {
 		public:
 			CGraphicTextfield(CGraphicItem * pParent = nullptr);
 			CGraphicTextfield(const char * text, CGraphicItem * pParent = nullptr);
-			virtual ~CGraphicTextfield() {};
 			CGraphicTextfield(const CGraphicTextfield &) = delete;
 			CGraphicTextfield &operator=(const CGraphicTextfield &) = delete;
+			virtual ~CGraphicTextfield() override {};
 
-			const char * text();
-			void setText(const char * format, ...);
+			const char * text() override { return m_text.c_str(); }
+			void setText(const char * format, ...) override;
 
 		protected:
-			void draw(int x, int y);
+			void draw(int x, int y) override;
 
 		private:
 			std::string m_text;

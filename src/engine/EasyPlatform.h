@@ -36,11 +36,11 @@ namespace engine {
 			bool init();
 
 			// IPlatformManager
-			utils::interfaces::IPlatform* platform() const;
+			inline utils::interfaces::IPlatform* platform() const override { return m_interface; }
 			// ~IPlatformManager
 
 		private:
-			utils::interfaces::IPlatform * m_interface;
+			utils::interfaces::IPlatform * m_interface{ nullptr };
 		};
 
 	} // namespace platform

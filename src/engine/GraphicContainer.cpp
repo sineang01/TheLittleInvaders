@@ -23,19 +23,9 @@
 namespace engine {
 	namespace graphic {
 
-		CGraphicContainer::CGraphicContainer(CGraphicItem * pParent) :
-			CGraphicItem(pParent)
+		CGraphicContainer::CGraphicContainer(CGraphicItem * pParent)
+			:CGraphicItem(pParent)
 		{
-		}
-
-		utils::interfaces::IGraphicContainer * CGraphicContainer::addContainer()
-		{
-			return new CGraphicContainer(this);
-		}
-
-		utils::interfaces::IGraphicBitmap * CGraphicContainer::addBitmap(const utils::CPicture & picture)
-		{
-			return new CGraphicBitmap(picture, this);
 		}
 
 		utils::interfaces::IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)

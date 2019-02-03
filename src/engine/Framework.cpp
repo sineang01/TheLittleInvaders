@@ -41,14 +41,7 @@ namespace engine {
 	static const char * GAME_LIBRARY_ENTRY_POINT_CREATE = "CreateGame";
 	static const char * GAME_LIBRARY_ENTRY_POINT_DESTROY = "DestroyGame";
 
-	CFramework::CFramework() :
-		m_pPlatformManager(nullptr),
-		m_pWindow(nullptr),
-		m_pVariablesManager(nullptr),
-		m_time(0.0f),
-		m_keyFire(utils::interfaces::CInputKey::key::fire),
-		m_keyLeft(utils::interfaces::CInputKey::key::left),
-		m_keyRight(utils::interfaces::CInputKey::key::right)
+	CFramework::CFramework()
 	{
 		makeApplicationPath();
 	}
@@ -202,30 +195,15 @@ namespace engine {
 		return m_pPlatformManager->platform();
 	}
 
-	float CFramework::elapsedTime() const
-	{
-		return m_time;
-	}
-
 	utils::interfaces::IGraphicContainer * CFramework::window() const
 	{
 		return m_pWindow;
-	}
-
-	unsigned int CFramework::random(size_t maxValue) const
-	{
-		return rand() % maxValue;
 	}
 
 	void CFramework::destroySprite(utils::interfaces::ISprite * pSprite)
 	{
 		assert(pSprite);
 		utils::containers::gPushBackUnique(m_sprites, pSprite);
-	}
-
-	const char * CFramework::applicationPath() const
-	{
-		return m_applicationPath.c_str();
 	}
 
 	utils::interfaces::IVariablesManager * CFramework::variablesManager() const

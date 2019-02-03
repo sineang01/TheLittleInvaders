@@ -29,6 +29,7 @@ namespace utils {
 
 			virtual IVariable * variable(const char * name) const = 0;
 
+			virtual IVariable * registerVariable(const char * name, unsigned int defaultValue) = 0;
 			virtual IVariable * registerVariable(const char * name, int defaultValue) = 0;
 			virtual IVariable * registerVariable(const char * name, float defaultValue) = 0;
 			virtual IVariable * registerVariable(const char * name, double defaultValue) = 0;

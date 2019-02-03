@@ -24,8 +24,7 @@
 namespace engine {
 	namespace graphic {
 
-		CGraphicItem::CGraphicItem(CGraphicItem * pParent) :
-			m_pParent(nullptr)
+		CGraphicItem::CGraphicItem(CGraphicItem * pParent)
 		{
 			setParent(pParent);
 		}
@@ -67,41 +66,6 @@ namespace engine {
 				dynamic_cast<CGraphicItem*>(m_pParent)->addChild(this);
 		}
 
-		utils::CPoint CGraphicItem::position() const
-		{
-			return m_rectangle.position();
-		}
-
-		void CGraphicItem::setPosition(const utils::CPoint & position)
-		{
-			m_rectangle.setPosition(position);
-		}
-
-		void CGraphicItem::setPosition(double x, double y)
-		{
-			m_rectangle.setPosition(x, y);
-		}
-
-		utils::CSize CGraphicItem::size() const
-		{
-			return m_rectangle.size();
-		}
-
-		void CGraphicItem::setSize(const utils::CSize & size)
-		{
-			m_rectangle.setSize(size);
-		}
-
-		void CGraphicItem::setSize(double w, double h)
-		{
-			m_rectangle.setSize(utils::CSize(w, h));
-		}
-
-		utils::CRectangle CGraphicItem::rectangle() const
-		{
-			return m_rectangle;
-		}
-
 		void CGraphicItem::setRectangle(const utils::CRectangle & rectangle)
 		{
 			m_rectangle.setPosition(rectangle.position());
@@ -126,16 +90,6 @@ namespace engine {
 		{
 			assert(pChild);
 			return utils::containers::gFindAndErase(m_children, pChild);
-		}
-
-		const CGraphicItem::TGraphicItems & CGraphicItem::items() const
-		{
-			return m_children;
-		}
-
-		utils::CRectangle CGraphicItem::shape() const
-		{
-			return m_rectangle;
 		}
 
 		bool CGraphicItem::collidesWithItem(const IGraphicItem * pOther, collision_mode mode) const
@@ -208,16 +162,6 @@ namespace engine {
 			}
 
 			return false;
-		}
-
-		void CGraphicItem::paint()
-		{
-			draw(drawOffset(this) + position());
-		}
-
-		void CGraphicItem::draw(const utils::CPoint & position)
-		{
-			draw((int)position.x(), (int)position.y());
 		}
 
 		utils::CPoint CGraphicItem::drawOffset(const IGraphicItem * pItem)
