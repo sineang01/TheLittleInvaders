@@ -22,9 +22,9 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES_OTHERS} ${SOURCEC_STATES})
 source_group("src" FILES ${SOURCES_OTHERS})
 source_group("src\\states" FILES ${SOURCEC_STATES})
 
-add_dependencies(${PROJECT_NAME} common)
-target_link_libraries(${PROJECT_NAME} common)
-target_include_directories(${PROJECT_NAME} PUBLIC ${common_SOURCE_DIR})
+add_dependencies(${PROJECT_NAME} utilities)
+target_link_libraries(${PROJECT_NAME} utilities)
+target_include_directories(${PROJECT_NAME} PUBLIC ${utilities_SOURCE_DIR})
 
 install(TARGETS ${PROJECT_NAME}
 	DESTINATION ${TheLittleInvaders_SOURCE_DIR}/output)

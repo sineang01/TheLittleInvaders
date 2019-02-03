@@ -35,9 +35,9 @@ source_group("src\\graphicview" FILES ${SOURCEC_GRAPHICVIEW_FRAMEWORK})
 source_group("src\\platforms" FILES ${SOURCES_PLATFORMS})
 source_group("src\\variables" FILES ${SOURCES_VARIABLES})
 
-add_dependencies(${PROJECT_NAME} common)
-target_link_libraries(${PROJECT_NAME} common)
-target_include_directories(${PROJECT_NAME} PUBLIC ${common_SOURCE_DIR})
+add_dependencies(${PROJECT_NAME} utilities)
+target_link_libraries(${PROJECT_NAME} utilities)
+target_include_directories(${PROJECT_NAME} PUBLIC ${utilities_SOURCE_DIR})
 
 install(TARGETS ${PROJECT_NAME}
 	DESTINATION ${TheLittleInvaders_SOURCE_DIR}/output)

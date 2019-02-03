@@ -9,9 +9,9 @@ set(SOURCES_ALL main.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES_ALL}) 
 source_group("src" FILES ${SOURCES_ALL})
 
-add_dependencies(${PROJECT_NAME} common)
-target_link_libraries(${PROJECT_NAME} common)
-target_include_directories(${PROJECT_NAME} PUBLIC ${common_SOURCE_DIR})
+add_dependencies(${PROJECT_NAME} utilities)
+target_link_libraries(${PROJECT_NAME} utilities)
+target_include_directories(${PROJECT_NAME} PUBLIC ${utilities_SOURCE_DIR})
 
 add_dependencies(${PROJECT_NAME} engine)
 target_link_libraries(${PROJECT_NAME} engine)

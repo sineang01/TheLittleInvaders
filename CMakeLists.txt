@@ -15,7 +15,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     endif()
 endif()
 
-add_subdirectory(src/common)
+add_subdirectory(src/utilities)
 add_subdirectory(src/engine)
 add_subdirectory(src/game)
 add_subdirectory(src/launcher)
