@@ -41,14 +41,14 @@ namespace utils {
 			typedef void(*TEntryFunctionDestroy)();
 
 			/**
-			  * @brief Initialize the framework using the given parameters
-			  * @return true if the platform is successfully initialized, otherwise false
-			  */
+			 * @brief Initialize the framework using the given parameters
+			 * @return true if the platform is successfully initialized, otherwise false
+			 */
 			virtual bool init() = 0;
 
 			/**
-			  * @brief Enters the main event loop. It is necessary to call this function to start event handling
-			  */
+			 * @brief Enters the main event loop. It is necessary to call this function to start event handling
+			 */
 			virtual int exec() = 0;
 
 			/**
@@ -57,23 +57,23 @@ namespace utils {
 			virtual float elapsedTime() const = 0;
 
 			/**
-			  * @brief Retreives the platform window
-			  */
+			 * @brief Retreives the platform window
+			 */
 			virtual IGraphicContainer * window() const = 0;
 
 			/**
-			  * @brief Generates a random value between 0 and maxValue
-			  */
+			 * @brief Generates a random value between 0 and maxValue
+			 */
 			virtual unsigned int random(size_t maxValue) const = 0;
 
 			/**
-				* @brief Retreives the application path
-				*/
+			 * @brief Retreives the application path
+			 */
 			virtual const char * applicationPath() const = 0;
 
 			/**
-				* @brief Retreives the variables manager
-				*/
+			 * @brief Retreives the variables manager
+			 */
 			virtual IVariablesManager * variablesManager() const = 0;
 		};
 

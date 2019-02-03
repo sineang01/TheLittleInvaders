@@ -63,16 +63,16 @@ namespace engine {
 			const TGraphicItems & items() const;
 			virtual utils::CRectangle shape() const;
 
-			bool collidesWithItem(const IGraphicItem * pOther, ECollisionMode mode = eCM_Intersect) const;
-			bool collidesWithRectangle(const utils::CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const;
-			TGraphicItems collidingItems(const IGraphicItem * pItem, ECollisionMode mode = eCM_Intersect) const;
-			TGraphicItems collidingItems(const utils::CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const;
+			bool collidesWithItem(const IGraphicItem * pOther, collision_mode mode = collision_mode::intersect) const;
+			bool collidesWithRectangle(const utils::CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect) const;
+			TGraphicItems collidingItems(const IGraphicItem * pItem, collision_mode mode = collision_mode::intersect) const;
+			TGraphicItems collidingItems(const utils::CRectangle & rectangle, collision_mode mode = collision_mode::intersect) const;
 
 		protected:
 			void draw(const utils::CPoint & position);
 			virtual void draw(int x, int y) = 0;
 
-			static bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect);
+			static bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect);
 
 		private:
 			/**

@@ -28,11 +28,11 @@ namespace utils {
 		{
 			typedef std::vector<IGraphicItem*> TGraphicItems;
 
-			enum ECollisionMode
+			enum class collision_mode
 			{
-				eCM_Contain = 0,            /* The output list contains only items whose shapes are fully contained in the shape of the current item */
-				eCM_IntersectNotContain,    /* The output list contains only items whose shapes interesct with the one of the current item, but is not fully contained */
-				eCM_Intersect               /* The output list contains only items whose shapes are intersecting at least by 1 pixel with the one of the current item */
+				contain = 0,            /* The output list contains only items whose shapes are fully contained in the shape of the current item */
+				intersect_not_contain,    /* The output list contains only items whose shapes interesct with the one of the current item, but is not fully contained */
+				intersect               /* The output list contains only items whose shapes are intersecting at least by 1 pixel with the one of the current item */
 			};
 
 			virtual IGraphicItem * parent() const = 0;
@@ -53,10 +53,10 @@ namespace utils {
 			virtual const TGraphicItems & items() const = 0;
 			virtual CRectangle shape() const = 0;
 
-			virtual bool collidesWithItem(const IGraphicItem * pOther, ECollisionMode mode = eCM_Intersect) const = 0;
-			virtual bool collidesWithRectangle(const CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const = 0;
-			virtual TGraphicItems collidingItems(const IGraphicItem * pItem, ECollisionMode mode = eCM_Intersect) const = 0;
-			virtual TGraphicItems collidingItems(const CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const = 0;
+			virtual bool collidesWithItem(const IGraphicItem * pOther, collision_mode mode = collision_mode::intersect) const = 0;
+			virtual bool collidesWithRectangle(const CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect) const = 0;
+			virtual TGraphicItems collidingItems(const IGraphicItem * pItem, collision_mode mode = collision_mode::intersect) const = 0;
+			virtual TGraphicItems collidingItems(const CRectangle & rectangle, collision_mode mode = collision_mode::intersect) const = 0;
 
 			virtual ~IGraphicItem() {};
 		};

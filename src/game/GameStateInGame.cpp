@@ -168,7 +168,7 @@ namespace game {
 		assert(m_pGameArea);
 		m_aliensMoveDown = false;
 
-		utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pGameArea, utils::interfaces::IGraphicItem::eCM_IntersectNotContain);
+		utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pGameArea, utils::interfaces::IGraphicItem::collision_mode::intersect_not_contain);
 
 		auto it_end = collidingitems.end();
 		for (auto it = collidingitems.begin(); it != it_end; ++it)
@@ -206,7 +206,7 @@ namespace game {
 	{
 		assert(m_pGameArea && m_pPlayer);
 
-		utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pPlayer, utils::interfaces::IGraphicItem::eCM_Intersect);
+		utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pPlayer, utils::interfaces::IGraphicItem::collision_mode::intersect);
 
 		auto it_end = collidingitems.end();
 		for (auto it = collidingitems.begin(); it != it_end; ++it)
@@ -226,7 +226,7 @@ namespace game {
 					delete pItem;
 				}
 
-			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Health, VAR_HEALTH_DAMAGE_VALUE));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_health, VAR_HEALTH_DAMAGE_VALUE));
 		}
 	}
 
@@ -238,7 +238,7 @@ namespace game {
 		for (auto itRocket = m_rockets.begin(); itRocket != itRocket_end; ++itRocket)
 		{
 			utils::interfaces::IGraphicItem * pRocket = (*itRocket);
-			utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(pRocket, utils::interfaces::IGraphicItem::eCM_Intersect);
+			utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(pRocket, utils::interfaces::IGraphicItem::collision_mode::intersect);
 
 			if (collidingitems.empty())
 				continue;
@@ -254,7 +254,7 @@ namespace game {
 				(*itRocket) = nullptr;
 				delete pRocket;
 
-				gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_VALUE));
+				gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_score, VAR_KILL_SCORE_VALUE));
 			}
 			else
 				if (isSuperAlien(pItem))
@@ -265,7 +265,7 @@ namespace game {
 					(*itRocket) = nullptr;
 					delete pRocket;
 
-					gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_SPECIAL_VALUE));
+					gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_score, VAR_KILL_SCORE_SPECIAL_VALUE));
 				}
 		}
 
@@ -275,13 +275,13 @@ namespace game {
 	void CGameStateInGame::checkVictoryConditions()
 	{
 		if (aliveAliens().empty())
-			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit, 1));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_exit, 1));
 
 		if (static_cast<CGame*>(gEnv->pGame)->lifes() <= 0)
-			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit, 0));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_exit, 0));
 
 		if (isAnyAlienBypassed())
-			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit, 0));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_exit, 0));
 	}
 
 	void CGameStateInGame::moveAliens(float deltaTime)
@@ -392,7 +392,7 @@ namespace game {
 			return;
 
 		// Verifies if there is any alien in the top row where the superAlien is spawned
-		if (!m_pGameArea->collidingItems(utils::CRectangle(0, 0, m_pGameArea->size().width(), CGame::PICTURE_ALIEN_2.size().height()), utils::interfaces::IGraphicItem::eCM_Intersect).empty())
+		if (!m_pGameArea->collidingItems(utils::CRectangle(0, 0, m_pGameArea->size().width(), CGame::PICTURE_ALIEN_2.size().height()), utils::interfaces::IGraphicItem::collision_mode::intersect).empty())
 			return;
 
 		m_pSuperAlien = m_pGameArea->addBitmap(CGame::PICTURE_ALIEN_1);

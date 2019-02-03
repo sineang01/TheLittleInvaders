@@ -79,7 +79,7 @@ namespace utils {
 			{
 				bool fire{ false };	/* space */
 				bool left{ false };	/* left arrow */
-				bool right{ false };	/* right arrow */
+				bool right{ false }; /* right arrow */
 			};
 
 			/**

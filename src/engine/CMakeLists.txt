@@ -17,7 +17,8 @@ set(SOURCEC_GRAPHICVIEW_FRAMEWORK
 set(SOURCES_PLATFORMS
 	EasyPlatform.cpp
 	EasyPlatform.h
-	PlatformFactory.cpp)
+	PlatformFactory.cpp
+	PlatformFactory.h)
 
 set(SOURCES_OTHERS
 	EngineDll.cpp

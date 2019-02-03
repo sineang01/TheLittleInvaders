@@ -138,7 +138,7 @@ namespace engine {
 			return m_rectangle;
 		}
 
-		bool CGraphicItem::collidesWithItem(const IGraphicItem * pOther, ECollisionMode mode) const
+		bool CGraphicItem::collidesWithItem(const IGraphicItem * pOther, collision_mode mode) const
 		{
 			assert(pOther);
 
@@ -147,7 +147,7 @@ namespace engine {
 			return collides(itemRectangle, otherRectangle, mode);
 		}
 
-		bool CGraphicItem::collidesWithRectangle(const utils::CRectangle & otherRectangle, ECollisionMode mode) const
+		bool CGraphicItem::collidesWithRectangle(const utils::CRectangle & otherRectangle, collision_mode mode) const
 		{
 			assert(otherRectangle.isValid());
 
@@ -156,7 +156,7 @@ namespace engine {
 			return collides(itemRectangle, otherRectangleTranslated, mode);
 		}
 
-		CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const IGraphicItem * pItem, ECollisionMode mode) const
+		CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const IGraphicItem * pItem, collision_mode mode) const
 		{
 			TGraphicItems collidingItems;
 
@@ -176,7 +176,7 @@ namespace engine {
 			return collidingItems;
 		}
 
-		CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const utils::CRectangle & rectangle, ECollisionMode mode) const
+		CGraphicItem::TGraphicItems CGraphicItem::collidingItems(const utils::CRectangle & rectangle, collision_mode mode) const
 		{
 			TGraphicItems collidingItems;
 
@@ -193,17 +193,17 @@ namespace engine {
 			return collidingItems;
 		}
 
-		bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, ECollisionMode mode)
+		bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, collision_mode mode)
 		{
 			switch (mode)
 			{
-			case eCM_Contain:
+			case collision_mode::contain:
 				return rectangle.contains(otherRectangle);
 
-			case eCM_IntersectNotContain:
+			case collision_mode::intersect_not_contain:
 				return rectangle.intersects(otherRectangle) && !rectangle.contains(otherRectangle);
 
-			case eCM_Intersect:
+			case collision_mode::intersect:
 				return rectangle.intersects(otherRectangle);
 			}
 

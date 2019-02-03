@@ -59,7 +59,7 @@ namespace game {
 	void CGameStatePostGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
 	{
 		if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
-			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::gameevent_exit));
 	}
 
 } // namespace game

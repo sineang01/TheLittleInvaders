@@ -35,8 +35,8 @@ namespace game {
 
 	CGame::CGame() :
 		m_pState(nullptr),
-		m_gameState(eGS_Invalid),
-		m_deferredState(eGS_Invalid)
+		m_gameState(game_state::invalid),
+		m_deferredState(game_state::invalid)
 	{
 		resetGame();
 	}
@@ -51,7 +51,7 @@ namespace game {
 		if (!gEnv->pFramework->addListener(this))
 			return false;
 
-		if (!setGameState(eGS_PreGame))
+		if (!setGameState(game_state::pregame))
 			return false;
 
 		return true;
@@ -72,7 +72,7 @@ namespace game {
 		m_succeded = false;
 	}
 
-	bool CGame::setGameState(EGameState state)
+	bool CGame::setGameState(game_state state)
 	{
 		if (state == m_gameState)
 			return true;
@@ -82,15 +82,15 @@ namespace game {
 
 		switch (state)
 		{
-		case eGS_InGame:
+		case game_state::ingame:
 			m_pState = new CGameStateInGame();
 			break;
 
-		case eGS_PreGame:
+		case game_state::pregame:
 			m_pState = new CGameStatePreGame();
 			break;
 
-		case eGS_PostGame:
+		case game_state::postgame:
 			m_pState = new CGameStatePostGame(m_succeded, m_score);
 			break;
 		}
@@ -107,21 +107,21 @@ namespace game {
 	{
 		switch (e.eventType)
 		{
-		case eGE_Exit:
+		case gameevent_exit:
 		{
-			if (m_gameState == eGS_PreGame) { m_deferredState = eGS_InGame; }
-			else if (m_gameState == eGS_InGame) { m_succeded = e.eventValue != 0; m_deferredState = eGS_PostGame; }
-			else if (m_gameState == eGS_PostGame) { m_deferredState = eGS_InGame; if (!m_succeded) resetGame(); }
+			if (m_gameState == game_state::pregame) { m_deferredState = game_state::ingame; }
+			else if (m_gameState == game_state::ingame) { m_succeded = e.eventValue != 0; m_deferredState = game_state::postgame; }
+			else if (m_gameState == game_state::postgame) { m_deferredState = game_state::ingame; if (!m_succeded) resetGame(); }
 		}
 		break;
 
-		case eGE_Health:
+		case gameevent_health:
 		{
 			m_lifes -= e.eventValue;
 		}
 		break;
 
-		case eGE_Score:
+		case gameevent_score:
 			m_score += e.eventValue;
 			break;
 		}

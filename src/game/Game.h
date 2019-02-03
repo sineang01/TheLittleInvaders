@@ -31,19 +31,19 @@ namespace game {
 	class CGame final : public utils::interfaces::IGame, private utils::interfaces::IFrameworkListener
 	{
 	public:
-		enum EGameEvent
+		enum game_event
 		{
-			eGE_Exit = 0,
-			eGE_Score,
-			eGE_Health
+			gameevent_exit = 0,
+			gameevent_score,
+			gameevent_health
 		};
 
-		enum EGameState
+		enum class game_state
 		{
-			eGS_Invalid = -1,
-			eGS_PreGame = 0,
-			eGS_InGame,
-			eGS_PostGame
+			invalid = -1,
+			pregame = 0,
+			ingame,
+			postgame
 		};
 
 	public:
@@ -75,13 +75,13 @@ namespace game {
 		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
 		// ~IFrameworkListener
 
-		bool setGameState(EGameState state);
+		bool setGameState(game_state state);
 		void resetGame();
 
 	private:
 		CGameStateCommon * m_pState;
-		EGameState m_gameState;
-		EGameState m_deferredState; /* Memorizes the game state to set it at the end of the frame */
+		game_state m_gameState;
+		game_state m_deferredState; /* Memorizes the game state to set it at the end of the frame */
 
 		int m_lifes;
 		int m_score;
