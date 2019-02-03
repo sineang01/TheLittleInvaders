@@ -3,6 +3,8 @@ TheLittleInvaders
 
 The Little Invaders is the classical invaders game realized as coding test for a game company and then extended in my spare time to realize a micro-engine meant to run any kind of 2D game provided in the implementation.
 
+![TheLittleInvaders](https://i.ibb.co/DRs7wL4/little-invaders.png)
+
 Info
 ====
 
