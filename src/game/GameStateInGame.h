@@ -31,11 +31,13 @@ namespace utils {
 	}
 }
 
-class CGameStateInGame final : public CGameStateCommon, public utils::IGameTimerListener
-{
+namespace game {
+
+	class CGameStateInGame final : public CGameStateCommon, public utils::IGameTimerListener
+	{
 	public:
 		CGameStateInGame();
-        ~CGameStateInGame();
+		~CGameStateInGame();
 		CGameStateInGame(const CGameStateInGame &) = delete;
 		CGameStateInGame &operator=(const CGameStateInGame &) = delete;
 
@@ -52,7 +54,7 @@ class CGameStateInGame final : public CGameStateCommon, public utils::IGameTimer
 	private:
 		void checkCollisionsWithBorder();
 		void checkCollisionsWithPlayer();
-        void checkCollisionsWithRockets();
+		void checkCollisionsWithRockets();
 
 		void checkVictoryConditions();
 
@@ -72,20 +74,20 @@ class CGameStateInGame final : public CGameStateCommon, public utils::IGameTimer
 		bool isRocket(utils::interfaces::IGraphicItem * pItem) const;
 		bool isBomb(utils::interfaces::IGraphicItem * pItem) const;
 
-        /**
-         * @brief Retreives a list of aliens able to shoot bombs
-         */
+		/**
+		 * @brief Retreives a list of aliens able to shoot bombs
+		 */
 		utils::interfaces::IGraphicItem::TGraphicItems freeAliens() const;
 
-        /**
-         * @brief Retreives a list of alive aliens
-         */
+		/**
+		 * @brief Retreives a list of alive aliens
+		 */
 		utils::interfaces::IGraphicItem::TGraphicItems aliveAliens() const;
 
-        /**
-         * @brief Checks if at least one alien bypassed the player (is lower than the player position)
-         * @return true if aliens bypassed player, otherwise false
-         */
+		/**
+		 * @brief Checks if at least one alien bypassed the player (is lower than the player position)
+		 * @return true if aliens bypassed player, otherwise false
+		 */
 		bool isAnyAlienBypassed() const;
 
 	private:
@@ -123,4 +125,6 @@ class CGameStateInGame final : public CGameStateCommon, public utils::IGameTimer
 		const int VAR_HEALTH_DAMAGE_VALUE;
 		const int VAR_KILL_SCORE_VALUE;
 		const int VAR_KILL_SCORE_SPECIAL_VALUE;
-};
+	};
+
+} // namespace game

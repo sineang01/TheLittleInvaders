@@ -27,32 +27,38 @@
 static const char * PLATFORM_LIBRARY_NAME = "EasyPlatform.dll";
 static const char * PLATFORM_LIBRARY_ENTRY_POINT = "EasyPlatformFactory";
 
-CEasyPlatform::CEasyPlatform():
-	CLibraryHandler(PLATFORM_LIBRARY_NAME),
-	m_interface(nullptr)
-{
-	assert(init());
-}
+namespace engine {
+	namespace platform {
 
-CEasyPlatform::~CEasyPlatform()
-{
-	if (m_interface)
-		m_interface->destroy();
-}
+		CEasyPlatform::CEasyPlatform() :
+			CLibraryHandler(PLATFORM_LIBRARY_NAME),
+			m_interface(nullptr)
+		{
+			assert(init());
+		}
 
-bool CEasyPlatform::init()
-{
-	if (!CLibraryHandler::init())
-		return false;
+		CEasyPlatform::~CEasyPlatform()
+		{
+			if (m_interface)
+				m_interface->destroy();
+		}
 
-	utils::interfaces::IPlatform::TEntryFunction* factory = (utils::interfaces::IPlatform::TEntryFunction*)GetProcAddress(libraryHandler(), PLATFORM_LIBRARY_ENTRY_POINT);
-	m_interface = factory();
-	assert(m_interface);
+		bool CEasyPlatform::init()
+		{
+			if (!CLibraryHandler::init())
+				return false;
 
-	return true;
-}
+			utils::interfaces::IPlatform::TEntryFunction* factory = (utils::interfaces::IPlatform::TEntryFunction*)GetProcAddress(libraryHandler(), PLATFORM_LIBRARY_ENTRY_POINT);
+			m_interface = factory();
+			assert(m_interface);
 
-utils::interfaces::IPlatform* CEasyPlatform::platform() const
-{
-	return m_interface;
-}
+			return true;
+		}
+
+		utils::interfaces::IPlatform* CEasyPlatform::platform() const
+		{
+			return m_interface;
+		}
+
+	} // namespace platform
+} // namespace engine

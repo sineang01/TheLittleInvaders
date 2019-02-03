@@ -23,12 +23,15 @@
 #include <Picture.h>
 
 class CGraphicContainer;
-class CGameStateCommon;
 
-class CGame final : public utils::interfaces::IGame, private utils::interfaces::IFrameworkListener
-{
+namespace game {
+
+	class CGameStateCommon;
+
+	class CGame final : public utils::interfaces::IGame, private utils::interfaces::IFrameworkListener
+	{
 	public:
-		enum EGameEvent 
+		enum EGameEvent
 		{
 			eGE_Exit = 0,
 			eGE_Score,
@@ -59,12 +62,12 @@ class CGame final : public utils::interfaces::IGame, private utils::interfaces::
 		static const utils::CPicture PICTURE_ROCKET;
 		static const utils::CPicture PICTURE_BOMB;
 
-    public:
-        // IGame
-        bool init();
+	public:
+		// IGame
+		bool init();
 		bool refresh();
 		void onEvent(utils::interfaces::SGameEvent eventId);
-        // ~IGame
+		// ~IGame
 
 	private:
 		// IFrameworkListener
@@ -78,9 +81,11 @@ class CGame final : public utils::interfaces::IGame, private utils::interfaces::
 	private:
 		CGameStateCommon * m_pState;
 		EGameState m_gameState;
-        EGameState m_deferredState; /* Memorizes the game state to set it at the end of the frame */
+		EGameState m_deferredState; /* Memorizes the game state to set it at the end of the frame */
 
 		int m_lifes;
 		int m_score;
 		bool m_succeded;
-};
+	};
+
+} // namespace game

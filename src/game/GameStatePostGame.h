@@ -27,11 +27,13 @@ namespace utils {
 	}
 }
 
-class CGameStatePostGame final : public CGameStateCommon
-{
+namespace game {
+
+	class CGameStatePostGame final : public CGameStateCommon
+	{
 	public:
 		CGameStatePostGame(bool success, int score);
-        ~CGameStatePostGame();
+		~CGameStatePostGame();
 		CGameStatePostGame(const CGameStatePostGame &) = delete;
 		CGameStatePostGame &operator=(const CGameStatePostGame &) = delete;
 
@@ -42,4 +44,6 @@ class CGameStatePostGame final : public CGameStateCommon
 
 	private:
 		utils::interfaces::IGraphicContainer * m_pContainer;
-};
+	};
+
+} // namespace game

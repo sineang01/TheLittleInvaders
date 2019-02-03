@@ -31,7 +31,7 @@ extern "C"
 	__declspec(dllexport) utils::interfaces::IFramework * CreateEngine(utils::interfaces::SSystemGlobalEnvironment * env)
 	{
 		gEnv = env;
-		gEnv->pFramework = new CFramework();
+		gEnv->pFramework = new engine::CFramework();
 		return gEnv->pFramework;
 	}
 
@@ -39,7 +39,7 @@ extern "C"
 	{
 		if (gEnv->pFramework)
 		{
-			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+			engine::CFramework * pFramework = static_cast<engine::CFramework*>(gEnv->pFramework);
 			delete pFramework;
 			gEnv->pFramework = nullptr;
 		}

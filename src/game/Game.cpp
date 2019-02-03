@@ -25,61 +25,63 @@
 #include "ISystemGlobalEnvironment.h"
 extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-const utils::CPicture CGame::PICTURE_ALIEN_1 = utils::CPicture("images\\enemy1.bmp", utils::CRectangle(4, 5, 24, 22));
-const utils::CPicture CGame::PICTURE_ALIEN_2 = utils::CPicture("images\\enemy2.bmp", utils::CRectangle(1, 5, 30, 22));
-const utils::CPicture CGame::PICTURE_PLAYER = utils::CPicture("images\\player.bmp", utils::CRectangle(2, 7, 28, 17));
-const utils::CPicture CGame::PICTURE_ROCKET = utils::CPicture("images\\rocket.bmp", utils::CRectangle(14, 7, 4, 19));
-const utils::CPicture CGame::PICTURE_BOMB = utils::CPicture("images\\bomb.bmp", utils::CRectangle(12, 8, 8, 16));
+namespace game {
 
-CGame::CGame():
-	m_pState(nullptr),
-	m_gameState(eGS_Invalid),
-	m_deferredState(eGS_Invalid)
-{
-	resetGame();
-}
+	const utils::CPicture CGame::PICTURE_ALIEN_1 = utils::CPicture("images\\enemy1.bmp", utils::CRectangle(4, 5, 24, 22));
+	const utils::CPicture CGame::PICTURE_ALIEN_2 = utils::CPicture("images\\enemy2.bmp", utils::CRectangle(1, 5, 30, 22));
+	const utils::CPicture CGame::PICTURE_PLAYER = utils::CPicture("images\\player.bmp", utils::CRectangle(2, 7, 28, 17));
+	const utils::CPicture CGame::PICTURE_ROCKET = utils::CPicture("images\\rocket.bmp", utils::CRectangle(14, 7, 4, 19));
+	const utils::CPicture CGame::PICTURE_BOMB = utils::CPicture("images\\bomb.bmp", utils::CRectangle(12, 8, 8, 16));
 
-CGame::~CGame()
-{
-	gEnv->pFramework->removeListener(this);
-}
-
-bool CGame::init()
-{
-	if (!gEnv->pFramework->addListener(this))
-		return false;
-
-	if (!setGameState(eGS_PreGame))
-		return false;
-
-	return true;
-}
-
-bool CGame::refresh()
-{
-	if (!setGameState(m_deferredState))
-		return false;
-
-	return true;
-}
-
-void CGame::resetGame()
-{
-	m_lifes = gEnv->pFramework->variablesManager()->variable("g_lifes")->value<unsigned int>();
-	m_score = 0;
-	m_succeded = false;
-}
-
-bool CGame::setGameState(EGameState state)
-{
-	if (state == m_gameState)
-		return true;
-
-	delete m_pState;
-	m_pState = nullptr;
-
-	switch (state)
+	CGame::CGame() :
+		m_pState(nullptr),
+		m_gameState(eGS_Invalid),
+		m_deferredState(eGS_Invalid)
 	{
+		resetGame();
+	}
+
+	CGame::~CGame()
+	{
+		gEnv->pFramework->removeListener(this);
+	}
+
+	bool CGame::init()
+	{
+		if (!gEnv->pFramework->addListener(this))
+			return false;
+
+		if (!setGameState(eGS_PreGame))
+			return false;
+
+		return true;
+	}
+
+	bool CGame::refresh()
+	{
+		if (!setGameState(m_deferredState))
+			return false;
+
+		return true;
+	}
+
+	void CGame::resetGame()
+	{
+		m_lifes = gEnv->pFramework->variablesManager()->variable("g_lifes")->value<unsigned int>();
+		m_score = 0;
+		m_succeded = false;
+	}
+
+	bool CGame::setGameState(EGameState state)
+	{
+		if (state == m_gameState)
+			return true;
+
+		delete m_pState;
+		m_pState = nullptr;
+
+		switch (state)
+		{
 		case eGS_InGame:
 			m_pState = new CGameStateInGame();
 			break;
@@ -91,58 +93,60 @@ bool CGame::setGameState(EGameState state)
 		case eGS_PostGame:
 			m_pState = new CGameStatePostGame(m_succeded, m_score);
 			break;
+		}
+
+		if (!m_pState->init())
+			return false;
+
+		m_gameState = state;
+		m_deferredState = state;
+		return true;
 	}
 
-	if (!m_pState->init())
-		return false;
-
-	m_gameState = state;
-	m_deferredState = state;
-	return true;
-}
-
-void CGame::onEvent(utils::interfaces::SGameEvent e)
-{
-	switch (e.eventType)
+	void CGame::onEvent(utils::interfaces::SGameEvent e)
 	{
+		switch (e.eventType)
+		{
 		case eGE_Exit:
-			{
-				if (m_gameState == eGS_PreGame) { m_deferredState = eGS_InGame; }
-				else if (m_gameState == eGS_InGame) { m_succeded = e.eventValue != 0; m_deferredState = eGS_PostGame; }
-				else if (m_gameState == eGS_PostGame) { m_deferredState = eGS_InGame; if (!m_succeded) resetGame(); }
-			}
-			break;
+		{
+			if (m_gameState == eGS_PreGame) { m_deferredState = eGS_InGame; }
+			else if (m_gameState == eGS_InGame) { m_succeded = e.eventValue != 0; m_deferredState = eGS_PostGame; }
+			else if (m_gameState == eGS_PostGame) { m_deferredState = eGS_InGame; if (!m_succeded) resetGame(); }
+		}
+		break;
 
 		case eGE_Health:
-			{
-				m_lifes -= e.eventValue;
-			}
-			break;
+		{
+			m_lifes -= e.eventValue;
+		}
+		break;
 
 		case eGE_Score:
 			m_score += e.eventValue;
 			break;
+		}
 	}
-}
 
-void CGame::onUpdate(float deltaTime)
-{
-	if (m_pState)
-		m_pState->onUpdate(deltaTime);
-}
+	void CGame::onUpdate(float deltaTime)
+	{
+		if (m_pState)
+			m_pState->onUpdate(deltaTime);
+	}
 
-void CGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
-{
-	if (m_pState)
-		m_pState->onInput(get_key, deltaTime);
-}
+	void CGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
+	{
+		if (m_pState)
+			m_pState->onInput(get_key, deltaTime);
+	}
 
-int CGame::lifes() const
-{
-	return m_lifes;
-}
+	int CGame::lifes() const
+	{
+		return m_lifes;
+	}
 
-int CGame::score() const
-{
-	return m_score;
-}
+	int CGame::score() const
+	{
+		return m_score;
+	}
+
+} // namespace game

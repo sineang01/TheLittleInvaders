@@ -24,41 +24,47 @@
 #include "ISystemGlobalEnvironment.h"
 extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-CGraphicBitmap::CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent):
-	CGraphicItem(pParent),
-	m_pSprite(nullptr),
-	m_shape(picture.shape())
-{
-	assert(picture.isValid());
+namespace engine {
+	namespace graphic {
 
-	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-	assert(pFramework);
+		CGraphicBitmap::CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent) :
+			CGraphicItem(pParent),
+			m_pSprite(nullptr),
+			m_shape(picture.shape())
+		{
+			assert(picture.isValid());
 
-	utils::interfaces::IPlatform * pPlatform = pFramework->platform();
-	assert(pPlatform);
+			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+			assert(pFramework);
 
-	m_pSprite = pPlatform->createSprite(picture.image());
-	assert(m_pSprite);
+			utils::interfaces::IPlatform * pPlatform = pFramework->platform();
+			assert(pPlatform);
 
-	setPosition(0, 0);
-	setSize(picture.size());
-}
+			m_pSprite = pPlatform->createSprite(picture.image());
+			assert(m_pSprite);
 
-CGraphicBitmap::~CGraphicBitmap()
-{
-    // All the sprites are deferred destroyed
-	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-	assert(pFramework);
+			setPosition(0, 0);
+			setSize(picture.size());
+		}
 
-	pFramework->destroySprite(m_pSprite);
-}
+		CGraphicBitmap::~CGraphicBitmap()
+		{
+			// All the sprites are deferred destroyed
+			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+			assert(pFramework);
 
-utils::CRectangle CGraphicBitmap::shape() const
-{
-	return m_shape.translated(position());
-}
+			pFramework->destroySprite(m_pSprite);
+		}
 
-void CGraphicBitmap::draw(int x, int y)
-{
-	m_pSprite->draw(x, y);
-}
+		utils::CRectangle CGraphicBitmap::shape() const
+		{
+			return m_shape.translated(position());
+		}
+
+		void CGraphicBitmap::draw(int x, int y)
+		{
+			m_pSprite->draw(x, y);
+		}
+
+	} // namespace graphic
+} // namespace engine

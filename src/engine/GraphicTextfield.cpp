@@ -25,47 +25,53 @@
 #include "ISystemGlobalEnvironment.h"
 extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent):
-	CGraphicItem(pParent)
-{
-	setPosition(0, 0);
-}
+namespace engine {
+	namespace graphic {
 
-CGraphicTextfield::CGraphicTextfield(const char * text, CGraphicItem * pParent):
-	CGraphicItem(pParent)
-{
-	setText(text);
-	setPosition(0, 0);
-}
+		CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent) :
+			CGraphicItem(pParent)
+		{
+			setPosition(0, 0);
+		}
 
-const char * CGraphicTextfield::text()
-{
-	return m_text.c_str();
-}
+		CGraphicTextfield::CGraphicTextfield(const char * text, CGraphicItem * pParent) :
+			CGraphicItem(pParent)
+		{
+			setText(text);
+			setPosition(0, 0);
+		}
 
-void CGraphicTextfield::setText(const char * format, ...)
-{
-	assert(format && format[0]);
+		const char * CGraphicTextfield::text()
+		{
+			return m_text.c_str();
+		}
 
-	va_list argList;
-	va_start(argList, format);
+		void CGraphicTextfield::setText(const char * format, ...)
+		{
+			assert(format && format[0]);
 
-	char temp[4096];
-	vsnprintf_s(temp, 4096, format, argList); 
-	temp[4095] = '\0';
+			va_list argList;
+			va_start(argList, format);
 
-	va_end(argList);
-	m_text = temp;
-}
+			char temp[4096];
+			vsnprintf_s(temp, 4096, format, argList);
+			temp[4095] = '\0';
 
-void CGraphicTextfield::draw(int x, int y)
-{
-	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
-	assert(pFramework);
+			va_end(argList);
+			m_text = temp;
+		}
 
-	utils::interfaces::IPlatform * pPlatform = pFramework->platform();
-	assert(pPlatform);
+		void CGraphicTextfield::draw(int x, int y)
+		{
+			CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
+			assert(pFramework);
 
-	if (!m_text.empty())
-		pPlatform->drawText(x, y, m_text.c_str());
-}
+			utils::interfaces::IPlatform * pPlatform = pFramework->platform();
+			assert(pPlatform);
+
+			if (!m_text.empty())
+				pPlatform->drawText(x, y, m_text.c_str());
+		}
+
+	} // namespace graphic
+} // namespace engine

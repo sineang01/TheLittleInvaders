@@ -21,12 +21,18 @@
 #include "PlatformFactory.h"
 #include <cassert>
 
-utils::interfaces::IPlatformManager * CPlatformFactory::make(const char * platformName)
-{
-	assert(platformName && platformName[0]);
+namespace engine {
+	namespace platform {
 
-	if (strcmp(platformName, "win_platform") == 0)
-		return new CEasyPlatform();
+		utils::interfaces::IPlatformManager * CPlatformFactory::make(const char * platformName)
+		{
+			assert(platformName && platformName[0]);
 
-	return nullptr;
-}
+			if (strcmp(platformName, "win_platform") == 0)
+				return new CEasyPlatform();
+
+			return nullptr;
+		}
+
+	} // namespace platform
+} // namespace engine

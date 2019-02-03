@@ -27,11 +27,13 @@ namespace utils {
 	}
 }
 
-class CGameStatePreGame final : public CGameStateCommon
-{
+namespace game {
+
+	class CGameStatePreGame final : public CGameStateCommon
+	{
 	public:
 		CGameStatePreGame();
-        ~CGameStatePreGame();
+		~CGameStatePreGame();
 		CGameStatePreGame(const CGameStatePreGame &) = delete;
 		CGameStatePreGame &operator=(const CGameStatePreGame &) = delete;
 
@@ -42,4 +44,6 @@ class CGameStatePreGame final : public CGameStateCommon
 
 	private:
 		utils::interfaces::IGraphicContainer * m_pContainer;
-};
+	};
+
+} // namespace game

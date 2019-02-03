@@ -23,25 +23,31 @@
 #include "GraphicTextfield.h"
 #include <IGraphicContainer.h>
 
-class CGraphicContainer final : public utils::interfaces::IGraphicContainer, public CGraphicItem
-{
-	public:
-		CGraphicContainer(CGraphicItem * pParent = nullptr);
-		virtual ~CGraphicContainer() {};
-		CGraphicContainer(const CGraphicContainer &) = delete;
-		CGraphicContainer &operator=(const CGraphicContainer &) = delete;
+namespace engine {
+	namespace graphic {
 
-		void paint();
+		class CGraphicContainer final : public utils::interfaces::IGraphicContainer, public CGraphicItem
+		{
+		public:
+			CGraphicContainer(CGraphicItem * pParent = nullptr);
+			virtual ~CGraphicContainer() {};
+			CGraphicContainer(const CGraphicContainer &) = delete;
+			CGraphicContainer &operator=(const CGraphicContainer &) = delete;
 
-		utils::interfaces::IGraphicContainer * addContainer();
-		utils::interfaces::IGraphicBitmap * addBitmap(const utils::CPicture & picture);
-		utils::interfaces::IGraphicTextfield * addTextfield(const char * text = nullptr);
+			void paint();
 
-		void removeItem(IGraphicItem * pItem);
+			utils::interfaces::IGraphicContainer * addContainer();
+			utils::interfaces::IGraphicBitmap * addBitmap(const utils::CPicture & picture);
+			utils::interfaces::IGraphicTextfield * addTextfield(const char * text = nullptr);
 
-	private:
+			void removeItem(IGraphicItem * pItem);
+
+		private:
 
 
-	protected:
-        virtual void draw(int x, int y) {}
-};
+		protected:
+			virtual void draw(int x, int y) {}
+		};
+
+	} // namespace graphic
+} // namespace engine

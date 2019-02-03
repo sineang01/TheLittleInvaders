@@ -22,8 +22,10 @@
 #include <map>
 #include <vector>
 
-class CVariablesManager final : public utils::interfaces::IVariablesManager
-{
+namespace engine {
+
+	class CVariablesManager final : public utils::interfaces::IVariablesManager
+	{
 	public:
 		CVariablesManager();
 		~CVariablesManager();
@@ -62,4 +64,6 @@ class CVariablesManager final : public utils::interfaces::IVariablesManager
 		typedef std::map<std::string, utils::interfaces::IVariable *> TVariables;
 		typedef std::pair<std::string, utils::interfaces::IVariable *> TVariableMapPair;
 		TVariables m_variables;
-};
+	};
+
+} // namespace engine

@@ -20,40 +20,46 @@
 #include "GraphicContainer.h"
 #include <cassert>
 
-CGraphicContainer::CGraphicContainer(CGraphicItem * pParent):
-	CGraphicItem(pParent)
-{
-}
+namespace engine {
+	namespace graphic {
 
-utils::interfaces::IGraphicContainer * CGraphicContainer::addContainer()
-{
-	return new CGraphicContainer(this);
-}
+		CGraphicContainer::CGraphicContainer(CGraphicItem * pParent) :
+			CGraphicItem(pParent)
+		{
+		}
 
-utils::interfaces::IGraphicBitmap * CGraphicContainer::addBitmap(const utils::CPicture & picture)
-{
-	return new CGraphicBitmap(picture, this);
-}
+		utils::interfaces::IGraphicContainer * CGraphicContainer::addContainer()
+		{
+			return new CGraphicContainer(this);
+		}
 
-utils::interfaces::IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)
-{
-	if (text) return new CGraphicTextfield(text, this);
-	else return new CGraphicTextfield(this);
-}
+		utils::interfaces::IGraphicBitmap * CGraphicContainer::addBitmap(const utils::CPicture & picture)
+		{
+			return new CGraphicBitmap(picture, this);
+		}
 
-void CGraphicContainer::removeItem(IGraphicItem * pItem)
-{
-	assert(pItem);
-	CGraphicItem * pFullItem = dynamic_cast<CGraphicItem *>(pItem);
-	pItem->setParent(nullptr);
-}
+		utils::interfaces::IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)
+		{
+			if (text) return new CGraphicTextfield(text, this);
+			else return new CGraphicTextfield(this);
+		}
 
-void CGraphicContainer::paint()
-{
-	const TGraphicItems & graphicItems = items();
-	auto it_end = graphicItems.end();
-	for (auto it = graphicItems.begin(); it != it_end; ++it)
-	{
-		dynamic_cast<CGraphicItem *>(*it)->paint();
-	}
-}
+		void CGraphicContainer::removeItem(IGraphicItem * pItem)
+		{
+			assert(pItem);
+			CGraphicItem * pFullItem = dynamic_cast<CGraphicItem *>(pItem);
+			pItem->setParent(nullptr);
+		}
+
+		void CGraphicContainer::paint()
+		{
+			const TGraphicItems & graphicItems = items();
+			auto it_end = graphicItems.end();
+			for (auto it = graphicItems.begin(); it != it_end; ++it)
+			{
+				dynamic_cast<CGraphicItem *>(*it)->paint();
+			}
+		}
+
+	} // namespace graphic
+} // namespace engine

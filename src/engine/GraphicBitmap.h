@@ -28,20 +28,26 @@ namespace utils {
 	}
 }
 
-class CGraphicBitmap final : public utils::interfaces::IGraphicBitmap, public CGraphicItem
-{
-	public:
-		CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent = nullptr);
-		virtual ~CGraphicBitmap();
-		CGraphicBitmap(const CGraphicBitmap &) = delete;
-		CGraphicBitmap &operator=(const CGraphicBitmap &) = delete;
+namespace engine {
+	namespace graphic {
 
-		utils::CRectangle shape() const;
+		class CGraphicBitmap final : public utils::interfaces::IGraphicBitmap, public CGraphicItem
+		{
+		public:
+			CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent = nullptr);
+			virtual ~CGraphicBitmap();
+			CGraphicBitmap(const CGraphicBitmap &) = delete;
+			CGraphicBitmap &operator=(const CGraphicBitmap &) = delete;
 
-	protected:
-		void draw(int x, int y);
+			utils::CRectangle shape() const;
 
-	private:
-		utils::interfaces::ISprite * m_pSprite;
-		utils::CRectangle m_shape;
-};
+		protected:
+			void draw(int x, int y);
+
+		private:
+			utils::interfaces::ISprite * m_pSprite;
+			utils::CRectangle m_shape;
+		};
+
+	} // namespace graphic
+} // namespace engine

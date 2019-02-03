@@ -25,12 +25,18 @@ namespace utils {
 	}
 }
 
-class CPlatformFactory final
-{
-	public:
-		CPlatformFactory() = default;
-		CPlatformFactory(const CPlatformFactory &) = delete;
-		CPlatformFactory &operator=(const CPlatformFactory &) = delete;
+namespace engine {
+	namespace platform {
 
-		static utils::interfaces::IPlatformManager * make(const char * platformName);
-};
+		class CPlatformFactory final
+		{
+		public:
+			CPlatformFactory() = default;
+			CPlatformFactory(const CPlatformFactory &) = delete;
+			CPlatformFactory &operator=(const CPlatformFactory &) = delete;
+
+			static utils::interfaces::IPlatformManager * make(const char * platformName);
+		};
+
+	} // namespace platform
+} // namespace engine

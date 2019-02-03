@@ -23,74 +23,81 @@
 #include <IPlatform.h>
 #include <IPlatformManager.h>
 
-class CGraphicContainer;
-class CVariablesManager;
-
 namespace utils {
 	namespace interfaces {
 		struct ISprite;
 	}
 }
 
-class CFramework final : public utils::interfaces::IFramework
-{
-public:
-	CFramework();
-	~CFramework();
-	CFramework(const CFramework &) = delete;
-	CFramework &operator=(const CFramework &) = delete;
+namespace engine {
 
-	/**
-	* @brief Retrieves the platform manager
-	*/
-	utils::interfaces::IPlatformManager * platformManager();
+	class CVariablesManager;
 
-	/**
-	* @brief Retreives the current platform instancated
-	*/
-	utils::interfaces::IPlatform * platform();
+	namespace graphic {
+		class CGraphicContainer;
+	}
 
-	/**
-	* @brief Schedules a sprite to be destroyed
-	*/
-	void destroySprite(utils::interfaces::ISprite * pSprite);
+	class CFramework final : public utils::interfaces::IFramework
+	{
+	public:
+		CFramework();
+		~CFramework();
+		CFramework(const CFramework &) = delete;
+		CFramework &operator=(const CFramework &) = delete;
 
-public:
-	// IFramework
-	bool init();
-	int exec();
-	float elapsedTime() const;
-	utils::interfaces::IGraphicContainer * window() const;
-	unsigned int random(size_t maxValue) const;
-	const char * applicationPath() const;
-	utils::interfaces::IVariablesManager * variablesManager() const;
-	// ~IFramework
+		/**
+		* @brief Retrieves the platform manager
+		*/
+		utils::interfaces::IPlatformManager * platformManager();
 
-protected:
-	// IFrameworkListener
-	void onUpdate(float deltaTime);
-	void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
-	// ~IFrameworkListener
+		/**
+		* @brief Retreives the current platform instancated
+		*/
+		utils::interfaces::IPlatform * platform();
 
-private:
-	void spriteDeferredDestruction();
-	void makeApplicationPath();
+		/**
+		* @brief Schedules a sprite to be destroyed
+		*/
+		void destroySprite(utils::interfaces::ISprite * pSprite);
 
-	bool initVariables();
+	public:
+		// IFramework
+		bool init();
+		int exec();
+		float elapsedTime() const;
+		utils::interfaces::IGraphicContainer * window() const;
+		unsigned int random(size_t maxValue) const;
+		const char * applicationPath() const;
+		utils::interfaces::IVariablesManager * variablesManager() const;
+		// ~IFramework
 
-private:
-	utils::interfaces::IPlatformManager * m_pPlatformManager;
-	CGraphicContainer * m_pWindow;
-	CVariablesManager * m_pVariablesManager;
+	protected:
+		// IFrameworkListener
+		void onUpdate(float deltaTime);
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
+		// ~IFrameworkListener
 
-	typedef std::vector<utils::interfaces::ISprite *> TSprites;
-	TSprites m_sprites;
+	private:
+		void spriteDeferredDestruction();
+		void makeApplicationPath();
 
-	float m_time;
+		bool initVariables();
 
-	utils::interfaces::CInputKey m_keyFire;
-	utils::interfaces::CInputKey m_keyLeft;
-	utils::interfaces::CInputKey m_keyRight;
+	private:
+		utils::interfaces::IPlatformManager * m_pPlatformManager;
+		graphic::CGraphicContainer * m_pWindow;
+		CVariablesManager * m_pVariablesManager;
 
-	std::string m_applicationPath;
-};
+		typedef std::vector<utils::interfaces::ISprite *> TSprites;
+		TSprites m_sprites;
+
+		float m_time;
+
+		utils::interfaces::CInputKey m_keyFire;
+		utils::interfaces::CInputKey m_keyLeft;
+		utils::interfaces::CInputKey m_keyRight;
+
+		std::string m_applicationPath;
+	};
+
+} // namespace engine

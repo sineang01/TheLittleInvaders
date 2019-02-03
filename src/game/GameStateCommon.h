@@ -20,23 +20,27 @@
 #pragma once
 #include "Game.h"
 
-class CGameStateCommon
-{
+namespace game {
+
+	class CGameStateCommon
+	{
 	public:
 		CGameStateCommon() {}
-        virtual ~CGameStateCommon() {}
+		virtual ~CGameStateCommon() {}
 		CGameStateCommon(const CGameStateCommon &) = delete;
 		CGameStateCommon &operator=(const CGameStateCommon &) = delete;
 
 		virtual bool init() = 0;
 
-        /**
-         * @brief Propagates frame events to the game state
-         */
+		/**
+		 * @brief Propagates frame events to the game state
+		 */
 		virtual void onUpdate(float deltaTime) = 0;
 
-        /**
-         * @brief Propagates input events to the game state
-         */
+		/**
+		 * @brief Propagates input events to the game state
+		 */
 		virtual void onInput(utils::interfaces::CInputKey get_key, float deltaTime) = 0;
-};
+	};
+
+} // namespace game

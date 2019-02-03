@@ -25,35 +25,39 @@
 #include "ISystemGlobalEnvironment.h"
 extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-CGameStatePreGame::CGameStatePreGame()
-{
-	m_pContainer = gEnv->pFramework->window()->addContainer();
-	m_pContainer->setSize(gEnv->pFramework->window()->size());
+namespace game {
 
-	m_pContainer->addTextfield("THE LITTLE INVADERS")->setPosition(150, 130);
+	CGameStatePreGame::CGameStatePreGame()
+	{
+		m_pContainer = gEnv->pFramework->window()->addContainer();
+		m_pContainer->setSize(gEnv->pFramework->window()->size());
 
-	m_pContainer->addTextfield("* score advanced table *")->setPosition(145, 215);
-	
-	m_pContainer->addBitmap(CGame::PICTURE_ALIEN_1)->setPosition(190, 240);
-	utils::interfaces::IGraphicTextfield * pText1 = m_pContainer->addTextfield();
-	pText1->setText(" = %d", gEnv->pFramework->variablesManager()->variable("g_killScoreSpecial")->value<unsigned int>());
-	pText1->setPosition(220, 250);
+		m_pContainer->addTextfield("THE LITTLE INVADERS")->setPosition(150, 130);
 
-	m_pContainer->addBitmap(CGame::PICTURE_ALIEN_2)->setPosition(190, 280);
-	utils::interfaces::IGraphicTextfield * pText2 = m_pContainer->addTextfield();
-	pText2->setText(" = %d", gEnv->pFramework->variablesManager()->variable("g_killScore")->value<unsigned int>());
-	pText2->setPosition(220, 290);
+		m_pContainer->addTextfield("* score advanced table *")->setPosition(145, 215);
 
-	m_pContainer->addTextfield("* press FIRE to continue *")->setPosition(145, 500);
-}
+		m_pContainer->addBitmap(CGame::PICTURE_ALIEN_1)->setPosition(190, 240);
+		utils::interfaces::IGraphicTextfield * pText1 = m_pContainer->addTextfield();
+		pText1->setText(" = %d", gEnv->pFramework->variablesManager()->variable("g_killScoreSpecial")->value<unsigned int>());
+		pText1->setPosition(220, 250);
 
-CGameStatePreGame::~CGameStatePreGame()
-{
-	gEnv->pFramework->window()->removeItem(m_pContainer);
-}
+		m_pContainer->addBitmap(CGame::PICTURE_ALIEN_2)->setPosition(190, 280);
+		utils::interfaces::IGraphicTextfield * pText2 = m_pContainer->addTextfield();
+		pText2->setText(" = %d", gEnv->pFramework->variablesManager()->variable("g_killScore")->value<unsigned int>());
+		pText2->setPosition(220, 290);
 
-void CGameStatePreGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
-{
-	if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
-		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit));
-}
+		m_pContainer->addTextfield("* press FIRE to continue *")->setPosition(145, 500);
+	}
+
+	CGameStatePreGame::~CGameStatePreGame()
+	{
+		gEnv->pFramework->window()->removeItem(m_pContainer);
+	}
+
+	void CGameStatePreGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
+	{
+		if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit));
+	}
+
+} // namespace game

@@ -24,38 +24,42 @@
 #include "ISystemGlobalEnvironment.h"
 extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-CGameStatePostGame::CGameStatePostGame(bool success, int score)
-{
-	m_pContainer = gEnv->pFramework->window()->addContainer();
-	m_pContainer->setSize(gEnv->pFramework->window()->size());
+namespace game {
 
-	if (success)
+	CGameStatePostGame::CGameStatePostGame(bool success, int score)
 	{
-		m_pContainer->addTextfield("WELL DONE EARTHLING")->setPosition(145, 130);
-		m_pContainer->addTextfield("this time you win!")->setPosition(170, 160);
-		m_pContainer->addTextfield("* press FIRE to continue *")->setPosition(145, 500);
+		m_pContainer = gEnv->pFramework->window()->addContainer();
+		m_pContainer->setSize(gEnv->pFramework->window()->size());
+
+		if (success)
+		{
+			m_pContainer->addTextfield("WELL DONE EARTHLING")->setPosition(145, 130);
+			m_pContainer->addTextfield("this time you win!")->setPosition(170, 160);
+			m_pContainer->addTextfield("* press FIRE to continue *")->setPosition(145, 500);
+		}
+		else
+		{
+			m_pContainer->addTextfield("GAME OVER")->setPosition(185, 130);
+			m_pContainer->addTextfield("earth is destroyed :(")->setPosition(160, 160);
+			m_pContainer->addTextfield("* press FIRE to play again *")->setPosition(135, 500);
+		}
+
+		m_pContainer->addTextfield("You scored")->setPosition(160, 270);
+		utils::interfaces::IGraphicTextfield * pTextScore = m_pContainer->addTextfield();
+		pTextScore->setText("%d", score);
+		pTextScore->setPosition(270, 280);
+		m_pContainer->addTextfield("points")->setPosition(195, 290);
 	}
-	else
+
+	CGameStatePostGame::~CGameStatePostGame()
 	{
-		m_pContainer->addTextfield("GAME OVER")->setPosition(185, 130);
-		m_pContainer->addTextfield("earth is destroyed :(")->setPosition(160, 160);
-		m_pContainer->addTextfield("* press FIRE to play again *")->setPosition(135, 500);
+		gEnv->pFramework->window()->removeItem(m_pContainer);
 	}
 
-	m_pContainer->addTextfield("You scored")->setPosition(160, 270);
-	utils::interfaces::IGraphicTextfield * pTextScore = m_pContainer->addTextfield();
-	pTextScore->setText("%d", score);
-	pTextScore->setPosition(270, 280);
-	m_pContainer->addTextfield("points")->setPosition(195, 290);
-}
+	void CGameStatePostGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
+	{
+		if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit));
+	}
 
-CGameStatePostGame::~CGameStatePostGame()
-{
-	gEnv->pFramework->window()->removeItem(m_pContainer);
-}
-
-void CGameStatePostGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
-{
-	if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
-		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit));
-}
+} // namespace game

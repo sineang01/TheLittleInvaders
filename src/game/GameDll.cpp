@@ -31,7 +31,7 @@ extern "C"
 	__declspec(dllexport) utils::interfaces::IGame * CreateGame(utils::interfaces::SSystemGlobalEnvironment * env)
 	{
 		gEnv = env;
-		gEnv->pGame = new CGame();
+		gEnv->pGame = new game::CGame();
 		return gEnv->pGame;
 	}
 
@@ -39,7 +39,7 @@ extern "C"
 	{
 		if (gEnv->pGame)
 		{
-			CGame * pGame = static_cast<CGame*>(gEnv->pGame);
+			game::CGame * pGame = static_cast<game::CGame*>(gEnv->pGame);
 			delete pGame;
 			gEnv->pGame = nullptr;
 		}
