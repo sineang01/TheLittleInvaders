@@ -90,6 +90,9 @@ namespace game {
 		case game_state::postgame:
 			m_pState = new CGameStatePostGame(m_succeded, m_score);
 			break;
+
+		case game_state::invalid:
+			break;
 		}
 
 		if (!m_pState->init())

@@ -27,6 +27,7 @@ namespace utils {
 		struct IPlatformManager
 		{
 			virtual IPlatform * platform() const = 0;
+			virtual ~IPlatformManager() {};
 		};
 
 	} // namespace interfaces

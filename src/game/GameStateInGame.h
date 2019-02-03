@@ -49,7 +49,8 @@ namespace game {
 	protected:
 		// IGameTimerListener
 		void timeout() override;
-		// ~IGameTimerListener
+		//~IGameTimerListener
+
 
 	private:
 		void checkCollisionsWithBorder();

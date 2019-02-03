@@ -79,7 +79,7 @@ namespace engine {
 			if (m_variables.find(name) != m_variables.end())
 			{
 				std::cerr << "[ERROR] Variable " << name_s << " at line " << line << " already exists" << std::endl;
-				return nullptr;
+				return false;
 			}
 
 			std::string type = csvRow[1];

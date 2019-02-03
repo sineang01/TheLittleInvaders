@@ -39,7 +39,9 @@ namespace engine {
 			CGraphicBitmap &operator=(const CGraphicBitmap &) = delete;
 			virtual ~CGraphicBitmap() override;
 
-			utils::CRectangle shape() const { return m_shape.translated(position()); }
+			// CGraphicItem
+			utils::CRectangle shape() const override { return m_shape.translated(position()); }
+			//~CGraphicItem
 
 		protected:
 			// CGraphicItem

@@ -42,7 +42,8 @@ namespace engine {
 		inline utils::interfaces::IVariable * registerVariable(const char * name, double defaultValue) override { return registerVariable<double>(name, defaultValue); }
 		inline utils::interfaces::IVariable * registerVariable(const char * name, bool defaultValue) override { return registerVariable<bool>(name, defaultValue); }
 		inline utils::interfaces::IVariable * registerVariable(const char * name, std::string defaultValue) override { return registerVariable<std::string>(name, defaultValue); }
-		// ~IVariablesManager
+		//~IVariablesManager
+
 
 	private:
 		std::string getLower(const char * value) const;

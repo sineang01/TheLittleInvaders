@@ -33,11 +33,14 @@ namespace engine {
 			CEasyPlatform(const CEasyPlatform &) = delete;
 			CEasyPlatform &operator=(const CEasyPlatform &) = delete;
 
-			bool init();
+			// CLibraryHandler
+			bool init() override;
+			//~CLibraryHandler
 
 			// IPlatformManager
 			inline utils::interfaces::IPlatform* platform() const override { return m_interface; }
-			// ~IPlatformManager
+			//~IPlatformManager
+
 
 		private:
 			utils::interfaces::IPlatform * m_interface{ nullptr };

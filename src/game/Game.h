@@ -67,13 +67,15 @@ namespace game {
 		bool init();
 		bool refresh();
 		void onEvent(utils::interfaces::SGameEvent eventId);
-		// ~IGame
+		//~IGame
+
 
 	private:
 		// IFrameworkListener
 		void onUpdate(float deltaTime);
 		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
-		// ~IFrameworkListener
+		//~IFrameworkListener
+
 
 		bool setGameState(game_state state);
 		void resetGame();

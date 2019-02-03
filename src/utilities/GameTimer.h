@@ -49,13 +49,15 @@ namespace utils {
 	protected:
 		// IGameTimerListener
 		void timeout();
-		// ~IGameTimerListener
+		//~IGameTimerListener
+
 
 	private:
 		// IFrameworkListener
 		void onUpdate(float deltaTime);
 		void onInput(interfaces::CInputKey get_key, float deltaTime) {};
-		// ~IFrameworkListener
+		//~IFrameworkListener
+
 
 		inline void reset() noexcept { m_elapsedTime = 0.0f; }
 

@@ -72,7 +72,7 @@ namespace engine {
 			void draw(const utils::CPoint & position) { draw((int)position.x(), (int)position.y()); }
 			virtual void draw(int x, int y) = 0;
 
-			static bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect);
+			static bool collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, collision_mode mode = collision_mode::intersect);
 
 		private:
 			/**

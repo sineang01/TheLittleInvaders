@@ -57,7 +57,7 @@ namespace utils {
 		{
 		public:
 			CVariable() = default;
-			CVariable(const char * value) {};
+			inline CVariable(const char * value);
 			CVariable(T value) :m_value(value) {}
 
 			inline void setValueInternal(T value) { m_value = value; }
@@ -67,32 +67,38 @@ namespace utils {
 			T m_value;
 		};
 
-		CVariable<bool>::CVariable(const char * value)
+		template<>
+		inline CVariable<bool>::CVariable(const char * value)
 		{
 			m_value = strcmp(value, "false") == 0 ? false : true;
 		}
 
-		CVariable<unsigned int>::CVariable(const char * value)
+		template<>
+		inline CVariable<unsigned int>::CVariable(const char * value)
 		{
 			m_value = (unsigned int)std::strtoul(value, nullptr, 0);
 		}
 
-		CVariable<int>::CVariable(const char * value)
+		template<>
+		inline CVariable<int>::CVariable(const char * value)
 		{
 			m_value = atoi(value);
 		}
 
-		CVariable<float>::CVariable(const char * value)
+		template<>
+		inline CVariable<float>::CVariable(const char * value)
 		{
 			m_value = (float)atof(value);
 		}
 
-		CVariable<double>::CVariable(const char * value)
+		template<>
+		inline CVariable<double>::CVariable(const char * value)
 		{
 			m_value = atof(value);
 		}
 
-		CVariable<std::string>::CVariable(const char * value)
+		template<>
+		inline CVariable<std::string>::CVariable(const char * value)
 		{
 			m_value = value;
 		}

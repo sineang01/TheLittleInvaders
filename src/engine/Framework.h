@@ -69,13 +69,15 @@ namespace engine {
 		inline unsigned int random(size_t maxValue) const override { return rand() % maxValue; }
 		inline const char * applicationPath() const override { return m_applicationPath.c_str(); }
 		utils::interfaces::IVariablesManager * variablesManager() const override;
-		// ~IFramework
+		//~IFramework
+
 
 	protected:
 		// IFrameworkListener
 		void onUpdate(float deltaTime) override;
 		void onInput(utils::interfaces::CInputKey get_key, float deltaTime) override;
-		// ~IFrameworkListener
+		//~IFrameworkListener
+
 
 	private:
 		void spriteDeferredDestruction();

@@ -34,15 +34,16 @@ namespace engine {
 			CGraphicContainer &operator=(const CGraphicContainer &) = delete;
 			virtual ~CGraphicContainer() override {};
 
-			void paint();
+			// CGraphicItem
+			void paint() override;
+			//~CGraphicItem
 
 			// IGraphicContainer
 			inline utils::interfaces::IGraphicContainer * addContainer() override { return new CGraphicContainer(this); }
 			inline utils::interfaces::IGraphicBitmap * addBitmap(const utils::CPicture & picture) override { return new CGraphicBitmap(picture, this); }
 			utils::interfaces::IGraphicTextfield * addTextfield(const char * text = nullptr) override;
+			void removeItem(IGraphicItem * pItem) override;
 			//~IGraphicContainer
-
-			void removeItem(IGraphicItem * pItem);
 
 		protected:
 			// CGraphicItem
