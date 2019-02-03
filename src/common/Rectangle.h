@@ -21,8 +21,10 @@
 #include "Point.h"
 #include "Size.h"
 
-class CRectangle final
-{
+namespace utils {
+
+	class CRectangle final
+	{
 	public:
 		CRectangle() = default;
 		CRectangle(const CPoint &topleft, const CSize &size);
@@ -47,9 +49,9 @@ class CRectangle final
 		inline CRectangle translated(const CPoint &p) const noexcept { return CRectangle(m_x + p.x(), m_y + p.y(), m_width, m_height); }
 
 		inline CSize size() const noexcept { return CSize(m_width, m_height); }
-		inline double width() const noexcept  { return m_width; }
+		inline double width() const noexcept { return m_width; }
 		inline double height() const noexcept { return m_height; }
-        inline void setWidth(double width) noexcept { m_width = width; }
+		inline void setWidth(double width) noexcept { m_width = width; }
 		inline void setHeight(double height) noexcept { m_height = height; }
 		inline void setSize(const CSize &s) noexcept;
 
@@ -60,29 +62,31 @@ class CRectangle final
 		friend bool operator!=(const CRectangle &, const CRectangle &) noexcept;
 
 	private:
-		double m_x{0};
-        double m_y{ 0 };
-        double m_width{ 0 };
-        double m_height{ 0 };
-};
+		double m_x{ 0 };
+		double m_y{ 0 };
+		double m_width{ 0 };
+		double m_height{ 0 };
+	};
 
-bool operator==(const CRectangle &, const CRectangle &) noexcept;
-bool operator!=(const CRectangle &, const CRectangle &) noexcept;
+	bool operator==(const CRectangle &, const CRectangle &) noexcept;
+	bool operator!=(const CRectangle &, const CRectangle &) noexcept;
 
-void CRectangle::setPosition(const CPoint &p) noexcept
-{
-	setX(p.x());
-	setY(p.y());
-}
+	void CRectangle::setPosition(const CPoint &p) noexcept
+	{
+		setX(p.x());
+		setY(p.y());
+	}
 
-void CRectangle::setPosition(double x, double y) noexcept
-{
-	setX(x);
-	setY(y);
-}
+	void CRectangle::setPosition(double x, double y) noexcept
+	{
+		setX(x);
+		setY(y);
+	}
 
-void CRectangle::setSize(const CSize &s) noexcept
-{
-	m_width = s.width();
-	m_height = s.height();
-}
+	void CRectangle::setSize(const CSize &s) noexcept
+	{
+		m_width = s.width();
+		m_height = s.height();
+	}
+
+} // namespace utils

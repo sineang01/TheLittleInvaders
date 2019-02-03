@@ -21,9 +21,11 @@
 #include "ContainersUtils.h"
 #include <vector>
 
-template <class T>
-class CBaseListenerHandler : protected T
-{
+namespace utils {
+
+	template <class T>
+	class CBaseListenerHandler : protected T
+	{
 	public:
 		bool addListener(T * pListener)
 		{
@@ -41,4 +43,6 @@ class CBaseListenerHandler : protected T
 	protected:
 		typedef std::vector<T*> TListeners;
 		TListeners m_listeners;
-};
+	};
+
+} // namespace utils

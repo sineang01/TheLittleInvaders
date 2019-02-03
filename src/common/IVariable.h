@@ -20,76 +20,82 @@
 #pragma once
 #include <string>
 
-struct IVariable
-{
-	template<typename T> 
-	T setValue(T value, bool * ok = nullptr) const
-	{
-		if (ok) *ok = false;
+namespace utils {
+	namespace interfaces {
 
-		CVariable<T> * pCVar = dynamic_cast<CVariable<T> *>(this);
-		if (!pCVar) return;
+		struct IVariable
+		{
+			template<typename T>
+			T setValue(T value, bool * ok = nullptr) const
+			{
+				if (ok) *ok = false;
 
-		if (ok) *ok = true;
-		pCVar->setValueInternal(value);
-	}
+				CVariable<T> * pCVar = dynamic_cast<CVariable<T> *>(this);
+				if (!pCVar) return;
 
-	template<typename T> 
-	T value(bool * ok = nullptr) const
-	{
-		if (ok) *ok = false;
+				if (ok) *ok = true;
+				pCVar->setValueInternal(value);
+			}
 
-		const CVariable<T> * pCVar = dynamic_cast<const CVariable<T> *>(this);
-		if (!pCVar) return T();
-		
-		if (ok) *ok = true;
-		return pCVar->valueInternal();
-	}
+			template<typename T>
+			T value(bool * ok = nullptr) const
+			{
+				if (ok) *ok = false;
 
-	virtual ~IVariable() {}
-};
+				const CVariable<T> * pCVar = dynamic_cast<const CVariable<T> *>(this);
+				if (!pCVar) return T();
 
-template <class T> 
-class CVariable : public IVariable
-{
-	public:
-		CVariable() = default;
-		CVariable(const char * value) {};
-		CVariable(T value):m_value(value) {}
+				if (ok) *ok = true;
+				return pCVar->valueInternal();
+			}
 
-		inline void setValueInternal(T value) { m_value = value; }
-		inline T valueInternal() const { return m_value; }
+			virtual ~IVariable() {}
+		};
 
-	private:
-		T m_value;
-};
+		template <class T>
+		class CVariable : public IVariable
+		{
+		public:
+			CVariable() = default;
+			CVariable(const char * value) {};
+			CVariable(T value) :m_value(value) {}
 
-CVariable<bool>::CVariable(const char * value)
-{
-	m_value = strcmp(value, "false") == 0 ? false : true;
-}
+			inline void setValueInternal(T value) { m_value = value; }
+			inline T valueInternal() const { return m_value; }
 
-CVariable<unsigned int>::CVariable(const char * value)
-{
-	m_value = (unsigned int)std::strtoul(value, nullptr, 0);
-}
+		private:
+			T m_value;
+		};
 
-CVariable<int>::CVariable(const char * value)
-{
-	m_value = atoi(value);
-}
+		CVariable<bool>::CVariable(const char * value)
+		{
+			m_value = strcmp(value, "false") == 0 ? false : true;
+		}
 
-CVariable<float>::CVariable(const char * value)
-{
-	m_value = (float)atof(value);
-}
+		CVariable<unsigned int>::CVariable(const char * value)
+		{
+			m_value = (unsigned int)std::strtoul(value, nullptr, 0);
+		}
 
-CVariable<double>::CVariable(const char * value)
-{
-	m_value = atof(value);
-}
+		CVariable<int>::CVariable(const char * value)
+		{
+			m_value = atoi(value);
+		}
 
-CVariable<std::string>::CVariable(const char * value)
-{
-	m_value = value;
-}
+		CVariable<float>::CVariable(const char * value)
+		{
+			m_value = (float)atof(value);
+		}
+
+		CVariable<double>::CVariable(const char * value)
+		{
+			m_value = atof(value);
+		}
+
+		CVariable<std::string>::CVariable(const char * value)
+		{
+			m_value = value;
+		}
+
+	} // namespace interfaces
+} // namespace utils

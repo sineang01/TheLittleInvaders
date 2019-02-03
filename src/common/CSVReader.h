@@ -22,8 +22,10 @@
 #include <string>
 #include <vector>
 
-class CCSVReader final
-{
+namespace utils {
+
+	class CCSVReader final
+	{
 	public:
 		typedef std::string TCell;
 		typedef std::vector<TCell> TRow;
@@ -35,8 +37,8 @@ class CCSVReader final
 		CCSVReader(const CCSVReader &) = delete;
 		CCSVReader &operator=(const CCSVReader &) = delete;
 
-        inline bool isNull() const { return !m_filePath.empty(); }
-        inline bool isEmpty() const { return !m_filePath.empty(); }
+		inline bool isNull() const { return !m_filePath.empty(); }
+		inline bool isEmpty() const { return !m_filePath.empty(); }
 		inline bool isValid() const { return !m_filePath.empty() && m_file.good(); }
 
 		inline const char * file() const { return m_filePath.c_str(); }
@@ -53,4 +55,6 @@ class CCSVReader final
 	private:
 		std::string m_filePath;
 		std::ifstream m_file;
-};
+	};
+
+} // namespace utils

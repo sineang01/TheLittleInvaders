@@ -23,23 +23,24 @@
 #include "GraphicTextfield.h"
 #include <IGraphicContainer.h>
 
-class CGraphicContainer final : public IGraphicContainer, public CGraphicItem
+class CGraphicContainer final : public utils::interfaces::IGraphicContainer, public CGraphicItem
 {
 	public:
 		CGraphicContainer(CGraphicItem * pParent = nullptr);
 		virtual ~CGraphicContainer() {};
+		CGraphicContainer(const CGraphicContainer &) = delete;
+		CGraphicContainer &operator=(const CGraphicContainer &) = delete;
 
 		void paint();
 
-		IGraphicContainer * addContainer();
-		IGraphicBitmap * addBitmap(const CPicture & picture);
-		IGraphicTextfield * addTextfield(const char * text = nullptr);
+		utils::interfaces::IGraphicContainer * addContainer();
+		utils::interfaces::IGraphicBitmap * addBitmap(const utils::CPicture & picture);
+		utils::interfaces::IGraphicTextfield * addTextfield(const char * text = nullptr);
 
 		void removeItem(IGraphicItem * pItem);
 
 	private:
-		CGraphicContainer(const CGraphicContainer &);
-		CGraphicContainer &operator=(const CGraphicContainer &);
+
 
 	protected:
         virtual void draw(int x, int y) {}

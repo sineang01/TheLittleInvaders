@@ -22,51 +22,55 @@
 #include <cassert>
 #include <fstream>
 
-CPicture::CPicture(const char * imagePath)
-{
-	setImage(imagePath);
-}
+namespace utils {
 
-CPicture::CPicture(const char * imagePath, const CRectangle & shape):
-	m_shape(shape)
-{
-	setImage(imagePath);
-}
+	CPicture::CPicture(const char * imagePath)
+	{
+		setImage(imagePath);
+	}
 
-void CPicture::setImage(const char * imagePath)
-{
-	assert(imagePath && imagePath[0]);
-	m_imagePath = imagePath;
+	CPicture::CPicture(const char * imagePath, const CRectangle & shape) :
+		m_shape(shape)
+	{
+		setImage(imagePath);
+	}
 
-	//m_size = CSize(32, 32);
-	assert(readImage());
-}
+	void CPicture::setImage(const char * imagePath)
+	{
+		assert(imagePath && imagePath[0]);
+		m_imagePath = imagePath;
 
-bool CPicture::readImage()
-{
-	std::string path = PathUtils::executablePath();
-	path += "\\";
-	path += m_imagePath;
+		//m_size = CSize(32, 32);
+		assert(readImage());
+	}
 
-	std::ifstream fileInput(path.c_str(), std::ios::in | std::ios::binary);
-	if (!fileInput.is_open())
-		return false;
+	bool CPicture::readImage()
+	{
+		std::string path = PathUtils::executablePath();
+		path += "\\";
+		path += m_imagePath;
 
-	static const int FORMAT_SIZE = 2;
-	char fileFormat[FORMAT_SIZE+1] = {'\0'};
-	fileInput.read(fileFormat, FORMAT_SIZE);
-	if (strncmp(fileFormat, "BM", FORMAT_SIZE) != 0)
-		return false;
+		std::ifstream fileInput(path.c_str(), std::ios::in | std::ios::binary);
+		if (!fileInput.is_open())
+			return false;
 
-	fileInput.seekg(0x12, std::ios::beg);
-	unsigned int width = 0;
-	fileInput.read((char*)&width, sizeof(unsigned int));
+		static const int FORMAT_SIZE = 2;
+		char fileFormat[FORMAT_SIZE + 1] = { '\0' };
+		fileInput.read(fileFormat, FORMAT_SIZE);
+		if (strncmp(fileFormat, "BM", FORMAT_SIZE) != 0)
+			return false;
 
-	unsigned int height = 0;
-	fileInput.read((char*)&height, sizeof(unsigned int));
+		fileInput.seekg(0x12, std::ios::beg);
+		unsigned int width = 0;
+		fileInput.read((char*)&width, sizeof(unsigned int));
 
-	m_size = CSize(width, height);
-	fileInput.close();
+		unsigned int height = 0;
+		fileInput.read((char*)&height, sizeof(unsigned int));
 
-	return true;
-}
+		m_size = CSize(width, height);
+		fileInput.close();
+
+		return true;
+	}
+
+} // namespace utils

@@ -21,23 +21,25 @@
 #include "GameStateCommon.h"
 #include <IGraphicItem.h>
 
-struct IGraphicContainer;
+namespace utils {
+	namespace interfaces {
+		struct IGraphicContainer;
+	}
+}
 
 class CGameStatePostGame final : public CGameStateCommon
 {
 	public:
 		CGameStatePostGame(bool success, int score);
         ~CGameStatePostGame();
+		CGameStatePostGame(const CGameStatePostGame &) = delete;
+		CGameStatePostGame &operator=(const CGameStatePostGame &) = delete;
 
 		bool init() { return true; }
 
 		void onUpdate(float deltaTime) {};
-		void onInput(CInputKey get_key, float deltaTime);
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
 
 	private:
-		CGameStatePostGame(const CGameStatePostGame &);
-		CGameStatePostGame &operator=(const CGameStatePostGame &);
-
-	private:
-		IGraphicContainer * m_pContainer;
+		utils::interfaces::IGraphicContainer * m_pContainer;
 };

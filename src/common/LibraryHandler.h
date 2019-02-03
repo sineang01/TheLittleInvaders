@@ -24,8 +24,10 @@ class HINSTANCE__;
 typedef HINSTANCE__* HINSTANCE;
 typedef HINSTANCE HMODULE;
 
-class CLibraryHandler
-{
+namespace utils {
+
+	class CLibraryHandler
+	{
 	public:
 		CLibraryHandler(const char * library);
 		virtual ~CLibraryHandler();
@@ -40,4 +42,6 @@ class CLibraryHandler
 	private:
 		std::string m_libraryName;
 		HMODULE m_libraryHandler;
-};
+	};
+
+} // namespace utils

@@ -20,8 +20,14 @@
 #pragma once
 #include "IGraphicItem.h"
 
-struct IGraphicTextfield : public virtual IGraphicItem
-{
-	virtual const char * text() = 0;
-	virtual void setText(const char * format, ...) = 0;
-};
+namespace utils {
+	namespace interfaces {
+
+		struct IGraphicTextfield : public virtual IGraphicItem
+		{
+			virtual const char * text() = 0;
+			virtual void setText(const char * format, ...) = 0;
+		};
+
+	} // namespace interfaces
+} // namespace utils

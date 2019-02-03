@@ -19,28 +19,34 @@
 
 #pragma once
 
-struct IFramework;
-struct SSystemGlobalEnvironment;
+namespace utils {
+	namespace interfaces {
 
-struct SGameEvent 
-{
-	unsigned int eventType;
-	int eventValue;
+		struct IFramework;
+		struct SSystemGlobalEnvironment;
 
-	SGameEvent(unsigned int _eventType):eventType(_eventType),eventValue(0) {}
-	SGameEvent(unsigned int _eventType, int _eventValue):eventType(_eventType),eventValue(_eventValue) {}
+		struct SGameEvent
+		{
+			unsigned int eventType;
+			int eventValue;
 
-	private:
-		SGameEvent() {}
-};
+			SGameEvent(unsigned int _eventType) :eventType(_eventType), eventValue(0) {}
+			SGameEvent(unsigned int _eventType, int _eventValue) :eventType(_eventType), eventValue(_eventValue) {}
 
-struct IGame
-{
-	typedef IGame *(*TEntryFunctionCreate)(SSystemGlobalEnvironment*);
-	typedef void (*TEntryFunctionDestroy)();
+		private:
+			SGameEvent() {}
+		};
 
-	virtual bool init() = 0;
-	virtual bool refresh() = 0;
+		struct IGame
+		{
+			typedef IGame *(*TEntryFunctionCreate)(SSystemGlobalEnvironment*);
+			typedef void(*TEntryFunctionDestroy)();
 
-	virtual void onEvent(SGameEvent e) = 0;
-};
+			virtual bool init() = 0;
+			virtual bool refresh() = 0;
+
+			virtual void onEvent(SGameEvent e) = 0;
+		};
+
+	} // namespace interfaces
+} // namespace utils

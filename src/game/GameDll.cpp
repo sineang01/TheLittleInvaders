@@ -24,11 +24,11 @@
 #include <windows.h>
 
 #include "ISystemGlobalEnvironment.h"
-SSystemGlobalEnvironment * gEnv = nullptr;
+utils::interfaces::SSystemGlobalEnvironment * gEnv = nullptr;
 
 extern "C"
 {
-	__declspec(dllexport) IGame * CreateGame(SSystemGlobalEnvironment * env)
+	__declspec(dllexport) utils::interfaces::IGame * CreateGame(utils::interfaces::SSystemGlobalEnvironment * env)
 	{
 		gEnv = env;
 		gEnv->pGame = new CGame();

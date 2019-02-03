@@ -21,39 +21,45 @@
 #include "Rectangle.h"
 #include <vector>
 
-struct IGraphicItem
-{
-	typedef std::vector<IGraphicItem*> TGraphicItems;
+namespace utils {
+	namespace interfaces {
 
-	enum ECollisionMode
-	{
-        eCM_Contain = 0,            /* The output list contains only items whose shapes are fully contained in the shape of the current item */
-        eCM_IntersectNotContain,    /* The output list contains only items whose shapes interesct with the one of the current item, but is not fully contained */
-        eCM_Intersect               /* The output list contains only items whose shapes are intersecting at least by 1 pixel with the one of the current item */
-	};
+		struct IGraphicItem
+		{
+			typedef std::vector<IGraphicItem*> TGraphicItems;
 
-	virtual IGraphicItem * parent() const = 0;
-	virtual void setParent(IGraphicItem * pParent) = 0;
+			enum ECollisionMode
+			{
+				eCM_Contain = 0,            /* The output list contains only items whose shapes are fully contained in the shape of the current item */
+				eCM_IntersectNotContain,    /* The output list contains only items whose shapes interesct with the one of the current item, but is not fully contained */
+				eCM_Intersect               /* The output list contains only items whose shapes are intersecting at least by 1 pixel with the one of the current item */
+			};
 
-	virtual CPoint position() const = 0;
-	virtual void setPosition(const CPoint & position) = 0;
-	virtual void setPosition(double x, double y) = 0;
+			virtual IGraphicItem * parent() const = 0;
+			virtual void setParent(IGraphicItem * pParent) = 0;
 
-	virtual CSize size() const = 0;
-	virtual void setSize(const CSize & size) = 0;
-	virtual void setSize(double w, double h) = 0;
+			virtual CPoint position() const = 0;
+			virtual void setPosition(const CPoint & position) = 0;
+			virtual void setPosition(double x, double y) = 0;
 
-	virtual CRectangle rectangle() const = 0;
-	virtual void setRectangle(const CRectangle & rectangle) = 0;
-	virtual void setRectangle(double x, double y, double width, double height) = 0;
+			virtual CSize size() const = 0;
+			virtual void setSize(const CSize & size) = 0;
+			virtual void setSize(double w, double h) = 0;
 
-	virtual const TGraphicItems & items() const = 0;
-	virtual CRectangle shape() const = 0;
+			virtual CRectangle rectangle() const = 0;
+			virtual void setRectangle(const CRectangle & rectangle) = 0;
+			virtual void setRectangle(double x, double y, double width, double height) = 0;
 
-	virtual bool collidesWithItem(const IGraphicItem * pOther, ECollisionMode mode = eCM_Intersect) const = 0;
-	virtual bool collidesWithRectangle(const CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const = 0;
-	virtual TGraphicItems collidingItems(const IGraphicItem * pItem, ECollisionMode mode = eCM_Intersect) const = 0;
-	virtual TGraphicItems collidingItems(const CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const = 0;
+			virtual const TGraphicItems & items() const = 0;
+			virtual CRectangle shape() const = 0;
 
-	virtual ~IGraphicItem() {};
-};
+			virtual bool collidesWithItem(const IGraphicItem * pOther, ECollisionMode mode = eCM_Intersect) const = 0;
+			virtual bool collidesWithRectangle(const CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const = 0;
+			virtual TGraphicItems collidingItems(const IGraphicItem * pItem, ECollisionMode mode = eCM_Intersect) const = 0;
+			virtual TGraphicItems collidingItems(const CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const = 0;
+
+			virtual ~IGraphicItem() {};
+		};
+
+	} // namespace interfaces
+} // namespace utils

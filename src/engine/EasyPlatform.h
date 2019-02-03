@@ -22,22 +22,20 @@
 #include <IPlatformManager.h>
 #include <LibraryHandler.h>
 
-class CEasyPlatform final : public IPlatformManager, public CLibraryHandler
+class CEasyPlatform final : public utils::interfaces::IPlatformManager, public utils::CLibraryHandler
 {
 	public:
         CEasyPlatform();
 		virtual ~CEasyPlatform();
+		CEasyPlatform(const CEasyPlatform &) = delete;
+		CEasyPlatform &operator=(const CEasyPlatform &) = delete;
 
 		bool init();
 
 		// IPlatformManager
-		IPlatform* platform() const;
+		utils::interfaces::IPlatform* platform() const;
         // ~IPlatformManager
 
-	private:
-		CEasyPlatform(const CEasyPlatform &);
-		CEasyPlatform &operator=(const CEasyPlatform &);
-
 	private: 
-        IPlatform * m_interface;
+		utils::interfaces::IPlatform * m_interface;
 };

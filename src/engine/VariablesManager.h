@@ -22,7 +22,7 @@
 #include <map>
 #include <vector>
 
-class CVariablesManager final : public IVariablesManager
+class CVariablesManager final : public utils::interfaces::IVariablesManager
 {
 	public:
 		CVariablesManager();
@@ -32,34 +32,34 @@ class CVariablesManager final : public IVariablesManager
 		// IVariablesManager
 		bool loadConfig(const char * filePath);
 
-		IVariable * variable(const char * name) const;
+		utils::interfaces::IVariable * variable(const char * name) const;
 
-		IVariable * registerVariable(const char * name, unsigned int defaultValue);
-		IVariable * registerVariable(const char * name, int defaultValue);
-		IVariable * registerVariable(const char * name, float defaultValue);
-		IVariable * registerVariable(const char * name, double defaultValue);
-		IVariable * registerVariable(const char * name, bool defaultValue);
-		IVariable * registerVariable(const char * name, std::string defaultValue);
+		utils::interfaces::IVariable * registerVariable(const char * name, unsigned int defaultValue);
+		utils::interfaces::IVariable * registerVariable(const char * name, int defaultValue);
+		utils::interfaces::IVariable * registerVariable(const char * name, float defaultValue);
+		utils::interfaces::IVariable * registerVariable(const char * name, double defaultValue);
+		utils::interfaces::IVariable * registerVariable(const char * name, bool defaultValue);
+		utils::interfaces::IVariable * registerVariable(const char * name, std::string defaultValue);
 		// ~IVariablesManager
 
 	private:
 		std::string getLower(const char * value) const;
 
 		template <typename T>
-		IVariable * registerVariable(const char * name, T defaultValue)
+		utils::interfaces::IVariable * registerVariable(const char * name, T defaultValue)
 		{
 			std::string nameStr = getLower(name);
 
 			if (m_variables.find(nameStr) != m_variables.end())
 				return nullptr;
 
-			IVariable * pVariable = new CVariable<T>(defaultValue);
+			utils::interfaces::IVariable * pVariable = new utils::interfaces::CVariable<T>(defaultValue);
 			m_variables.insert(TVariableMapPair(nameStr, pVariable));
 			return pVariable;
 		}
 
 	private:
-		typedef std::map<std::string, IVariable *> TVariables;
-		typedef std::pair<std::string, IVariable *> TVariableMapPair;
+		typedef std::map<std::string, utils::interfaces::IVariable *> TVariables;
+		typedef std::pair<std::string, utils::interfaces::IVariable *> TVariableMapPair;
 		TVariables m_variables;
 };

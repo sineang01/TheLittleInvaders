@@ -45,14 +45,14 @@ bool CEasyPlatform::init()
 	if (!CLibraryHandler::init())
 		return false;
 
-	IPlatform::TEntryFunction* factory = (IPlatform::TEntryFunction*)GetProcAddress(libraryHandler(), PLATFORM_LIBRARY_ENTRY_POINT);
+	utils::interfaces::IPlatform::TEntryFunction* factory = (utils::interfaces::IPlatform::TEntryFunction*)GetProcAddress(libraryHandler(), PLATFORM_LIBRARY_ENTRY_POINT);
 	m_interface = factory();
 	assert(m_interface);
 
 	return true;
 }
 
-IPlatform* CEasyPlatform::platform() const 
+utils::interfaces::IPlatform* CEasyPlatform::platform() const
 {
 	return m_interface;
 }

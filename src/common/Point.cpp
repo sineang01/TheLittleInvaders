@@ -17,33 +17,36 @@
 **
 ****************************************************************************************/
 
+#include "MathUtils.h"
 #include "Point.h"
 
-#include "MathUtils.h"
+namespace utils {
 
-CPoint::CPoint()
-    :m_x(0)
-    ,m_y(0)
-{
-}
+	CPoint::CPoint()
+		:m_x(0)
+		, m_y(0)
+	{
+	}
 
-CPoint::CPoint(double xpos, double ypos)
-    :m_x(xpos)
-    ,m_y(ypos)
-{
-}
+	CPoint::CPoint(double xpos, double ypos)
+		: m_x(xpos)
+		, m_y(ypos)
+	{
+	}
 
-bool CPoint::isNull() const
-{
-    return math::gIsNull(m_x) && math::gIsNull(m_y);
-}
+	bool CPoint::isNull() const
+	{
+		return math::gIsNull(m_x) && math::gIsNull(m_y);
+	}
 
-bool operator==(const CPoint &p1, const CPoint &p2) noexcept
-{
-    return math::gFuzzyIsNull(p1.m_x - p2.m_x) && math::gFuzzyIsNull(p1.m_y - p2.m_y);
-}
+	bool operator==(const CPoint &p1, const CPoint &p2) noexcept
+	{
+		return math::gFuzzyIsNull(p1.m_x - p2.m_x) && math::gFuzzyIsNull(p1.m_y - p2.m_y);
+	}
 
-bool operator!=(const CPoint &p1, const CPoint &p2) noexcept
-{
-    return !math::gFuzzyIsNull(p1.m_x - p2.m_x) || !math::gFuzzyIsNull(p1.m_y - p2.m_y);
-}
+	bool operator!=(const CPoint &p1, const CPoint &p2) noexcept
+	{
+		return !math::gFuzzyIsNull(p1.m_x - p2.m_x) || !math::gFuzzyIsNull(p1.m_y - p2.m_y);
+	}
+
+} // namespace utils

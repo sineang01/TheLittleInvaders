@@ -22,24 +22,26 @@
 #include <IGraphicBitmap.h>
 #include <Picture.h>
 
-struct ISprite;
+namespace utils {
+	namespace interfaces {
+		struct ISprite;
+	}
+}
 
-class CGraphicBitmap final : public IGraphicBitmap, public CGraphicItem
+class CGraphicBitmap final : public utils::interfaces::IGraphicBitmap, public CGraphicItem
 {
 	public:
-		CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent = nullptr);
+		CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent = nullptr);
 		virtual ~CGraphicBitmap();
+		CGraphicBitmap(const CGraphicBitmap &) = delete;
+		CGraphicBitmap &operator=(const CGraphicBitmap &) = delete;
 
-		CRectangle shape() const;
+		utils::CRectangle shape() const;
 
 	protected:
 		void draw(int x, int y);
 
 	private:
-		CGraphicBitmap(const CGraphicBitmap &);
-		CGraphicBitmap &operator=(const CGraphicBitmap &);
-
-	private:
-		ISprite * m_pSprite;
-		CRectangle m_shape;
+		utils::interfaces::ISprite * m_pSprite;
+		utils::CRectangle m_shape;
 };

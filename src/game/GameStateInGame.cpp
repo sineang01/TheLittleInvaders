@@ -25,7 +25,7 @@
 #include <cassert>
 
 #include "ISystemGlobalEnvironment.h"
-extern SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
 static const int DIFFICULY_MULT = 5;
 
@@ -68,7 +68,7 @@ CGameStateInGame::CGameStateInGame():
 	{
 		for (int row = 0; row < VAR_ALIEN_ROWS_VALUE; ++row)
 		{		
-			IGraphicBitmap * pAlien = m_pGameArea->addBitmap(CGame::PICTURE_ALIEN_2);
+			utils::interfaces::IGraphicBitmap * pAlien = m_pGameArea->addBitmap(CGame::PICTURE_ALIEN_2);
 			m_aliens.push_back(pAlien);
 			pAlien->setPosition(column * CGame::PICTURE_ALIEN_2.size().width(), row * CGame::PICTURE_ALIEN_2.size().height());
 		}
@@ -117,42 +117,42 @@ void CGameStateInGame::timeout()
 	checkVictoryConditions();
 }
 
-void CGameStateInGame::onInput(CInputKey get_key, float deltaTime)
+void CGameStateInGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
 {
 	assert(m_pPlayer);
 	assert(m_pGameArea);
 
-	if (get_key.get_status() == CInputKey::key_status::inactive)
+	if (get_key.get_status() == utils::interfaces::CInputKey::key_status::inactive)
 		return;
 
 	switch (get_key.get_key())
 	{
-		case CInputKey::key::fire:
+		case utils::interfaces::CInputKey::key::fire:
 		{
-			if (get_key.get_status() == CInputKey::key_status::press)
+			if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press)
 			{
 				assert(m_pGameArea);
-				IGraphicBitmap * pRocket = m_pGameArea->addBitmap(CGame::PICTURE_ROCKET);
+				utils::interfaces::IGraphicBitmap * pRocket = m_pGameArea->addBitmap(CGame::PICTURE_ROCKET);
 				m_rockets.push_back(pRocket);
-				CPoint pos = m_pPlayer->position();
+				utils::CPoint pos = m_pPlayer->position();
 				pos.ry() -= m_pPlayer->size().height();
 				pRocket->setPosition(pos);
 			}
 		}
 		break;
 
-		case CInputKey::key::left:
+		case utils::interfaces::CInputKey::key::left:
 		{
-			CPoint pos = m_pPlayer->position();
+			utils::CPoint pos = m_pPlayer->position();
             pos.rx() -= (deltaTime * VAR_PLAYER_SPEED_VALUE);
 			pos.rx() = std::max(0., pos.x());
 			m_pPlayer->setPosition(pos);
 		}
 		break;
 
-		case CInputKey::key::right:
+		case utils::interfaces::CInputKey::key::right:
 		{
-			CPoint pos = m_pPlayer->position();
+			utils::CPoint pos = m_pPlayer->position();
             pos.rx() += (deltaTime * VAR_PLAYER_SPEED_VALUE);
 			pos.rx() = std::min(pos.x(), m_pGameArea->size().width() - CGame::PICTURE_PLAYER.size().width());
 			m_pPlayer->setPosition(pos);
@@ -166,12 +166,12 @@ void CGameStateInGame::checkCollisionsWithBorder()
 	assert(m_pGameArea);
 	m_aliensMoveDown = false;
 
-	IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pGameArea, IGraphicItem::eCM_IntersectNotContain);
+	utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pGameArea, utils::interfaces::IGraphicItem::eCM_IntersectNotContain);
 
-	IGraphicItem::TGraphicItems::const_iterator it_end = collidingitems.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = collidingitems.begin(); it != it_end; ++it)
+	auto it_end = collidingitems.end();
+	for (auto it = collidingitems.begin(); it != it_end; ++it)
 	{
-		IGraphicItem * pItem = (*it);
+		utils::interfaces::IGraphicItem * pItem = (*it);
 
 		if (isAlien(pItem))
 		{
@@ -188,13 +188,13 @@ void CGameStateInGame::checkCollisionsWithBorder()
 		else
 		if (isRocket(pItem))
 		{
-			containers::gFindAndErase(m_rockets, pItem);
+			utils::containers::gFindAndErase(m_rockets, pItem);
 			delete pItem;
 		}
 		else
 		if (isBomb(pItem))
 		{
-			containers::gFindAndErase(m_bombs, pItem);
+			utils::containers::gFindAndErase(m_bombs, pItem);
 			m_pContainer->removeItem(pItem);
 		}
 	}
@@ -204,27 +204,27 @@ void CGameStateInGame::checkCollisionsWithPlayer()
 {
 	assert(m_pGameArea && m_pPlayer);
 
-	IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pPlayer, IGraphicItem::eCM_Intersect);
+	utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(m_pPlayer, utils::interfaces::IGraphicItem::eCM_Intersect);
 
 	auto it_end = collidingitems.end();
 	for (auto it = collidingitems.begin(); it != it_end; ++it)
 	{
-		IGraphicItem * pItem = (*it);
+		utils::interfaces::IGraphicItem * pItem = (*it);
 
 		if (isAlien(pItem))
 		{
             // Aliens vector simulates a bydimentional array of type aliens[ROWS][COLUMNS] so the size is kept unchanged to retrieves aliens position at wish
-			containers::gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
+			utils::containers::gFindAndReplace(m_aliens, pItem, (utils::interfaces::IGraphicItem *)nullptr);
 			delete pItem;
 		}
 		else
 		if (isBomb(pItem))
 		{
-			containers::gFindAndErase(m_bombs, pItem);
+			utils::containers::gFindAndErase(m_bombs, pItem);
 			delete pItem;
 		}
 
-		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Health, VAR_HEALTH_DAMAGE_VALUE));
+		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Health, VAR_HEALTH_DAMAGE_VALUE));
 	}
 }
 
@@ -235,24 +235,24 @@ void CGameStateInGame::checkCollisionsWithRockets()
 	auto itRocket_end = m_rockets.end();
 	for (auto itRocket = m_rockets.begin(); itRocket != itRocket_end; ++itRocket)
 	{
-		IGraphicItem * pRocket = (*itRocket);
-		IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(pRocket, IGraphicItem::eCM_Intersect);
+		utils::interfaces::IGraphicItem * pRocket = (*itRocket);
+		utils::interfaces::IGraphicItem::TGraphicItems collidingitems = m_pGameArea->collidingItems(pRocket, utils::interfaces::IGraphicItem::eCM_Intersect);
 
 		if (collidingitems.empty())
 			continue;
 
         // Forcing rocket to collide with maximum 1 alien :))
-		IGraphicItem * pItem = collidingitems.at(0);
+		utils::interfaces::IGraphicItem * pItem = collidingitems.at(0);
 
 		if (isAlien(pItem))
 		{
-			containers::gFindAndReplace(m_aliens, pItem, (IGraphicItem *)nullptr);
+			utils::containers::gFindAndReplace(m_aliens, pItem, (utils::interfaces::IGraphicItem *)nullptr);
 			delete pItem;
 
 			(*itRocket) = nullptr;
 			delete pRocket;
 
-			gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_VALUE));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_VALUE));
 		}
 		else
 		if (isSuperAlien(pItem))
@@ -263,37 +263,37 @@ void CGameStateInGame::checkCollisionsWithRockets()
 			(*itRocket) = nullptr;
 			delete pRocket;
 
-			gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_SPECIAL_VALUE));
+			gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Score, VAR_KILL_SCORE_SPECIAL_VALUE));
 		}
 	}
 
-	containers::gFindAndEraseAll(m_rockets, (IGraphicItem *)nullptr);
+	utils::containers::gFindAndEraseAll(m_rockets, (utils::interfaces::IGraphicItem *)nullptr);
 }
 
 void CGameStateInGame::checkVictoryConditions()
 {
 	if (aliveAliens().empty())
-		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Exit, 1));
+		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit, 1));
 
 	if (static_cast<CGame*>(gEnv->pGame)->lifes() <= 0)
-		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Exit, 0));
+		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit, 0));
 
 	if (isAnyAlienBypassed())
-		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Exit, 0));
+		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit, 0));
 }
 
 void CGameStateInGame::moveAliens(float deltaTime)
 {
 	const float move = deltaTime * (VAR_ALIEN_SPEED_VALUE + m_difficulty);
 
-	IGraphicItem::TGraphicItems::const_iterator it_end = m_aliens.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = m_aliens.begin(); it != it_end; ++it)
+	auto it_end = m_aliens.end();
+	for (auto it = m_aliens.begin(); it != it_end; ++it)
 	{
-		IGraphicItem * pAlien = (*it);
+		utils::interfaces::IGraphicItem * pAlien = (*it);
 		if (!pAlien)
 			continue;
 
-		CPoint pos = pAlien->position();
+		utils::CPoint pos = pAlien->position();
 		if (m_aliensMoveDown)
 		{
             pos.ry() += CGame::PICTURE_ALIEN_2.size().height();
@@ -314,7 +314,7 @@ void CGameStateInGame::moveAliens(float deltaTime)
 
 	if (m_pSuperAlien)
 	{
-		CPoint pos = m_pSuperAlien->position();
+		utils::CPoint pos = m_pSuperAlien->position();
 		pos.rx() += move;
 		m_pSuperAlien->setPosition(pos);
 	}
@@ -324,12 +324,12 @@ void CGameStateInGame::moveRockets(float deltaTime)
 {
     const float move = deltaTime * VAR_ROCKET_SPEED_VALUE;
 
-	IGraphicItem::TGraphicItems::const_iterator it_end = m_rockets.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = m_rockets.begin(); it != it_end; ++it)
+	auto it_end = m_rockets.end();
+	for (auto it = m_rockets.begin(); it != it_end; ++it)
 	{
-        IGraphicItem * pRocket = (*it);
+		utils::interfaces::IGraphicItem * pRocket = (*it);
 
-        CPoint pos = pRocket->position();
+		utils::CPoint pos = pRocket->position();
 		pos.ry() -= move;
         pRocket->setPosition(pos);
 	}
@@ -339,12 +339,12 @@ void CGameStateInGame::moveBombs(float deltaTime)
 {
 	const float move = deltaTime * VAR_BOMB_SPEED_VALUE;
 
-	IGraphicItem::TGraphicItems::const_iterator it_end = m_bombs.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = m_bombs.begin(); it != it_end; ++it)
+	auto it_end = m_bombs.end();
+	for (auto it = m_bombs.begin(); it != it_end; ++it)
 	{
-		IGraphicItem * pBomb = (*it);
+		utils::interfaces::IGraphicItem * pBomb = (*it);
 
-		CPoint pos = pBomb->position();
+		utils::CPoint pos = pBomb->position();
 		pos.ry() += move;
 		pBomb->setPosition(pos);
 	}
@@ -357,22 +357,22 @@ void CGameStateInGame::spawnBombs()
 	if (m_bombs.size() >= VAR_BOMB_MAX_ON_SCREEN_VALUE)
 		return;
 
-	IGraphicItem::TGraphicItems aliens = freeAliens();
+	utils::interfaces::IGraphicItem::TGraphicItems aliens = freeAliens();
 	const size_t alienSize = aliens.size();
 
 	if (aliens.empty())
 		return;
 
 	int randomAlien = gEnv->pFramework->random(alienSize);
-	IGraphicItem * pAlien = aliens.at(randomAlien);
+	utils::interfaces::IGraphicItem * pAlien = aliens.at(randomAlien);
 
 	if (gEnv->pFramework->random(500) >= VAR_BOMB_PROBABILITY_VALUE * 5)
 		return;
 
-	IGraphicBitmap * pBomb = m_pGameArea->addBitmap(CGame::PICTURE_BOMB);
+	utils::interfaces::IGraphicBitmap * pBomb = m_pGameArea->addBitmap(CGame::PICTURE_BOMB);
 	m_bombs.push_back(pBomb);
 	
-	CPoint pos = pAlien->position();
+	utils::CPoint pos = pAlien->position();
 	pos.ry() += pAlien->size().height();
 	pBomb->setPosition(pos);
 }
@@ -390,7 +390,7 @@ void CGameStateInGame::spawnAliens()
 		return;
 
     // Verifies if there is any alien in the top row where the superAlien is spawned
-	if (!m_pGameArea->collidingItems(CRectangle(0, 0, m_pGameArea->size().width(), CGame::PICTURE_ALIEN_2.size().height()), IGraphicItem::eCM_Intersect).empty())
+	if (!m_pGameArea->collidingItems(utils::CRectangle(0, 0, m_pGameArea->size().width(), CGame::PICTURE_ALIEN_2.size().height()), utils::interfaces::IGraphicItem::eCM_Intersect).empty())
 		return;
 
 	m_pSuperAlien = m_pGameArea->addBitmap(CGame::PICTURE_ALIEN_1);
@@ -408,39 +408,39 @@ void CGameStateInGame::updateHealth()
 	m_pHealthTextField->setText("HEALTH: %d", static_cast<CGame*>(gEnv->pGame)->lifes());
 }
 
-bool CGameStateInGame::isAlien(IGraphicItem * pItem) const
+bool CGameStateInGame::isAlien(utils::interfaces::IGraphicItem * pItem) const
 {
-	return containers::gFind(m_aliens, pItem);
+	return utils::containers::gFind(m_aliens, pItem);
 }
 
-bool CGameStateInGame::isSuperAlien(IGraphicItem * pItem) const
+bool CGameStateInGame::isSuperAlien(utils::interfaces::IGraphicItem * pItem) const
 {
 	return pItem == m_pSuperAlien;
 }
 
-bool CGameStateInGame::isPlayer(IGraphicItem * pItem) const 
+bool CGameStateInGame::isPlayer(utils::interfaces::IGraphicItem * pItem) const
 {
 	return pItem == m_pPlayer;
 }
 
-bool CGameStateInGame::isRocket(IGraphicItem * pItem) const
+bool CGameStateInGame::isRocket(utils::interfaces::IGraphicItem * pItem) const
 {
-	return containers::gFind(m_rockets, pItem);
+	return utils::containers::gFind(m_rockets, pItem);
 }
 
-bool CGameStateInGame::isBomb(IGraphicItem * pItem) const
+bool CGameStateInGame::isBomb(utils::interfaces::IGraphicItem * pItem) const
 {
-	return containers::gFind(m_bombs, pItem);
+	return utils::containers::gFind(m_bombs, pItem);
 }
 
-IGraphicItem::TGraphicItems CGameStateInGame::aliveAliens() const
+utils::interfaces::IGraphicItem::TGraphicItems CGameStateInGame::aliveAliens() const
 {
-	IGraphicItem::TGraphicItems aliens;
+	utils::interfaces::IGraphicItem::TGraphicItems aliens;
 
-	IGraphicItem::TGraphicItems::const_iterator it_end = m_aliens.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = m_aliens.begin(); it != it_end; ++it)
+	auto it_end = m_aliens.end();
+	for (auto it = m_aliens.begin(); it != it_end; ++it)
 	{
-		IGraphicItem * pAlien = (*it);
+		utils::interfaces::IGraphicItem * pAlien = (*it);
 		if (pAlien)
 		{
 			aliens.push_back(pAlien);
@@ -452,10 +452,10 @@ IGraphicItem::TGraphicItems CGameStateInGame::aliveAliens() const
 
 bool CGameStateInGame::isAnyAlienBypassed() const
 {
-	IGraphicItem::TGraphicItems::const_iterator it_end = m_aliens.end();
-	for (IGraphicItem::TGraphicItems::const_iterator it = m_aliens.begin(); it != it_end; ++it)
+	auto it_end = m_aliens.end();
+	for (auto it = m_aliens.begin(); it != it_end; ++it)
 	{
-		IGraphicItem * pAlien = (*it);
+		utils::interfaces::IGraphicItem * pAlien = (*it);
 		if (pAlien && pAlien->position().y() > m_pPlayer->position().y())
 		{
 			return true;
@@ -465,14 +465,14 @@ bool CGameStateInGame::isAnyAlienBypassed() const
 	return false;
 }
 
-IGraphicItem::TGraphicItems CGameStateInGame::freeAliens() const
+utils::interfaces::IGraphicItem::TGraphicItems CGameStateInGame::freeAliens() const
 {
-	IGraphicItem::TGraphicItems aliens;
+	utils::interfaces::IGraphicItem::TGraphicItems aliens;
 
     // From "bottom" to "top" retrieves the aliens able to shoot
 	for (int column = 0; column < VAR_ALIEN_COLUMNS_VALUE; ++column)
 	{
-		IGraphicItem * pAlien = nullptr;
+		utils::interfaces::IGraphicItem * pAlien = nullptr;
 
 		for (int row = VAR_ALIEN_ROWS_VALUE - 1; row >= 0; --row)
 		{

@@ -19,68 +19,74 @@
 
 #pragma once
 
-struct ISprite
-{
-	/**
-	 * @brief Destroys the sprite instance
-	 */
-	virtual void destroy() = 0;
+namespace utils {
+	namespace interfaces {
 
-	/**
-	 * @brief Draw the sprite at the given position. 
-	 * Valid coordinates are between (0,0) (upper left) and (width-32, height-32) (lower right).
-	 * (All sprites are 32*32 pixels, clipping is not supported)
-	*/
-	virtual void draw(int x, int y) = 0;
-};
+		struct ISprite
+		{
+			/**
+			 * @brief Destroys the sprite instance
+			 */
+			virtual void destroy() = 0;
 
-struct IPlatform 
-{
-	/**
-	 * @brief A type type for creating IPlatform instances
-	 */
-	typedef IPlatform *(__cdecl TEntryFunction)();
+			/**
+			 * @brief Draw the sprite at the given position.
+			 * Valid coordinates are between (0,0) (upper left) and (width-32, height-32) (lower right).
+			 * (All sprites are 32*32 pixels, clipping is not supported)
+			*/
+			virtual void draw(int x, int y) = 0;
+		};
 
-	/**
-	 * @brief Destroys the platform instance
-	 */
-	virtual void destroy() = 0;
+		struct IPlatform
+		{
+			/**
+			 * @brief A type type for creating IPlatform instances
+			 */
+			typedef IPlatform *(__cdecl TEntryFunction)();
 
-	/**
-	 * @brief Creates the main window. Returns true on success.
-	 */
-	virtual bool init(int width, int height) = 0;
+			/**
+			 * @brief Destroys the platform instance
+			 */
+			virtual void destroy() = 0;
 
-	/**
-	 * @brief Clears the screen and draws all sprites and texts which have been drawn since the last update call.
-	 * @return If update returns false, the application should terminate.
-	 */ 
-	virtual bool update() = 0;
+			/**
+			 * @brief Creates the main window. Returns true on success.
+			 */
+			virtual bool init(int width, int height) = 0;
 
-	/**
-	 * @brief Create a sprite given a string. All sprites are 32*32 pixels.
-	 */
-	virtual ISprite* createSprite(const char* name) = 0;
+			/**
+			 * @brief Clears the screen and draws all sprites and texts which have been drawn since the last update call.
+			 * @return If update returns false, the application should terminate.
+			 */
+			virtual bool update() = 0;
 
-	/**
-	 * @brief Draws the given text.
-	 */
-	virtual void drawText(int x, int y, const char* msg) = 0;
+			/**
+			 * @brief Create a sprite given a string. All sprites are 32*32 pixels.
+			 */
+			virtual ISprite* createSprite(const char* name) = 0;
 
-	/**
-	 * @brief Return the total time spent in the game, in seconds.
-	 */
-	virtual float getElapsedTime() = 0;
+			/**
+			 * @brief Draws the given text.
+			 */
+			virtual void drawText(int x, int y, const char* msg) = 0;
 
-	struct key_status
-	{
-		bool fire{ false };	/* space */
-		bool left{ false };	/* left arrow */
-		bool right{ false };	/* right arrow */
-	};
+			/**
+			 * @brief Return the total time spent in the game, in seconds.
+			 */
+			virtual float getElapsedTime() = 0;
 
-	/**
-	 * @brief Returns the keyboard status. If a flag is set, the corresponding key is being held down.
-	 */
-	virtual void getKeyStatus(key_status& keys) = 0;
-};
+			struct key_status
+			{
+				bool fire{ false };	/* space */
+				bool left{ false };	/* left arrow */
+				bool right{ false };	/* right arrow */
+			};
+
+			/**
+			 * @brief Returns the keyboard status. If a flag is set, the corresponding key is being held down.
+			 */
+			virtual void getKeyStatus(key_status& keys) = 0;
+		};
+
+	} // namespace interfaces
+} // namespace utils

@@ -20,15 +20,21 @@
 #pragma once
 #include "IVariable.h"
 
-struct IVariablesManager
-{
-	virtual bool loadConfig(const char * filePath) = 0;
+namespace utils {
+	namespace interfaces {
 
-	virtual IVariable * variable(const char * name) const = 0;
+		struct IVariablesManager
+		{
+			virtual bool loadConfig(const char * filePath) = 0;
 
-	virtual IVariable * registerVariable(const char * name, int defaultValue) = 0;
-	virtual IVariable * registerVariable(const char * name, float defaultValue) = 0;
-	virtual IVariable * registerVariable(const char * name, double defaultValue) = 0;
-	virtual IVariable * registerVariable(const char * name, bool defaultValue) = 0;
-	virtual IVariable * registerVariable(const char * name, std::string defaultValue) = 0;
-};
+			virtual IVariable * variable(const char * name) const = 0;
+
+			virtual IVariable * registerVariable(const char * name, int defaultValue) = 0;
+			virtual IVariable * registerVariable(const char * name, float defaultValue) = 0;
+			virtual IVariable * registerVariable(const char * name, double defaultValue) = 0;
+			virtual IVariable * registerVariable(const char * name, bool defaultValue) = 0;
+			virtual IVariable * registerVariable(const char * name, std::string defaultValue) = 0;
+		};
+
+	} // namespace interfaces
+} // namespace utils

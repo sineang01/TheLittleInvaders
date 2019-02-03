@@ -19,40 +19,45 @@
 
 #include "GameTimer.h"
 #include "ISystemGlobalEnvironment.h"
-extern SSystemGlobalEnvironment * gEnv;
 
-CGameTimer::CGameTimer(float interval)
-	:m_interval(interval)
-{
-	reset();
-}
+extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-void CGameTimer::onUpdate(float deltaTime)
-{
-	if (!m_active)
-		return;
+namespace utils {
 
-	m_elapsedTime += deltaTime;
+	CGameTimer::CGameTimer(float interval)
+		:m_interval(interval)
+	{
+		reset();
+	}
 
-	if (isElapsed())
-		timeout();
-}
+	void CGameTimer::onUpdate(float deltaTime)
+	{
+		if (!m_active)
+			return;
 
-void CGameTimer::start()
-{
-	m_active = gEnv->pFramework->addListener(this);
-}
+		m_elapsedTime += deltaTime;
 
-void CGameTimer::stop()
-{
-	m_active = false;
-	gEnv->pFramework->removeListener(this);
-}
+		if (isElapsed())
+			timeout();
+	}
 
-void CGameTimer::timeout()
-{
-	for(TListeners::iterator it = m_listeners.begin(), itEnd = m_listeners.end(); it != itEnd; ++it)
-		(*it)->timeout();
+	void CGameTimer::start()
+	{
+		m_active = gEnv->pFramework->addListener(this);
+	}
 
-	reset();
-}
+	void CGameTimer::stop()
+	{
+		m_active = false;
+		gEnv->pFramework->removeListener(this);
+	}
+
+	void CGameTimer::timeout()
+	{
+		for (auto it = m_listeners.begin(), itEnd = m_listeners.end(); it != itEnd; ++it)
+			(*it)->timeout();
+
+		reset();
+	}
+
+} // namespace utils

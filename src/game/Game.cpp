@@ -23,13 +23,13 @@
 #include "GameStatePreGame.h"
 
 #include "ISystemGlobalEnvironment.h"
-extern SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-const CPicture CGame::PICTURE_ALIEN_1 = CPicture("images\\enemy1.bmp", CRectangle(4, 5, 24, 22));
-const CPicture CGame::PICTURE_ALIEN_2 = CPicture("images\\enemy2.bmp", CRectangle(1, 5, 30, 22));
-const CPicture CGame::PICTURE_PLAYER = CPicture("images\\player.bmp", CRectangle(2, 7, 28, 17));
-const CPicture CGame::PICTURE_ROCKET = CPicture("images\\rocket.bmp", CRectangle(14, 7, 4, 19));
-const CPicture CGame::PICTURE_BOMB = CPicture("images\\bomb.bmp", CRectangle(12, 8, 8, 16));
+const utils::CPicture CGame::PICTURE_ALIEN_1 = utils::CPicture("images\\enemy1.bmp", utils::CRectangle(4, 5, 24, 22));
+const utils::CPicture CGame::PICTURE_ALIEN_2 = utils::CPicture("images\\enemy2.bmp", utils::CRectangle(1, 5, 30, 22));
+const utils::CPicture CGame::PICTURE_PLAYER = utils::CPicture("images\\player.bmp", utils::CRectangle(2, 7, 28, 17));
+const utils::CPicture CGame::PICTURE_ROCKET = utils::CPicture("images\\rocket.bmp", utils::CRectangle(14, 7, 4, 19));
+const utils::CPicture CGame::PICTURE_BOMB = utils::CPicture("images\\bomb.bmp", utils::CRectangle(12, 8, 8, 16));
 
 CGame::CGame():
 	m_pState(nullptr),
@@ -101,7 +101,7 @@ bool CGame::setGameState(EGameState state)
 	return true;
 }
 
-void CGame::onEvent(SGameEvent e)
+void CGame::onEvent(utils::interfaces::SGameEvent e)
 {
 	switch (e.eventType)
 	{
@@ -131,7 +131,7 @@ void CGame::onUpdate(float deltaTime)
 		m_pState->onUpdate(deltaTime);
 }
 
-void CGame::onInput(CInputKey get_key, float deltaTime)
+void CGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
 {
 	if (m_pState)
 		m_pState->onInput(get_key, deltaTime);

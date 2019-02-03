@@ -24,45 +24,52 @@
 #include <IPlatformManager.h>
 
 class CGraphicContainer;
-struct ISprite;
 class CVariablesManager;
 
-class CFramework final : public IFramework
+namespace utils {
+	namespace interfaces {
+		struct ISprite;
+	}
+}
+
+class CFramework final : public utils::interfaces::IFramework
 {
 public:
 	CFramework();
 	~CFramework();
+	CFramework(const CFramework &) = delete;
+	CFramework &operator=(const CFramework &) = delete;
 
 	/**
 	* @brief Retrieves the platform manager
 	*/
-	IPlatformManager * platformManager();
+	utils::interfaces::IPlatformManager * platformManager();
 
 	/**
 	* @brief Retreives the current platform instancated
 	*/
-	IPlatform * platform();
+	utils::interfaces::IPlatform * platform();
 
 	/**
 	* @brief Schedules a sprite to be destroyed
 	*/
-	void destroySprite(ISprite * pSprite);
+	void destroySprite(utils::interfaces::ISprite * pSprite);
 
 public:
 	// IFramework
 	bool init();
 	int exec();
 	float elapsedTime() const;
-	IGraphicContainer * window() const;
+	utils::interfaces::IGraphicContainer * window() const;
 	unsigned int random(size_t maxValue) const;
 	const char * applicationPath() const;
-	IVariablesManager * variablesManager() const;
+	utils::interfaces::IVariablesManager * variablesManager() const;
 	// ~IFramework
 
 protected:
 	// IFrameworkListener
 	void onUpdate(float deltaTime);
-	void onInput(CInputKey get_key, float deltaTime);
+	void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
 	// ~IFrameworkListener
 
 private:
@@ -72,22 +79,18 @@ private:
 	bool initVariables();
 
 private:
-	CFramework(const CFramework &);
-	CFramework &operator=(const CFramework &);
-
-private:
-	IPlatformManager * m_pPlatformManager;
+	utils::interfaces::IPlatformManager * m_pPlatformManager;
 	CGraphicContainer * m_pWindow;
 	CVariablesManager * m_pVariablesManager;
 
-	typedef std::vector<ISprite *> TSprites;
+	typedef std::vector<utils::interfaces::ISprite *> TSprites;
 	TSprites m_sprites;
 
 	float m_time;
 
-	CInputKey m_keyFire;
-	CInputKey m_keyLeft;
-	CInputKey m_keyRight;
+	utils::interfaces::CInputKey m_keyFire;
+	utils::interfaces::CInputKey m_keyLeft;
+	utils::interfaces::CInputKey m_keyRight;
 
 	std::string m_applicationPath;
 };

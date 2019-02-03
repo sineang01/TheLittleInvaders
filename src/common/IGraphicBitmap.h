@@ -20,6 +20,12 @@
 #pragma once
 #include "IGraphicItem.h"
 
-struct IGraphicBitmap : public virtual IGraphicItem
-{
-};
+namespace utils {
+	namespace interfaces {
+
+		struct IGraphicBitmap : public virtual IGraphicItem
+		{
+		};
+
+	} // namespace interfaces
+} // namespace utils

@@ -25,45 +25,49 @@
 #define NOMINMAX 
 #include <windows.h>
 
-CLibraryHandler::CLibraryHandler(const char * library):
-	m_libraryHandler(nullptr)
-{
-	assert(library && library[0]);
-	m_libraryName = library;
-}
+namespace utils {
 
-CLibraryHandler::~CLibraryHandler()
-{
-	if (m_libraryHandler)
+	CLibraryHandler::CLibraryHandler(const char * library) :
+		m_libraryHandler(nullptr)
 	{
-		FreeLibrary(m_libraryHandler);
-	}
-}
-
-bool CLibraryHandler::init()
-{
-	if (m_libraryHandler)
-	{
-		std::cerr << "[ERROR] Library " << m_libraryName.c_str() << " is already open" << std::endl;
-		return false;
+		assert(library && library[0]);
+		m_libraryName = library;
 	}
 
-	m_libraryHandler = LoadLibraryA(m_libraryName.c_str());
-	if (!m_libraryHandler)
+	CLibraryHandler::~CLibraryHandler()
 	{
-		std::cerr << "[ERROR] Failed to open the DLL " << m_libraryName.c_str() << std::endl;
-		return false;
+		if (m_libraryHandler)
+		{
+			FreeLibrary(m_libraryHandler);
+		}
 	}
 
-	return true;
-}
+	bool CLibraryHandler::init()
+	{
+		if (m_libraryHandler)
+		{
+			std::cerr << "[ERROR] Library " << m_libraryName.c_str() << " is already open" << std::endl;
+			return false;
+		}
 
-HMODULE CLibraryHandler::libraryHandler() const
-{
-	return m_libraryHandler;
-}
+		m_libraryHandler = LoadLibraryA(m_libraryName.c_str());
+		if (!m_libraryHandler)
+		{
+			std::cerr << "[ERROR] Failed to open the DLL " << m_libraryName.c_str() << std::endl;
+			return false;
+		}
 
-const char * CLibraryHandler::libraryName() const
-{
-	return m_libraryName.c_str();
-}
+		return true;
+	}
+
+	HMODULE CLibraryHandler::libraryHandler() const
+	{
+		return m_libraryHandler;
+	}
+
+	const char * CLibraryHandler::libraryName() const
+	{
+		return m_libraryName.c_str();
+	}
+
+} // namespace utils

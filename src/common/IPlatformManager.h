@@ -18,9 +18,16 @@
 ****************************************************************************************/
 
 #pragma once
-struct IPlatform;
 
-struct IPlatformManager
-{
-	virtual IPlatform * platform() const = 0;
-};
+namespace utils {
+	namespace interfaces {
+
+		struct IPlatform;
+
+		struct IPlatformManager
+		{
+			virtual IPlatform * platform() const = 0;
+		};
+
+	} // namespace interfaces
+} // namespace utils

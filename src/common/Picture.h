@@ -21,16 +21,18 @@
 #include "Rectangle.h"
 #include <string>
 
-class CPicture final
-{
+namespace utils {
+
+	class CPicture final
+	{
 	public:
 		CPicture() = default;
 		CPicture(const char * imagePath);
 		CPicture(const char * imagePath, const CRectangle & shape);
 
-        inline bool isNull() const { return m_imagePath.empty(); }
-        inline bool isEmpty() const { return m_imagePath.empty(); }
-        inline bool isValid() const { return !m_imagePath.empty() && rectangle().contains(m_shape); }
+		inline bool isNull() const { return m_imagePath.empty(); }
+		inline bool isEmpty() const { return m_imagePath.empty(); }
+		inline bool isValid() const { return !m_imagePath.empty() && rectangle().contains(m_shape); }
 
 		inline const char * image() const { return m_imagePath.c_str(); }
 		inline void setImage(const char * imagePath);
@@ -50,4 +52,6 @@ class CPicture final
 		std::string m_imagePath;
 		CSize m_size;
 		CRectangle m_shape;
-};
+	};
+
+} // namespace utils

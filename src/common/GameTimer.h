@@ -20,13 +20,15 @@
 #pragma once
 #include "IFramework.h"
 
-struct IGameTimerListener
-{
-	virtual void timeout() = 0;
-};
+namespace utils {
 
-class CGameTimer final : public CBaseListenerHandler<IGameTimerListener>, public IFrameworkListener
-{
+	struct IGameTimerListener
+	{
+		virtual void timeout() = 0;
+	};
+
+	class CGameTimer final : public CBaseListenerHandler<IGameTimerListener>, public interfaces::IFrameworkListener
+	{
 	public:
 		CGameTimer(float interval = 0);
 		~CGameTimer() { stop(); }
@@ -52,7 +54,7 @@ class CGameTimer final : public CBaseListenerHandler<IGameTimerListener>, public
 	private:
 		// IFrameworkListener
 		void onUpdate(float deltaTime);
-		void onInput(CInputKey get_key, float deltaTime) {};
+		void onInput(interfaces::CInputKey get_key, float deltaTime) {};
 		// ~IFrameworkListener
 
 		inline void reset() noexcept { m_elapsedTime = 0.0f; }
@@ -61,10 +63,12 @@ class CGameTimer final : public CBaseListenerHandler<IGameTimerListener>, public
 		float m_interval{ 0.0f };
 		float m_elapsedTime{ 0.0f };
 		bool m_active{ false };
-};
+	};
 
-void CGameTimer::setInterval(float interval) noexcept
-{
-	m_interval = interval;
-	reset();
-}
+	void CGameTimer::setInterval(float interval) noexcept
+	{
+		m_interval = interval;
+		reset();
+	}
+
+} // namespace utils

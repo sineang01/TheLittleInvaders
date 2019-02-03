@@ -22,9 +22,9 @@
 #include <cassert>
 
 #include "ISystemGlobalEnvironment.h"
-extern SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
-CGraphicBitmap::CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent):
+CGraphicBitmap::CGraphicBitmap(const utils::CPicture & picture, CGraphicItem * pParent):
 	CGraphicItem(pParent),
 	m_pSprite(nullptr),
 	m_shape(picture.shape())
@@ -34,7 +34,7 @@ CGraphicBitmap::CGraphicBitmap(const CPicture & picture, CGraphicItem * pParent)
 	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
 	assert(pFramework);
 
-	IPlatform * pPlatform = pFramework->platform();
+	utils::interfaces::IPlatform * pPlatform = pFramework->platform();
 	assert(pPlatform);
 
 	m_pSprite = pPlatform->createSprite(picture.image());
@@ -53,7 +53,7 @@ CGraphicBitmap::~CGraphicBitmap()
 	pFramework->destroySprite(m_pSprite);
 }
 
-CRectangle CGraphicBitmap::shape() const
+utils::CRectangle CGraphicBitmap::shape() const
 {
 	return m_shape.translated(position());
 }

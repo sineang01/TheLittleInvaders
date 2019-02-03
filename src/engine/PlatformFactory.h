@@ -19,17 +19,18 @@
 
 #pragma once
 
-struct IPlatformManager;
+namespace utils {
+	namespace interfaces {
+		struct IPlatformManager;
+	}
+}
 
 class CPlatformFactory final
 {
 	public:
-		CPlatformFactory() {};
-		~CPlatformFactory() {};
+		CPlatformFactory() = default;
+		CPlatformFactory(const CPlatformFactory &) = delete;
+		CPlatformFactory &operator=(const CPlatformFactory &) = delete;
 
-		static IPlatformManager * make(const char * platformName);
-
-	private:
-		CPlatformFactory(const CPlatformFactory &);
-		CPlatformFactory &operator=(const CPlatformFactory &);
+		static utils::interfaces::IPlatformManager * make(const char * platformName);
 };

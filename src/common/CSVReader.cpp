@@ -21,62 +21,66 @@
 #include <cassert>
 #include <sstream>
 
-CCSVReader::CCSVReader(const char * filePath):
-	m_filePath(filePath)
-{
-}
+namespace utils {
 
-bool CCSVReader::open()
-{
-	m_file.open(m_filePath.c_str(), std::ios::in | std::ios::binary);
-	if (m_file.is_open())
-		return true;
+	CCSVReader::CCSVReader(const char * filePath) :
+		m_filePath(filePath)
+	{
+	}
 
-	return false;
-}
+	bool CCSVReader::open()
+	{
+		m_file.open(m_filePath.c_str(), std::ios::in | std::ios::binary);
+		if (m_file.is_open())
+			return true;
 
-void CCSVReader::setFile(const char * filePath)
-{
-	assert(filePath && filePath[0]);
-	m_filePath = filePath;
-}
-
-bool CCSVReader::readAll(TContent & ret)
-{
-	ret.clear();
-
-	if (!open())
 		return false;
-
-	while(m_file.good())
-	{
-		ret.push_back(readNextLine());
-	}
-		 
-	close();
-	return true;
-}
-
-CCSVReader::TRow CCSVReader::readNextLine()
-{
-	assert(m_file.good());
-
-	TRow ret;
-
-	std::string line;
-	std::getline(m_file, line);
-
-	if (line[line.size() - 1] == '\r')
-		line.resize(line.size() - 1);
-
-	std::stringstream lineStream(line);
-	std::string cell;
-
-	//doesn't care about escaping comma and newline, can't embed comma and newline in quotes
-	while(std::getline(lineStream, cell, ';'))
-	{
-		ret.push_back(cell);
 	}
 
-	return ret;
-}
+	void CCSVReader::setFile(const char * filePath)
+	{
+		assert(filePath && filePath[0]);
+		m_filePath = filePath;
+	}
+
+	bool CCSVReader::readAll(TContent & ret)
+	{
+		ret.clear();
+
+		if (!open())
+			return false;
+
+		while (m_file.good())
+		{
+			ret.push_back(readNextLine());
+		}
+
+		close();
+		return true;
+	}
+
+	CCSVReader::TRow CCSVReader::readNextLine()
+	{
+		assert(m_file.good());
+
+		TRow ret;
+
+		std::string line;
+		std::getline(m_file, line);
+
+		if (line[line.size() - 1] == '\r')
+			line.resize(line.size() - 1);
+
+		std::stringstream lineStream(line);
+		std::string cell;
+
+		//doesn't care about escaping comma and newline, can't embed comma and newline in quotes
+		while (std::getline(lineStream, cell, ';'))
+		{
+			ret.push_back(cell);
+		}
+
+		return ret;
+	}
+
+} // namespace utils

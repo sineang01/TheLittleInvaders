@@ -20,7 +20,10 @@
 #pragma once
 #include <string>
 
-namespace PathUtils
-{
-	std::string executablePath();
-};
+namespace utils {
+	namespace PathUtils	{
+
+		std::string executablePath();
+
+	} // namespace PathUtils
+} // namespace utils

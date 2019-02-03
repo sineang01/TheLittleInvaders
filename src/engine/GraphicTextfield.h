@@ -21,22 +21,20 @@
 #include "GraphicItem.h"
 #include <IGraphicTextfield.h>
 
-class CGraphicTextfield final : public IGraphicTextfield, public CGraphicItem
+class CGraphicTextfield final : public utils::interfaces::IGraphicTextfield, public CGraphicItem
 {
 	public:
 		CGraphicTextfield(CGraphicItem * pParent = nullptr);
 		CGraphicTextfield(const char * text, CGraphicItem * pParent = nullptr);
 		virtual ~CGraphicTextfield() {};
+		CGraphicTextfield(const CGraphicTextfield &) = delete;
+		CGraphicTextfield &operator=(const CGraphicTextfield &) = delete;
 
 		const char * text();
 		void setText(const char * format, ...);
 
 	protected:
 		void draw(int x, int y);
-
-	private:
-		CGraphicTextfield(const CGraphicTextfield &);
-		CGraphicTextfield &operator=(const CGraphicTextfield &);
 
 	private:
 		std::string m_text;

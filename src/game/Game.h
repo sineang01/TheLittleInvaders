@@ -25,7 +25,7 @@
 class CGraphicContainer;
 class CGameStateCommon;
 
-class CGame final : public IGame, private IFrameworkListener
+class CGame final : public utils::interfaces::IGame, private utils::interfaces::IFrameworkListener
 {
 	public:
 		enum EGameEvent 
@@ -46,36 +46,34 @@ class CGame final : public IGame, private IFrameworkListener
 	public:
 		CGame();
 		virtual ~CGame();
+		CGame(const CGame &) = delete;
+		CGame &operator=(const CGame &) = delete;
 
 		int lifes() const;
 		int score() const;
 
 	public:
-		static const CPicture PICTURE_ALIEN_1;
-		static const CPicture PICTURE_ALIEN_2;
-		static const CPicture PICTURE_PLAYER;
-		static const CPicture PICTURE_ROCKET;
-		static const CPicture PICTURE_BOMB;
+		static const utils::CPicture PICTURE_ALIEN_1;
+		static const utils::CPicture PICTURE_ALIEN_2;
+		static const utils::CPicture PICTURE_PLAYER;
+		static const utils::CPicture PICTURE_ROCKET;
+		static const utils::CPicture PICTURE_BOMB;
 
     public:
         // IGame
         bool init();
 		bool refresh();
-		void onEvent(SGameEvent eventId);
+		void onEvent(utils::interfaces::SGameEvent eventId);
         // ~IGame
 
 	private:
 		// IFrameworkListener
 		void onUpdate(float deltaTime);
-		void onInput(CInputKey get_key, float deltaTime);
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
 		// ~IFrameworkListener
 
 		bool setGameState(EGameState state);
 		void resetGame();
-
-	private:
-		CGame(const CGame &);
-		CGame &operator=(const CGame &);
 
 	private:
 		CGameStateCommon * m_pState;

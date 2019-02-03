@@ -21,7 +21,7 @@
 #include "PlatformFactory.h"
 #include <cassert>
 
-IPlatformManager * CPlatformFactory::make(const char * platformName)
+utils::interfaces::IPlatformManager * CPlatformFactory::make(const char * platformName)
 {
 	assert(platformName && platformName[0]);
 

@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cstdlib>
 
-//namespace utils {
+namespace utils {
 	namespace math {
 
 		/**
@@ -74,4 +74,4 @@
 		}
 
 	} // namespace math
-//} // namespace utils
+} // namespace utils

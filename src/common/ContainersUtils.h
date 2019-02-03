@@ -1,6 +1,6 @@
 #pragma once
 
-//namespace utils {
+namespace utils {
 	namespace containers {
 
 		/**
@@ -76,4 +76,4 @@
 
 
 	} // namespace containers
-//} // namespace utils
+} // namespace utils

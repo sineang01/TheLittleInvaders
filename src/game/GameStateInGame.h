@@ -22,25 +22,27 @@
 #include "GameTimer.h"
 #include <IGraphicItem.h>
 
-struct IVariablesManager;
-struct IGraphicContainer;
-struct IGraphicBitmap;
-struct IGraphicTextfield;
+namespace utils {
+	namespace interfaces {
+		struct IVariablesManager;
+		struct IGraphicContainer;
+		struct IGraphicBitmap;
+		struct IGraphicTextfield;
+	}
+}
 
-class CGameStateInGame final : public CGameStateCommon, public IGameTimerListener
+class CGameStateInGame final : public CGameStateCommon, public utils::IGameTimerListener
 {
 	public:
 		CGameStateInGame();
         ~CGameStateInGame();
+		CGameStateInGame(const CGameStateInGame &) = delete;
+		CGameStateInGame &operator=(const CGameStateInGame &) = delete;
 
 		bool init();
 
 		void onUpdate(float deltaTime) {};
-		void onInput(CInputKey get_key, float deltaTime);
-
-	private:
-		CGameStateInGame(const CGameStateInGame &);
-		CGameStateInGame &operator=(const CGameStateInGame &);
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
 
 	protected:
 		// IGameTimerListener
@@ -64,21 +66,21 @@ class CGameStateInGame final : public CGameStateCommon, public IGameTimerListene
 		void updateScore();
 		void updateHealth();
 
-		bool isAlien(IGraphicItem * pItem) const;
-		bool isSuperAlien(IGraphicItem * pItem) const;
-		bool isPlayer(IGraphicItem * pItem) const;
-		bool isRocket(IGraphicItem * pItem) const;
-		bool isBomb(IGraphicItem * pItem) const;
+		bool isAlien(utils::interfaces::IGraphicItem * pItem) const;
+		bool isSuperAlien(utils::interfaces::IGraphicItem * pItem) const;
+		bool isPlayer(utils::interfaces::IGraphicItem * pItem) const;
+		bool isRocket(utils::interfaces::IGraphicItem * pItem) const;
+		bool isBomb(utils::interfaces::IGraphicItem * pItem) const;
 
         /**
          * @brief Retreives a list of aliens able to shoot bombs
          */
-		IGraphicItem::TGraphicItems freeAliens() const;
+		utils::interfaces::IGraphicItem::TGraphicItems freeAliens() const;
 
         /**
          * @brief Retreives a list of alive aliens
          */
-		IGraphicItem::TGraphicItems aliveAliens() const;
+		utils::interfaces::IGraphicItem::TGraphicItems aliveAliens() const;
 
         /**
          * @brief Checks if at least one alien bypassed the player (is lower than the player position)
@@ -87,28 +89,28 @@ class CGameStateInGame final : public CGameStateCommon, public IGameTimerListene
 		bool isAnyAlienBypassed() const;
 
 	private:
-		IGraphicContainer * m_pContainer;
-		IGraphicContainer * m_pGameArea;
+		utils::interfaces::IGraphicContainer * m_pContainer;
+		utils::interfaces::IGraphicContainer * m_pGameArea;
 
-		IGraphicBitmap * m_pPlayer;
+		utils::interfaces::IGraphicBitmap * m_pPlayer;
 
-        IGraphicItem::TGraphicItems m_aliens; /* The vector behaves like a bydimentional array. Aliens deleted are set to nullptr, but not removed from array */
+		utils::interfaces::IGraphicItem::TGraphicItems m_aliens; /* The vector behaves like a bydimentional array. Aliens deleted are set to nullptr, but not removed from array */
 		bool m_aliensMoveLeft;
 		bool m_aliensMoveDown;
 
-		IGraphicBitmap * m_pSuperAlien;
+		utils::interfaces::IGraphicBitmap * m_pSuperAlien;
 
-		IGraphicItem::TGraphicItems m_rockets;
-		IGraphicItem::TGraphicItems m_bombs;
+		utils::interfaces::IGraphicItem::TGraphicItems m_rockets;
+		utils::interfaces::IGraphicItem::TGraphicItems m_bombs;
 
-		IGraphicTextfield * m_pScoreTextField;
-		IGraphicTextfield * m_pHealthTextField;
+		utils::interfaces::IGraphicTextfield * m_pScoreTextField;
+		utils::interfaces::IGraphicTextfield * m_pHealthTextField;
 
 		int m_difficulty;
 
-		CGameTimer m_timer;
+		utils::CGameTimer m_timer;
 
-		IVariablesManager * m_pVariables;
+		utils::interfaces::IVariablesManager * m_pVariables;
 
 		const int VAR_ALIEN_ROWS_VALUE;
 		const int VAR_ALIEN_COLUMNS_VALUE;

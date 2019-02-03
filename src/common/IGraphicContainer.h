@@ -21,14 +21,20 @@
 #include "IGraphicItem.h"
 #include "Picture.h"
 
-struct IGraphicBitmap;
-struct IGraphicTextfield;
+namespace utils {
+	namespace interfaces {
 
-struct IGraphicContainer : public virtual IGraphicItem
-{
-	virtual IGraphicContainer * addContainer() = 0;
-	virtual IGraphicBitmap * addBitmap(const CPicture & picture) = 0;
-	virtual IGraphicTextfield * addTextfield(const char * text = nullptr) = 0;
+		struct IGraphicBitmap;
+		struct IGraphicTextfield;
 
-	virtual void removeItem(IGraphicItem * pItem) = 0;
-};
+		struct IGraphicContainer : public virtual IGraphicItem
+		{
+			virtual IGraphicContainer * addContainer() = 0;
+			virtual IGraphicBitmap * addBitmap(const CPicture & picture) = 0;
+			virtual IGraphicTextfield * addTextfield(const char * text = nullptr) = 0;
+
+			virtual void removeItem(IGraphicItem * pItem) = 0;
+		};
+
+	} // namespace interfaces
+} // namespace utils

@@ -23,7 +23,7 @@
 #include <IGraphicTextfield.h>
 
 #include "ISystemGlobalEnvironment.h"
-extern SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
 CGameStatePreGame::CGameStatePreGame()
 {
@@ -35,12 +35,12 @@ CGameStatePreGame::CGameStatePreGame()
 	m_pContainer->addTextfield("* score advanced table *")->setPosition(145, 215);
 	
 	m_pContainer->addBitmap(CGame::PICTURE_ALIEN_1)->setPosition(190, 240);
-	IGraphicTextfield * pText1 = m_pContainer->addTextfield();
+	utils::interfaces::IGraphicTextfield * pText1 = m_pContainer->addTextfield();
 	pText1->setText(" = %d", gEnv->pFramework->variablesManager()->variable("g_killScoreSpecial")->value<unsigned int>());
 	pText1->setPosition(220, 250);
 
 	m_pContainer->addBitmap(CGame::PICTURE_ALIEN_2)->setPosition(190, 280);
-	IGraphicTextfield * pText2 = m_pContainer->addTextfield();
+	utils::interfaces::IGraphicTextfield * pText2 = m_pContainer->addTextfield();
 	pText2->setText(" = %d", gEnv->pFramework->variablesManager()->variable("g_killScore")->value<unsigned int>());
 	pText2->setPosition(220, 290);
 
@@ -52,8 +52,8 @@ CGameStatePreGame::~CGameStatePreGame()
 	gEnv->pFramework->window()->removeItem(m_pContainer);
 }
 
-void CGameStatePreGame::onInput(CInputKey get_key, float deltaTime)
+void CGameStatePreGame::onInput(utils::interfaces::CInputKey get_key, float deltaTime)
 {
-	if (get_key.get_status() == CInputKey::key_status::press && get_key.get_key() == CInputKey::key::fire)
-		gEnv->pGame->onEvent(SGameEvent(CGame::eGE_Exit));
+	if (get_key.get_status() == utils::interfaces::CInputKey::key_status::press && get_key.get_key() == utils::interfaces::CInputKey::key::fire)
+		gEnv->pGame->onEvent(utils::interfaces::SGameEvent(CGame::eGE_Exit));
 }

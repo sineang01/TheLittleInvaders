@@ -24,11 +24,11 @@
 #include <windows.h>
 
 #include "ISystemGlobalEnvironment.h"
-SSystemGlobalEnvironment * gEnv = nullptr;
+utils::interfaces::SSystemGlobalEnvironment * gEnv = nullptr;
 
 extern "C"
 {
-	__declspec(dllexport) IFramework * CreateEngine(SSystemGlobalEnvironment * env)
+	__declspec(dllexport) utils::interfaces::IFramework * CreateEngine(utils::interfaces::SSystemGlobalEnvironment * env)
 	{
 		gEnv = env;
 		gEnv->pFramework = new CFramework();

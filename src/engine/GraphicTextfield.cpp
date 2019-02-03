@@ -23,7 +23,7 @@
 #include <cstdarg>
 
 #include "ISystemGlobalEnvironment.h"
-extern SSystemGlobalEnvironment * gEnv;
+extern utils::interfaces::SSystemGlobalEnvironment * gEnv;
 
 CGraphicTextfield::CGraphicTextfield(CGraphicItem * pParent):
 	CGraphicItem(pParent)
@@ -63,7 +63,7 @@ void CGraphicTextfield::draw(int x, int y)
 	CFramework * pFramework = static_cast<CFramework*>(gEnv->pFramework);
 	assert(pFramework);
 
-	IPlatform * pPlatform = pFramework->platform();
+	utils::interfaces::IPlatform * pPlatform = pFramework->platform();
 	assert(pPlatform);
 
 	if (!m_text.empty())

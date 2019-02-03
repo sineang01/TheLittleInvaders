@@ -25,17 +25,17 @@ CGraphicContainer::CGraphicContainer(CGraphicItem * pParent):
 {
 }
 
-IGraphicContainer * CGraphicContainer::addContainer()
+utils::interfaces::IGraphicContainer * CGraphicContainer::addContainer()
 {
 	return new CGraphicContainer(this);
 }
 
-IGraphicBitmap * CGraphicContainer::addBitmap(const CPicture & picture)
+utils::interfaces::IGraphicBitmap * CGraphicContainer::addBitmap(const utils::CPicture & picture)
 {
 	return new CGraphicBitmap(picture, this);
 }
 
-IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)
+utils::interfaces::IGraphicTextfield * CGraphicContainer::addTextfield(const char * text)
 {
 	if (text) return new CGraphicTextfield(text, this);
 	else return new CGraphicTextfield(this);
@@ -51,8 +51,8 @@ void CGraphicContainer::removeItem(IGraphicItem * pItem)
 void CGraphicContainer::paint()
 {
 	const TGraphicItems & graphicItems = items();
-	TGraphicItems::const_iterator it_end = graphicItems.end();
-	for (TGraphicItems::const_iterator it = graphicItems.begin(); it != it_end; ++it)
+	auto it_end = graphicItems.end();
+	for (auto it = graphicItems.begin(); it != it_end; ++it)
 	{
 		dynamic_cast<CGraphicItem *>(*it)->paint();
 	}

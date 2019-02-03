@@ -17,70 +17,73 @@
 **
 ****************************************************************************************/
 
+#include "MathUtils.h"
 #include "Rectangle.h"
 
-#include "MathUtils.h"
+namespace utils {
 
-CRectangle::CRectangle(double left, double top, double width, double height)
-    :m_x(left)
-    ,m_y(top)
-    ,m_width(width)
-    ,m_height(height)
-{
-}
+	CRectangle::CRectangle(double left, double top, double width, double height)
+		:m_x(left)
+		, m_y(top)
+		, m_width(width)
+		, m_height(height)
+	{
+	}
 
-CRectangle::CRectangle(const CPoint &topLeft, const CSize &size)
-    :m_x(topLeft.x())
-    ,m_y(topLeft.y())
-    ,m_width(size.width())
-    ,m_height(size.height())
-{
-}
+	CRectangle::CRectangle(const CPoint &topLeft, const CSize &size)
+		:m_x(topLeft.x())
+		, m_y(topLeft.y())
+		, m_width(size.width())
+		, m_height(size.height())
+	{
+	}
 
-CRectangle::CRectangle(const CPoint &topLeft, const CPoint &bottomRight)
-    :m_x(topLeft.x())
-    ,m_y(topLeft.y())
-    ,m_width(bottomRight.x() - topLeft.x())
-    ,m_height(bottomRight.y() - topLeft.y())
-{
-}
+	CRectangle::CRectangle(const CPoint &topLeft, const CPoint &bottomRight)
+		:m_x(topLeft.x())
+		, m_y(topLeft.y())
+		, m_width(bottomRight.x() - topLeft.x())
+		, m_height(bottomRight.y() - topLeft.y())
+	{
+	}
 
-bool CRectangle::contains(const CRectangle &r) const noexcept
-{
-	if (!isValid())
-		return false;
+	bool CRectangle::contains(const CRectangle &r) const noexcept
+	{
+		if (!isValid())
+			return false;
 
-    if (r.m_x < m_x || (r.m_x + r.m_width) > (m_x + m_width))
-        return false;
+		if (r.m_x < m_x || (r.m_x + r.m_width) >(m_x + m_width))
+			return false;
 
-    if (r.m_y < m_y || (r.m_y + r.m_height) > (m_y + m_height))
-        return false;
+		if (r.m_y < m_y || (r.m_y + r.m_height) >(m_y + m_height))
+			return false;
 
-    return true;
-}
+		return true;
+	}
 
-bool CRectangle::intersects(const CRectangle &r) const noexcept
-{
-	if (!isValid())
-		return false;
+	bool CRectangle::intersects(const CRectangle &r) const noexcept
+	{
+		if (!isValid())
+			return false;
 
-    if (m_x >= (r.m_x + r.m_width) || r.m_x >= (m_x + m_width))
-        return false;
+		if (m_x >= (r.m_x + r.m_width) || r.m_x >= (m_x + m_width))
+			return false;
 
-    if (m_y >= (r.m_y + r.m_height) || r.m_y >= (m_y + m_height))
-        return false;
+		if (m_y >= (r.m_y + r.m_height) || r.m_y >= (m_y + m_height))
+			return false;
 
-    return true;
-}
+		return true;
+	}
 
-bool operator==(const CRectangle &r1, const CRectangle &r2) noexcept
-{
-    return math::gFuzzyCompare(r1.m_x, r2.m_x) && math::gFuzzyCompare(r1.m_y, r2.m_y)
-           && math::gFuzzyCompare(r1.m_width, r2.m_width) && math::gFuzzyCompare(r1.m_height, r2.m_height);
-}
+	bool operator==(const CRectangle &r1, const CRectangle &r2) noexcept
+	{
+		return math::gFuzzyCompare(r1.m_x, r2.m_x) && math::gFuzzyCompare(r1.m_y, r2.m_y)
+			&& math::gFuzzyCompare(r1.m_width, r2.m_width) && math::gFuzzyCompare(r1.m_height, r2.m_height);
+	}
 
-bool operator!=(const CRectangle &r1, const CRectangle &r2) noexcept
-{
-    return !math::gFuzzyCompare(r1.m_x, r2.m_x) || !math::gFuzzyCompare(r1.m_y, r2.m_y)
-           || !math::gFuzzyCompare(r1.m_width, r2.m_width) || !math::gFuzzyCompare(r1.m_height, r2.m_height);
-}
+	bool operator!=(const CRectangle &r1, const CRectangle &r2) noexcept
+	{
+		return !math::gFuzzyCompare(r1.m_x, r2.m_x) || !math::gFuzzyCompare(r1.m_y, r2.m_y)
+			|| !math::gFuzzyCompare(r1.m_width, r2.m_width) || !math::gFuzzyCompare(r1.m_height, r2.m_height);
+	}
+
+} // namespace utils

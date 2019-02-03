@@ -22,7 +22,7 @@
 #include <iostream>
 
 #include "ISystemGlobalEnvironment.h"
-SSystemGlobalEnvironment * gEnv = nullptr;
+utils::interfaces::SSystemGlobalEnvironment * gEnv = nullptr;
 
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX 
@@ -34,20 +34,20 @@ static const char * ENGINE_LIBRARY_ENTRY_POINT_DESTROY = "DestroyEngine";
 
 int main(int argc, char ** argv)
 {
-	CLibraryHandler engineDll(ENGINE_LIBRARY_NAME);
+	utils::CLibraryHandler engineDll(ENGINE_LIBRARY_NAME);
 	if (!engineDll.init())
 		return -1;
 
-	IFramework::TEntryFunctionCreate CreateEngine = (IFramework::TEntryFunctionCreate)GetProcAddress(engineDll.libraryHandler(), ENGINE_LIBRARY_ENTRY_POINT_CREATE);
+	utils::interfaces::IFramework::TEntryFunctionCreate CreateEngine = (utils::interfaces::IFramework::TEntryFunctionCreate)GetProcAddress(engineDll.libraryHandler(), ENGINE_LIBRARY_ENTRY_POINT_CREATE);
 	if (!CreateEngine)
 	{
 		std::cerr << "[ERROR] Specified " << engineDll.libraryName() << " doesn't have a valid CreateEngine entry point" << std::endl;
 		return -1;
 	}
 
-	gEnv = new SSystemGlobalEnvironment();
+	gEnv = new utils::interfaces::SSystemGlobalEnvironment();
 
-	IFramework * pFramework = CreateEngine(gEnv);
+	utils::interfaces::IFramework * pFramework = CreateEngine(gEnv);
 	if (!pFramework)
 	{
 		std::cerr << "[ERROR] Failed to create the framework interface" << std::endl;
@@ -62,7 +62,7 @@ int main(int argc, char ** argv)
 		
 	int ret_value = pFramework->exec();
 
-	IFramework::TEntryFunctionDestroy DestroyEngine = (IFramework::TEntryFunctionDestroy)GetProcAddress(engineDll.libraryHandler(), ENGINE_LIBRARY_ENTRY_POINT_DESTROY);
+	utils::interfaces::IFramework::TEntryFunctionDestroy DestroyEngine = (utils::interfaces::IFramework::TEntryFunctionDestroy)GetProcAddress(engineDll.libraryHandler(), ENGINE_LIBRARY_ENTRY_POINT_DESTROY);
 	if (!DestroyEngine)
 	{
 		std::cerr << "[ERROR] Specified " << engineDll.libraryName() << " doesn't have a valid DestroyEngine entry point" << std::endl;

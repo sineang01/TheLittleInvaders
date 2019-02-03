@@ -19,11 +19,17 @@
 
 #pragma once
 
-struct IFramework;
-struct IGame;
+namespace utils {
+	namespace interfaces {
 
-struct SSystemGlobalEnvironment
-{
-	IFramework * pFramework{ nullptr };
-	IGame * pGame{ nullptr };
-};
+		struct IFramework;
+		struct IGame;
+
+		struct SSystemGlobalEnvironment
+		{
+			IFramework * pFramework{ nullptr };
+			IGame * pGame{ nullptr };
+		};
+
+	} // namespace interfaces
+} // namespace utils

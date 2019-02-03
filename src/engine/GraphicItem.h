@@ -25,7 +25,7 @@
 /**
  * @brief CGraphicItem organize themselves in object trees. When a QObject is created with another object as parent, the object will automatically add itself to the parent's items() list. The parent takes ownership of the object; i.e., it will automatically delete its children in its destructor
  */
-class CGraphicItem : public virtual IGraphicItem
+class CGraphicItem : public virtual utils::interfaces::IGraphicItem
 {
 	public:
 		/**
@@ -37,37 +37,39 @@ class CGraphicItem : public virtual IGraphicItem
 		 * @brief Destroys the CGraphicItem and all its children
 		 */
 		virtual ~CGraphicItem();
+		CGraphicItem(const CGraphicItem &) = delete;
+		CGraphicItem &operator=(const CGraphicItem &) = delete;
 
 		virtual void paint();
 
-		IGraphicItem * parent() const;
-		void setParent(IGraphicItem * pParent);
+		utils::interfaces::IGraphicItem * parent() const;
+		void setParent(utils::interfaces::IGraphicItem * pParent);
 
-		CPoint position() const;
-		void setPosition(const CPoint & position);
+		utils::CPoint position() const;
+		void setPosition(const utils::CPoint & position);
 		void setPosition(double x, double y);
 
-		CSize size() const;
-		void setSize(const CSize & size);
+		utils::CSize size() const;
+		void setSize(const utils::CSize & size);
 		void setSize(double w, double h);
 
-		CRectangle rectangle() const;
-		void setRectangle(const CRectangle & rectangle);
+		utils::CRectangle rectangle() const;
+		void setRectangle(const utils::CRectangle & rectangle);
 		void setRectangle(double x, double y, double width, double height);
 
 		const TGraphicItems & items() const;
-		virtual CRectangle shape() const;
+		virtual utils::CRectangle shape() const;
 
 		bool collidesWithItem(const IGraphicItem * pOther, ECollisionMode mode = eCM_Intersect) const;
-		bool collidesWithRectangle(const CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const;
+		bool collidesWithRectangle(const utils::CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect) const;
 		TGraphicItems collidingItems(const IGraphicItem * pItem, ECollisionMode mode = eCM_Intersect) const;
-		TGraphicItems collidingItems(const CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const;
+		TGraphicItems collidingItems(const utils::CRectangle & rectangle, ECollisionMode mode = eCM_Intersect) const;
 
 	protected:
-		void draw(const CPoint & position);
+		void draw(const utils::CPoint & position);
 		virtual void draw(int x, int y) = 0;
 
-		static bool CGraphicItem::collides(const CRectangle & rectangle, const CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect);
+		static bool CGraphicItem::collides(const utils::CRectangle & rectangle, const utils::CRectangle & otherRectangle, ECollisionMode mode = eCM_Intersect);
 
 	private:
 		/**
@@ -83,14 +85,10 @@ class CGraphicItem : public virtual IGraphicItem
         /**
          * @brief Calculates the offset between the relative coordinates of the item and the main window 0,0 coordinates
          */
-		static CPoint drawOffset(const IGraphicItem * pItem);
+		static utils::CPoint drawOffset(const IGraphicItem * pItem);
 
 	private:
-		CGraphicItem(const CGraphicItem &);
-		CGraphicItem &operator=(const CGraphicItem &);
-
-	private:
-		CRectangle m_rectangle;
+		utils::CRectangle m_rectangle;
 
 		IGraphicItem * m_pParent;
 		TGraphicItems m_children;

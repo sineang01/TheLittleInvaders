@@ -21,23 +21,25 @@
 #include "GameStateCommon.h"
 #include <IGraphicItem.h>
 
-struct IGraphicContainer;
+namespace utils {
+	namespace interfaces {
+		struct IGraphicContainer;
+	}
+}
 
 class CGameStatePreGame final : public CGameStateCommon
 {
 	public:
 		CGameStatePreGame();
         ~CGameStatePreGame();
+		CGameStatePreGame(const CGameStatePreGame &) = delete;
+		CGameStatePreGame &operator=(const CGameStatePreGame &) = delete;
 
 		bool init() { return true; }
 
 		void onUpdate(float deltaTime) {};
-		void onInput(CInputKey get_key, float deltaTime);
+		void onInput(utils::interfaces::CInputKey get_key, float deltaTime);
 
 	private:
-		CGameStatePreGame(const CGameStatePreGame &);
-		CGameStatePreGame &operator=(const CGameStatePreGame &);
-
-	private:
-		IGraphicContainer * m_pContainer;
+		utils::interfaces::IGraphicContainer * m_pContainer;
 };
